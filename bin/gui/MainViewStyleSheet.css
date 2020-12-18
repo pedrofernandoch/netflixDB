@@ -1,0 +1,19 @@
+.text-field.error {
+  -fx-text-box-border: red ;
+  -fx-focus-color: red ;
+}
+.combo-box-base.error {
+  -fx-outer-border: red ;
+  -fx-focus-color: red ;
+}
+.label.error {
+  -fx-text-fill: red ;
+  -fx-focus-color: red ;
+}
+.list-view.error {
+  -fx-outer-border: red ;
+  -fx-focus-color: red ;
+}
+.table-view .table-column {
+  -fx-alignment: CENTER;
+}

@@ -1,18 +1,20 @@
 package application;
 	
 import javafx.application.Application;
-import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			BorderPane root = new BorderPane();
-			Scene scene = new Scene(root,400,400);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			Parent parent = FXMLLoader.load(getClass().getResource("/gui/SplashView.fxml"));
+			Scene scene = new Scene(parent);
+			primaryStage.initStyle(StageStyle.UNDECORATED);
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e) {

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="657.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MainViewController">
+   <content>
+      <VBox prefHeight="657.0" prefWidth="1150.0">
+         <children>
+            <Pane prefHeight="84.0" prefWidth="1146.0" style="-fx-background-color: black;">
+               <children>
+                  <Label layoutX="490.0" layoutY="15.0" text="Netflix DB" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="35.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1028.0" layoutY="31.0" text="Tabelas" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <TabPane prefHeight="528.0" prefWidth="1146.0" tabClosingPolicy="UNAVAILABLE">
+               <tabs>
+                  <Tab text="Usuários">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="539.0" prefWidth="1146.0" />
+                     </content>
+                  </Tab>
+                  <Tab text="Logs">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    </content>
+                  </Tab>
+                  <Tab text="Help">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    </content>
+                  </Tab>
+               </tabs>
+            </TabPane>
+            <Pane prefHeight="59.0" prefWidth="1062.0" style="-fx-background-color: black;" />
+         </children>
+      </VBox>
+   </content>
+</ScrollPane>
