@@ -47,12 +47,12 @@ public class SplashViewController implements Initializable {
 							//stage.getIcons().add(new Image(getClass().getResourceAsStream("/resources/icon.png")));
 							stage.setScene(mainScene);
 							stage.setResizable(false);
-							stage.setTitle("Zematec AACR");
+							stage.setTitle("Netflix DB");
 							stage.show();
 						} catch (IOException e) {
 							e.printStackTrace();
 							//EventLog.newEventLog(new Date(), "Sistema", LogActivities.ERROR, e.getMessage(),LogTypes.ERROR);
-							//Alerts.showAlert("IOException", "Erro ao carregar a página principal", e.getMessage(),AlertType.ERROR);
+							//Alerts.showAlert("IOException", "Erro ao carregar a pï¿½gina principal", e.getMessage(),AlertType.ERROR);
 						}
 						rootPane.getScene().getWindow().hide();
 					}
@@ -60,7 +60,7 @@ public class SplashViewController implements Initializable {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 				//EventLog.newEventLog(new Date(), "Sistema", LogActivities.ERROR, e.getMessage(), LogTypes.ERROR);
-				//Alerts.showAlert("InterruptedException", "Erro ao carregar a página principal", e.getMessage(),AlertType.ERROR);
+				//Alerts.showAlert("InterruptedException", "Erro ao carregar a pï¿½gina principal", e.getMessage(),AlertType.ERROR);
 			}
 		}
 
@@ -71,7 +71,7 @@ public class SplashViewController implements Initializable {
 			java.awt.Toolkit.getDefaultToolkit();
 			if (!java.awt.SystemTray.isSupported()) {
 				JFrame frame = new JFrame();
-				JOptionPane.showMessageDialog(frame, "Esse sistema operacional não suporta system tray");
+				JOptionPane.showMessageDialog(frame, "Esse sistema operacional nï¿½o suporta system tray");
 				Platform.exit();
 			}
 			java.awt.SystemTray tray = java.awt.SystemTray.getSystemTray();
