@@ -5,6 +5,12 @@ public class Perfil {
 	private int usuario;
 	private String tipo;
 	
+	public Perfil(String alias, int usuario, String tipo) {
+		super();
+		this.alias = alias;
+		this.usuario = usuario;
+		this.tipo = tipo;
+	}
 	public String getAlias() {
 		return alias;
 	}

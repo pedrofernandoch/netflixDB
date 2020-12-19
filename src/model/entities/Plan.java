@@ -8,6 +8,15 @@ public class Plano {
 	private int qtdTelas;
 	private int numMaxPerfis;
 	
+	public Plano(int id, String nome, float valor, int qualidadeMax, int qtdTelas, int numMaxPerfis) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.valor = valor;
+		this.qualidadeMax = qualidadeMax;
+		this.qtdTelas = qtdTelas;
+		this.numMaxPerfis = numMaxPerfis;
+	}
 	public int getId() {
 		return id;
 	}

@@ -5,6 +5,12 @@ public class Paypal {
 	private String email;
 	private String senha;
 	
+	public Paypal(int usuario, String email, String senha) {
+		super();
+		this.usuario = usuario;
+		this.email = email;
+		this.senha = senha;
+	}
 	public int getUsuario() {
 		return usuario;
 	}
