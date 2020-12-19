@@ -8,6 +8,13 @@ public class Acesso {
 	private String IPv4;
 	private Timestamp horaAcesso;
 	
+	public Acesso(int usuario, String nomeDisp, String iPv4, Timestamp horaAcesso) {
+		super();
+		this.usuario = usuario;
+		NomeDisp = nomeDisp;
+		IPv4 = iPv4;
+		this.horaAcesso = horaAcesso;
+	}
 	public int getUsuario() {
 		return usuario;
 	}

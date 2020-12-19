@@ -9,6 +9,14 @@ public class Usuario {
 	private Date dataNasc;
 	private int plano;
 	
+	public Usuario(String nome, int cPF, String email, Date dataNasc, int plano) {
+		super();
+		this.nome = nome;
+		CPF = cPF;
+		this.email = email;
+		this.dataNasc = dataNasc;
+		this.plano = plano;
+	}
 	public String getNome() {
 		return nome;
 	}

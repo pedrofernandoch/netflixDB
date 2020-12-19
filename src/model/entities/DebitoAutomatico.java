@@ -9,6 +9,16 @@ public class DebitoAutomatico {
 	private int agencia;
 	private int conta;
 	
+	public DebitoAutomatico(int usuario, int cPF, String nome, String sobrenome, String banco, int agencia, int conta) {
+		super();
+		this.usuario = usuario;
+		CPF = cPF;
+		this.nome = nome;
+		this.sobrenome = sobrenome;
+		this.banco = banco;
+		this.agencia = agencia;
+		this.conta = conta;
+	}
 	public int getUsuario() {
 		return usuario;
 	}

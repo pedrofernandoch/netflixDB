@@ -9,6 +9,14 @@ public class NumCartao {
 	private int codSeg;
 	private String nomeTitular;
 	
+	public NumCartao(int numCartao, String bandeira, Date dataVenc, int codSeg, String nomeTitular) {
+		super();
+		this.numCartao = numCartao;
+		this.bandeira = bandeira;
+		this.dataVenc = dataVenc;
+		this.codSeg = codSeg;
+		this.nomeTitular = nomeTitular;
+	}
 	public int getNumCartao() {
 		return numCartao;
 	}

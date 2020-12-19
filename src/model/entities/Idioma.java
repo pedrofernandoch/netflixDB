@@ -4,6 +4,11 @@ public class Idioma {
 	private int id;
 	private String Nome;
 	
+	public Idioma(int id, String nome) {
+		super();
+		this.id = id;
+		Nome = nome;
+	}
 	public int getId() {
 		return id;
 	}

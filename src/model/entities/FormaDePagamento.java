@@ -4,6 +4,11 @@ public class FormaDePagamento {
 	private int usuario;
 	private String tipo;
 	
+	public FormaDePagamento(int usuario, String tipo) {
+		super();
+		this.usuario = usuario;
+		this.tipo = tipo;
+	}
 	public int getUsuario() {
 		return usuario;
 	}

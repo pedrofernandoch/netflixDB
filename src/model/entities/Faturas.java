@@ -8,6 +8,13 @@ public class Faturas {
 	private int usuario;
 	private int plano;
 	
+	public Faturas(int codFatura, Date periodo, int usuario, int plano) {
+		super();
+		this.codFatura = codFatura;
+		this.periodo = periodo;
+		this.usuario = usuario;
+		this.plano = plano;
+	}
 	public int getCodFatura() {
 		return codFatura;
 	}

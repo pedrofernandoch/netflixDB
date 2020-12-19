@@ -5,6 +5,12 @@ public class Dispositivo {
 	private String nome;
 	private String sistOperacional;
 	
+	public Dispositivo(int usuario, String nome, String sistOperacional) {
+		super();
+		this.usuario = usuario;
+		this.nome = nome;
+		this.sistOperacional = sistOperacional;
+	}
 	public int getUsuario() {
 		return usuario;
 	}

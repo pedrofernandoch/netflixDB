@@ -6,6 +6,13 @@ public class Infantil {
 	private int faixaEtaria;
 	private String adulto;
 	
+	public Infantil(String alias, int usuario, int faixaEtaria, String adulto) {
+		super();
+		this.alias = alias;
+		this.usuario = usuario;
+		this.faixaEtaria = faixaEtaria;
+		this.adulto = adulto;
+	}
 	public String getAlias() {
 		return alias;
 	}

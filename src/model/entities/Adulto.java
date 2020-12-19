@@ -7,6 +7,15 @@ public class Adulto {
 	private int legenda;
 	private int idioma;
 	
+	public Adulto(String alias, int usuario, int qualidStreaming, int legenda, int idioma) {
+		super();
+		this.alias = alias;
+		this.usuario = usuario;
+		this.qualidStreaming = qualidStreaming;
+		this.legenda = legenda;
+		this.idioma = idioma;
+	}
+	
 	public String getAlias() {
 		return alias;
 	}
