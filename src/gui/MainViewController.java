@@ -1,22 +1,29 @@
 package gui;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import javafx.fxml.FXML;
+import javafx.stage.PopupWindow;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.Tooltip;
+import javafx.scene.shape.Circle;
 
 public class MainViewController implements Initializable {
 
 	
-	//private static final String SQUARE_BUBBLE = "M24 1h-24v16.981h4v5.019l7-5.019h13z";
-	
-	/*@FXML
+	private static final String SQUARE_BUBBLE = "M24 1h-24v16.981h4v5.019l7-5.019h13z";
+	private boolean connected = false;
+	@FXML
     private Circle light;
 	@FXML
 	private TextArea logsTextArea;
 	@FXML
     private Tab logTab;
-	public static ArrayList<String> logs = new ArrayList<>();*/
+	public static ArrayList<String> logs = new ArrayList<>();
 	
 	public void addToLogTextAreaButton() {
 		//logsTextArea.clear();
@@ -157,10 +164,20 @@ public class MainViewController implements Initializable {
 		lv.getStyleClass().removeAll(Collections.singleton("error"));
 	}*/
 	
-	/*private Tooltip makeBubble(Tooltip tooltip) {
+	private Tooltip makeBubble(Tooltip tooltip) {
 	        tooltip.setStyle("-fx-font-size: 12px; -fx-shape: \"" + SQUARE_BUBBLE + "\";");
 	        tooltip.setAnchorLocation(PopupWindow.AnchorLocation.WINDOW_BOTTOM_LEFT);
 	        return tooltip;
-	}*/
+	}
+	
+	public void validateCircle(Circle c) {
+		if(connected) {
+			light.setFill(javafx.scene.paint.Color.LIMEGREEN);
+			Tooltip.install(light, makeBubble(new Tooltip("Conectado")));
+		}else{
+			Tooltip.install(light, makeBubble(new Tooltip("Desconectado, por favor se concete ao banco através do botão xxx")));
+			light.setFill(javafx.scene.paint.Color.RED);
+		}
+	}
 
 }

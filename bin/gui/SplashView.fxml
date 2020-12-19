@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.text.Font?>
 
 <StackPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="245.0" prefWidth="435.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.SplashViewController">
    <children>
-      <Label text="Netflix" textFill="RED">
-         <font>
-            <Font name="System Bold" size="62.0" />
-         </font>
-      </Label>
+      <ImageView fitHeight="204.0" fitWidth="281.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/netflixLogo.png" />
+         </image>
+      </ImageView>
    </children>
 </StackPane>
