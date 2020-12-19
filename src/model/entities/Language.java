@@ -1,10 +1,10 @@
 package model.entities;
 
-public class Idioma {
+public class Language {
 	private int id;
 	private String Nome;
 	
-	public Idioma(int id, String nome) {
+	public Language(int id, String nome) {
 		super();
 		this.id = id;
 		Nome = nome;

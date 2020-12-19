@@ -1,10 +1,10 @@
 package model.entities;
 
-public class CartaoDeCredito {
+public class CreditCard {
 	private int usuario;
 	private int numCartao;
 	
-	public CartaoDeCredito(int usuario, int numCartao) {
+	public CreditCard(int usuario, int numCartao) {
 		super();
 		this.usuario = usuario;
 		this.numCartao = numCartao;

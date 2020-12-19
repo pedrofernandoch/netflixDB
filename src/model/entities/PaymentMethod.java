@@ -1,10 +1,10 @@
 package model.entities;
 
-public class FormaDePagamento {
+public class PaymentMethod {
 	private int usuario;
 	private String tipo;
 	
-	public FormaDePagamento(int usuario, String tipo) {
+	public PaymentMethod(int usuario, String tipo) {
 		super();
 		this.usuario = usuario;
 		this.tipo = tipo;

@@ -2,14 +2,14 @@ package model.entities;
 
 import java.util.Date;
 
-public class NumCartao {
+public class CardNumber {
 	private int numCartao;
 	private String bandeira;
 	private Date dataVenc;
 	private int codSeg;
 	private String nomeTitular;
 	
-	public NumCartao(int numCartao, String bandeira, Date dataVenc, int codSeg, String nomeTitular) {
+	public CardNumber(int numCartao, String bandeira, Date dataVenc, int codSeg, String nomeTitular) {
 		super();
 		this.numCartao = numCartao;
 		this.bandeira = bandeira;

@@ -1,12 +1,12 @@
 package model.entities;
 
-public class Infantil {
+public class Child {
 	private String alias;
 	private int usuario;
 	private int faixaEtaria;
 	private String adulto;
 	
-	public Infantil(String alias, int usuario, int faixaEtaria, String adulto) {
+	public Child(String alias, int usuario, int faixaEtaria, String adulto) {
 		super();
 		this.alias = alias;
 		this.usuario = usuario;

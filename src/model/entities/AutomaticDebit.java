@@ -1,6 +1,6 @@
 package model.entities;
 
-public class DebitoAutomatico {
+public class AutomaticDebit {
 	private int usuario;
 	private int CPF;
 	private String nome;
@@ -9,7 +9,7 @@ public class DebitoAutomatico {
 	private int agencia;
 	private int conta;
 	
-	public DebitoAutomatico(int usuario, int cPF, String nome, String sobrenome, String banco, int agencia, int conta) {
+	public AutomaticDebit(int usuario, int cPF, String nome, String sobrenome, String banco, int agencia, int conta) {
 		super();
 		this.usuario = usuario;
 		CPF = cPF;

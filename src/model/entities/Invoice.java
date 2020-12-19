@@ -2,13 +2,13 @@ package model.entities;
 
 import java.util.Date;
 
-public class Faturas {
+public class Invoice {
 	private int codFatura;
 	private Date periodo;
 	private int usuario;
 	private int plano;
 	
-	public Faturas(int codFatura, Date periodo, int usuario, int plano) {
+	public Invoice(int codFatura, Date periodo, int usuario, int plano) {
 		super();
 		this.codFatura = codFatura;
 		this.periodo = periodo;

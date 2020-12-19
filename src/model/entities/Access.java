@@ -2,13 +2,13 @@ package model.entities;
 
 import java.security.Timestamp;
 
-public class Acesso {
+public class Access {
 	private int usuario;
 	private String NomeDisp;
 	private String IPv4;
 	private Timestamp horaAcesso;
 	
-	public Acesso(int usuario, String nomeDisp, String iPv4, Timestamp horaAcesso) {
+	public Access(int usuario, String nomeDisp, String iPv4, Timestamp horaAcesso) {
 		super();
 		this.usuario = usuario;
 		NomeDisp = nomeDisp;

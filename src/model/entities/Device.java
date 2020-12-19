@@ -1,11 +1,11 @@
 package model.entities;
 
-public class Dispositivo {
+public class Device {
 	private int usuario;
 	private String nome;
 	private String sistOperacional;
 	
-	public Dispositivo(int usuario, String nome, String sistOperacional) {
+	public Device(int usuario, String nome, String sistOperacional) {
 		super();
 		this.usuario = usuario;
 		this.nome = nome;

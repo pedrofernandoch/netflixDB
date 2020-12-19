@@ -2,14 +2,14 @@ package model.entities;
 
 import java.util.Date;
 
-public class Usuario {
+public class User {
 	private String nome;
 	private int CPF;
 	private String email;
 	private Date dataNasc;
 	private int plano;
 	
-	public Usuario(String nome, int cPF, String email, Date dataNasc, int plano) {
+	public User(String nome, int cPF, String email, Date dataNasc, int plano) {
 		super();
 		this.nome = nome;
 		CPF = cPF;

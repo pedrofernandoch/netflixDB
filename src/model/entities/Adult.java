@@ -1,13 +1,13 @@
 package model.entities;
 
-public class Adulto {
+public class Adult {
 	private String alias;
 	private int usuario;
 	private int qualidStreaming;
 	private int legenda;
 	private int idioma;
 	
-	public Adulto(String alias, int usuario, int qualidStreaming, int legenda, int idioma) {
+	public Adult(String alias, int usuario, int qualidStreaming, int legenda, int idioma) {
 		super();
 		this.alias = alias;
 		this.usuario = usuario;

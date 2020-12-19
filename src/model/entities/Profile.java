@@ -1,11 +1,11 @@
 package model.entities;
 
-public class Perfil {
+public class Profile {
 	private String alias;
 	private int usuario;
 	private String tipo;
 	
-	public Perfil(String alias, int usuario, String tipo) {
+	public Profile(String alias, int usuario, String tipo) {
 		super();
 		this.alias = alias;
 		this.usuario = usuario;
