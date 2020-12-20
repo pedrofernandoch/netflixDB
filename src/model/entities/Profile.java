@@ -1,15 +1,15 @@
 package model.entities;
 
-public class Perfil {
+public class Profile {
 	private String alias;
-	private int usuario;
-	private String tipo;
+	private int user;
+	private String type;
 	
-	public Perfil(String alias, int usuario, String tipo) {
+	public Profile(String alias, int user, String type) {
 		super();
 		this.alias = alias;
-		this.usuario = usuario;
-		this.tipo = tipo;
+		this.user = user;
+		this.type = type;
 	}
 	public String getAlias() {
 		return alias;
@@ -17,17 +17,17 @@ public class Perfil {
 	public void setAlias(String alias) {
 		this.alias = alias;
 	}
-	public int getUsuario() {
-		return usuario;
+	public int getUser() {
+		return user;
 	}
-	public void setUsuario(int usuario) {
-		this.usuario = usuario;
+	public void setUser(int user) {
+		this.user = user;
 	}
-	public String getTipo() {
-		return tipo;
+	public String getType() {
+		return type;
 	}
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 }

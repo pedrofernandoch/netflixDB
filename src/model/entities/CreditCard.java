@@ -1,24 +1,24 @@
 package model.entities;
 
-public class CartaoDeCredito {
-	private int usuario;
-	private int numCartao;
+public class CreditCard {
+	private int user;
+	private int cardNumber;
 	
-	public CartaoDeCredito(int usuario, int numCartao) {
+	public CreditCard(int user, int cardNumber) {
 		super();
-		this.usuario = usuario;
-		this.numCartao = numCartao;
+		this.user = user;
+		this.cardNumber = cardNumber;
 	}
-	public int getUsuario() {
-		return usuario;
+	public int getUser() {
+		return user;
 	}
-	public void setUsuario(int usuario) {
-		this.usuario = usuario;
+	public void setUser(int user) {
+		this.user = user;
 	}
-	public int getNumCartao() {
-		return numCartao;
+	public int getCardNumber() {
+		return cardNumber;
 	}
-	public void setNumCartao(int numCartao) {
-		this.numCartao = numCartao;
+	public void setCardNumber(int cardNumber) {
+		this.cardNumber = cardNumber;
 	}
 }

@@ -1,64 +1,64 @@
 package model.entities;
 
-public class DebitoAutomatico {
-	private int usuario;
+public class AutomaticDebit {
+	private int user;
 	private int CPF;
-	private String nome;
-	private String sobrenome;
-	private String banco;
-	private int agencia;
-	private int conta;
+	private String name;
+	private String lastName;
+	private String bank;
+	private int agency;
+	private int account;
 	
-	public DebitoAutomatico(int usuario, int cPF, String nome, String sobrenome, String banco, int agencia, int conta) {
+	public AutomaticDebit(int user, int CPF, String name, String lastName, String bank, int agency, int account) {
 		super();
-		this.usuario = usuario;
-		CPF = cPF;
-		this.nome = nome;
-		this.sobrenome = sobrenome;
-		this.banco = banco;
-		this.agencia = agencia;
-		this.conta = conta;
+		this.user = user;
+		this.CPF = CPF;
+		this.name = name;
+		this.lastName = lastName;
+		this.bank = bank;
+		this.agency = agency;
+		this.account = account;
 	}
-	public int getUsuario() {
-		return usuario;
+	public int getUser() {
+		return user;
 	}
-	public void setUsuario(int usuario) {
-		this.usuario = usuario;
+	public void setUser(int user) {
+		this.user = user;
 	}
 	public int getCPF() {
 		return CPF;
 	}
-	public void setCPF(int cPF) {
-		CPF = cPF;
+	public void setCPF(int CPF) {
+		this.CPF = CPF;
 	}
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getSobrenome() {
-		return sobrenome;
+	public String getLastName() {
+		return lastName;
 	}
-	public void setSobrenome(String sobrenome) {
-		this.sobrenome = sobrenome;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
-	public String getBanco() {
-		return banco;
+	public String getBank() {
+		return bank;
 	}
-	public void setBanco(String banco) {
-		this.banco = banco;
+	public void setBank(String bank) {
+		this.bank = bank;
 	}
-	public int getAgencia() {
-		return agencia;
+	public int getAgency() {
+		return agency;
 	}
-	public void setAgencia(int agencia) {
-		this.agencia = agencia;
+	public void setAgency(int agency) {
+		this.agency = agency;
 	}
-	public int getConta() {
-		return conta;
+	public int getAccount() {
+		return account;
 	}
-	public void setConta(int conta) {
-		this.conta = conta;
+	public void setAccount(int account) {
+		this.account = account;
 	}
 }

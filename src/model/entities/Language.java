@@ -1,13 +1,13 @@
 package model.entities;
 
-public class Idioma {
+public class Language {
 	private int id;
-	private String Nome;
+	private String name;
 	
-	public Idioma(int id, String nome) {
+	public Language(int id, String name) {
 		super();
 		this.id = id;
-		Nome = nome;
+		this.name = name;
 	}
 	public int getId() {
 		return id;
@@ -15,10 +15,10 @@ public class Idioma {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getNome() {
-		return Nome;
+	public String getName() {
+		return name;
 	}
-	public void setNome(String nome) {
-		Nome = nome;
+	public void setName(String name) {
+		this.name = name;
 	}
 }

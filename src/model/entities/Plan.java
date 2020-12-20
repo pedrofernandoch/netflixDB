@@ -1,21 +1,21 @@
 package model.entities;
 
-public class Plano {
+public class Plan {
 	private int id;
-	private String nome;
-	private float valor;
-	private int qualidadeMax;
-	private int qtdTelas;
-	private int numMaxPerfis;
+	private String name;
+	private float value;
+	private int maxQuality;
+	private int screensQuantity;
+	private int maxProfileNumber;
 	
-	public Plano(int id, String nome, float valor, int qualidadeMax, int qtdTelas, int numMaxPerfis) {
+	public Plan(int id, String name, float value, int maxQuality, int screensQuantity, int maxProfileNumber) {
 		super();
 		this.id = id;
-		this.nome = nome;
-		this.valor = valor;
-		this.qualidadeMax = qualidadeMax;
-		this.qtdTelas = qtdTelas;
-		this.numMaxPerfis = numMaxPerfis;
+		this.name = name;
+		this.value = value;
+		this.maxQuality = maxQuality;
+		this.screensQuantity = screensQuantity;
+		this.maxProfileNumber = maxProfileNumber;
 	}
 	public int getId() {
 		return id;
@@ -23,34 +23,34 @@ public class Plano {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public float getValor() {
-		return valor;
+	public float getValue() {
+		return value;
 	}
-	public void setValor(float valor) {
-		this.valor = valor;
+	public void setValue(float value) {
+		this.value = value;
 	}
-	public int getQualidadeMax() {
-		return qualidadeMax;
+	public int getMaxQuality() {
+		return maxQuality;
 	}
-	public void setQualidadeMax(int qualidadeMax) {
-		this.qualidadeMax = qualidadeMax;
+	public void setMaxQuality(int maxQuality) {
+		this.maxQuality = maxQuality;
 	}
-	public int getQtdTelas() {
-		return qtdTelas;
+	public int getScreensQuantity() {
+		return screensQuantity;
 	}
-	public void setQtdTelas(int qtdTelas) {
-		this.qtdTelas = qtdTelas;
+	public void setScreensQuantity(int screensQuantity) {
+		this.screensQuantity = screensQuantity;
 	}
-	public int getNumMaxPerfis() {
-		return numMaxPerfis;
+	public int getMaxProfileNumber() {
+		return maxProfileNumber;
 	}
-	public void setNumMaxPerfis(int numMaxPerfis) {
-		this.numMaxPerfis = numMaxPerfis;
+	public void setMaxProfileNumber(int maxProfileNumber) {
+		this.maxProfileNumber = maxProfileNumber;
 	}
 }

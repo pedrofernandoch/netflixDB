@@ -2,26 +2,26 @@ package model.entities;
 
 import java.util.Date;
 
-public class Usuario {
-	private String nome;
+public class User {
+	private String name;
 	private int CPF;
 	private String email;
-	private Date dataNasc;
-	private int plano;
+	private Date birthday;
+	private int plan;
 	
-	public Usuario(String nome, int cPF, String email, Date dataNasc, int plano) {
+	public User(String name, int cPF, String email, Date birthday, int plan) {
 		super();
-		this.nome = nome;
+		this.name = name;
 		CPF = cPF;
 		this.email = email;
-		this.dataNasc = dataNasc;
-		this.plano = plano;
+		this.birthday = birthday;
+		this.plan = plan;
 	}
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setName(String name) {
+		this.name = name;
 	}
 	public int getCPF() {
 		return CPF;
@@ -35,17 +35,17 @@ public class Usuario {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Date getDataNasc() {
-		return dataNasc;
+	public Date getBirthday() {
+		return birthday;
 	}
-	public void setDataNasc(Date dataNasc) {
-		this.dataNasc = dataNasc;
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
 	}
-	public int getPlano() {
-		return plano;
+	public int getPlan() {
+		return plan;
 	}
-	public void setPlano(int plano) {
-		this.plano = plano;
+	public void setPlan(int plan) {
+		this.plan = plan;
 	}
 	
 }

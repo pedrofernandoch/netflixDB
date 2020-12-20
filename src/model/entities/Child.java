@@ -1,17 +1,17 @@
 package model.entities;
 
-public class Infantil {
+public class Child {
 	private String alias;
-	private int usuario;
-	private int faixaEtaria;
-	private String adulto;
+	private int user;
+	private int ageRange;
+	private String adult;
 	
-	public Infantil(String alias, int usuario, int faixaEtaria, String adulto) {
+	public Child(String alias, int user, int ageRange, String adult) {
 		super();
 		this.alias = alias;
-		this.usuario = usuario;
-		this.faixaEtaria = faixaEtaria;
-		this.adulto = adulto;
+		this.user = user;
+		this.ageRange = ageRange;
+		this.adult = adult;
 	}
 	public String getAlias() {
 		return alias;
@@ -19,22 +19,22 @@ public class Infantil {
 	public void setAlias(String alias) {
 		this.alias = alias;
 	}
-	public int getUsuario() {
-		return usuario;
+	public int getUser() {
+		return user;
 	}
-	public void setUsuario(int usuario) {
-		this.usuario = usuario;
+	public void setUser(int user) {
+		this.user = user;
 	}
-	public int getFaixaEtaria() {
-		return faixaEtaria;
+	public int getAgeRange() {
+		return ageRange;
 	}
-	public void setFaixaEtaria(int faixaEtaria) {
-		this.faixaEtaria = faixaEtaria;
+	public void setAgeRange(int ageRange) {
+		this.ageRange = ageRange;
 	}
-	public String getAdulto() {
-		return adulto;
+	public String getAdult() {
+		return adult;
 	}
-	public void setAdulto(String adulto) {
-		this.adulto = adulto;
+	public void setAdult(String adult) {
+		this.adult = adult;
 	}
 }

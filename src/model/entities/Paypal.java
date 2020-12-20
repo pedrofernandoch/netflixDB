@@ -1,21 +1,21 @@
 package model.entities;
 
 public class Paypal {
-	private int usuario;
+	private int user;
 	private String email;
-	private String senha;
+	private String password;
 	
-	public Paypal(int usuario, String email, String senha) {
+	public Paypal(int user, String email, String password) {
 		super();
-		this.usuario = usuario;
+		this.user = user;
 		this.email = email;
-		this.senha = senha;
+		this.password = password;
 	}
-	public int getUsuario() {
-		return usuario;
+	public int getUser() {
+		return user;
 	}
-	public void setUsuario(int usuario) {
-		this.usuario = usuario;
+	public void setUser(int user) {
+		this.user = user;
 	}
 	public String getEmail() {
 		return email;
@@ -23,10 +23,10 @@ public class Paypal {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getSenha() {
-		return senha;
+	public String getPassword() {
+		return password;
 	}
-	public void setSenha(String senha) {
-		this.senha = senha;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }

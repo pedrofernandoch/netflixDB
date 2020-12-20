@@ -2,41 +2,41 @@ package model.entities;
 
 import java.security.Timestamp;
 
-public class Acesso {
-	private int usuario;
-	private String NomeDisp;
+public class Access {
+	private int user;
+	private String deviceName;
 	private String IPv4;
-	private Timestamp horaAcesso;
+	private Timestamp accessTime;
 	
-	public Acesso(int usuario, String nomeDisp, String iPv4, Timestamp horaAcesso) {
+	public Access(int user, String deviceName, String IPv4, Timestamp accessTime) {
 		super();
-		this.usuario = usuario;
-		NomeDisp = nomeDisp;
-		IPv4 = iPv4;
-		this.horaAcesso = horaAcesso;
+		this.user = user;
+		this.deviceName = deviceName;
+		this.IPv4 = IPv4;
+		this.accessTime = accessTime;
 	}
-	public int getUsuario() {
-		return usuario;
+	public int getUser() {
+		return user;
 	}
-	public void setUsuario(int usuario) {
-		this.usuario = usuario;
+	public void setUser(int user) {
+		this.user = user;
 	}
-	public String getNomeDisp() {
-		return NomeDisp;
+	public String getDeviceName() {
+		return deviceName;
 	}
-	public void setNomeDisp(String nomeDisp) {
-		NomeDisp = nomeDisp;
+	public void setDeviceName(String deviceName) {
+		this.deviceName = deviceName;
 	}
 	public String getIPv4() {
 		return IPv4;
 	}
-	public void setIPv4(String iPv4) {
-		IPv4 = iPv4;
+	public void setIPv4(String IPv4) {
+		this.IPv4 = IPv4;
 	}
-	public Timestamp getHoraAcesso() {
-		return horaAcesso;
+	public Timestamp getAccessTime() {
+		return accessTime;
 	}
-	public void setHoraAcesso(Timestamp horaAcesso) {
-		this.horaAcesso = horaAcesso;
+	public void setAccessTime(Timestamp accessTime) {
+		this.accessTime = accessTime;
 	}
 }

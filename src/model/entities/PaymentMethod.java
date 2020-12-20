@@ -1,24 +1,24 @@
 package model.entities;
 
-public class FormaDePagamento {
-	private int usuario;
-	private String tipo;
+public class PaymentMethod {
+	private int user;
+	private String type;
 	
-	public FormaDePagamento(int usuario, String tipo) {
+	public PaymentMethod(int user, String type) {
 		super();
-		this.usuario = usuario;
-		this.tipo = tipo;
+		this.user = user;
+		this.type = type;
 	}
-	public int getUsuario() {
-		return usuario;
+	public int getUser() {
+		return user;
 	}
-	public void setUsuario(int usuario) {
-		this.usuario = usuario;
+	public void setUser(int user) {
+		this.user = user;
 	}
-	public String getTipo() {
-		return tipo;
+	public String getType() {
+		return type;
 	}
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
+	public void setType(String type) {
+		this.type = type;
 	}
 }

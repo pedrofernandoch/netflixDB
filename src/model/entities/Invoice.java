@@ -2,41 +2,41 @@ package model.entities;
 
 import java.util.Date;
 
-public class Faturas {
-	private int codFatura;
-	private Date periodo;
-	private int usuario;
-	private int plano;
+public class Invoice {
+	private int invoiceCode;
+	private Date period;
+	private int user;
+	private int plan;
 	
-	public Faturas(int codFatura, Date periodo, int usuario, int plano) {
+	public Invoice(int invoiceCode, Date period, int user, int plan) {
 		super();
-		this.codFatura = codFatura;
-		this.periodo = periodo;
-		this.usuario = usuario;
-		this.plano = plano;
+		this.invoiceCode = invoiceCode;
+		this.period = period;
+		this.user = user;
+		this.plan = plan;
 	}
-	public int getCodFatura() {
-		return codFatura;
+	public int getInvoiceCode() {
+		return invoiceCode;
 	}
-	public void setCodFatura(int codFatura) {
-		this.codFatura = codFatura;
+	public void setInvoiceCode(int invoiceCode) {
+		this.invoiceCode = invoiceCode;
 	}
-	public Date getPeriodo() {
-		return periodo;
+	public Date getPeriod() {
+		return period;
 	}
-	public void setPeriodo(Date periodo) {
-		this.periodo = periodo;
+	public void setPeriod(Date period) {
+		this.period = period;
 	}
-	public int getUsuario() {
-		return usuario;
+	public int getUser() {
+		return user;
 	}
-	public void setUsuario(int usuario) {
-		this.usuario = usuario;
+	public void setUser(int user) {
+		this.user = user;
 	}
-	public int getPlano() {
-		return plano;
+	public int getPlan() {
+		return plan;
 	}
-	public void setPlano(int plano) {
-		this.plano = plano;
+	public void setPlan(int plan) {
+		this.plan = plan;
 	}
 }

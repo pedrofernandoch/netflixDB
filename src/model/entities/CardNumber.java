@@ -2,49 +2,49 @@ package model.entities;
 
 import java.util.Date;
 
-public class NumCartao {
-	private int numCartao;
-	private String bandeira;
-	private Date dataVenc;
-	private int codSeg;
-	private String nomeTitular;
+public class CardNumber {
+	private int cardNumber;
+	private String banner;
+	private Date dueDate;
+	private int securityCode;
+	private String cardholderName;
 	
-	public NumCartao(int numCartao, String bandeira, Date dataVenc, int codSeg, String nomeTitular) {
+	public CardNumber(int cardNumber, String banner, Date dueDate, int securityCode, String cardholderName) {
 		super();
-		this.numCartao = numCartao;
-		this.bandeira = bandeira;
-		this.dataVenc = dataVenc;
-		this.codSeg = codSeg;
-		this.nomeTitular = nomeTitular;
+		this.cardNumber = cardNumber;
+		this.banner = banner;
+		this.dueDate = dueDate;
+		this.securityCode = securityCode;
+		this.cardholderName = cardholderName;
 	}
-	public int getNumCartao() {
-		return numCartao;
+	public int getCardNumber() {
+		return cardNumber;
 	}
-	public void setNumCartao(int numCartao) {
-		this.numCartao = numCartao;
+	public void setCardNumber(int cardNumber) {
+		this.cardNumber = cardNumber;
 	}
-	public String getBandeira() {
-		return bandeira;
+	public String getBanner() {
+		return banner;
 	}
-	public void setBandeira(String bandeira) {
-		this.bandeira = bandeira;
+	public void setBanner(String banner) {
+		this.banner = banner;
 	}
-	public Date getDataVenc() {
-		return dataVenc;
+	public Date getDueDate() {
+		return dueDate;
 	}
-	public void setDataVenc(Date dataVenc) {
-		this.dataVenc = dataVenc;
+	public void setDueDate(Date dueDate) {
+		this.dueDate = dueDate;
 	}
-	public int getCodSeg() {
-		return codSeg;
+	public int getSecurityCode() {
+		return securityCode;
 	}
-	public void setCodSeg(int codSeg) {
-		this.codSeg = codSeg;
+	public void setSecurityCode(int securityCode) {
+		this.securityCode = securityCode;
 	}
-	public String getNomeTitular() {
-		return nomeTitular;
+	public String getCardholderName() {
+		return cardholderName;
 	}
-	public void setNomeTitular(String nomeTitular) {
-		this.nomeTitular = nomeTitular;
+	public void setCardholderName(String cardholderName) {
+		this.cardholderName = cardholderName;
 	}
 }

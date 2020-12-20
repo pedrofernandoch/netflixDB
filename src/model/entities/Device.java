@@ -1,32 +1,32 @@
 package model.entities;
 
-public class Dispositivo {
-	private int usuario;
-	private String nome;
-	private String sistOperacional;
+public class Device {
+	private int user;
+	private String name;
+	private String operationalSystem;
 	
-	public Dispositivo(int usuario, String nome, String sistOperacional) {
+	public Device(int user, String name, String operationalSystem) {
 		super();
-		this.usuario = usuario;
-		this.nome = nome;
-		this.sistOperacional = sistOperacional;
+		this.user = user;
+		this.name = name;
+		this.operationalSystem = operationalSystem;
 	}
-	public int getUsuario() {
-		return usuario;
+	public int getUser() {
+		return user;
 	}
-	public void setUsuario(int usuario) {
-		this.usuario = usuario;
+	public void setUser(int user) {
+		this.user = user;
 	}
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getSistOperacional() {
-		return sistOperacional;
+	public String getOperationalSystem() {
+		return operationalSystem;
 	}
-	public void setSistOperacional(String sistOperacional) {
-		this.sistOperacional = sistOperacional;
+	public void setOperationalSystem(String operationalSystem) {
+		this.operationalSystem = operationalSystem;
 	}
 }

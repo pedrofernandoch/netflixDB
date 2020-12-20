@@ -1,19 +1,19 @@
 package model.entities;
 
-public class Adulto {
+public class Adult {
 	private String alias;
-	private int usuario;
-	private int qualidStreaming;
-	private int legenda;
-	private int idioma;
+	private int user;
+	private int qualitStreaming;
+	private int subtitle;
+	private int language;
 	
-	public Adulto(String alias, int usuario, int qualidStreaming, int legenda, int idioma) {
+	public Adult(String alias, int user, int qualitStreaming, int subtitle, int language) {
 		super();
 		this.alias = alias;
-		this.usuario = usuario;
-		this.qualidStreaming = qualidStreaming;
-		this.legenda = legenda;
-		this.idioma = idioma;
+		this.user = user;
+		this.qualitStreaming = qualitStreaming;
+		this.subtitle = subtitle;
+		this.language = language;
 	}
 	
 	public String getAlias() {
@@ -22,29 +22,29 @@ public class Adulto {
 	public void setAlias(String alias) {
 		this.alias = alias;
 	}
-	public int getUsuario() {
-		return usuario;
+	public int getUser() {
+		return user;
 	}
-	public void setUsuario(int usuario) {
-		this.usuario = usuario;
+	public void setUser(int user) {
+		this.user = user;
 	}
-	public int getQualidStreaming() {
-		return qualidStreaming;
+	public int getQualitStreaming() {
+		return qualitStreaming;
 	}
-	public void setQualidStreaming(int qualidStreaming) {
-		this.qualidStreaming = qualidStreaming;
+	public void setQualitStreaming(int qualitStreaming) {
+		this.qualitStreaming = qualitStreaming;
 	}
-	public int getLegenda() {
-		return legenda;
+	public int getSubtitle() {
+		return subtitle;
 	}
-	public void setLegenda(int legenda) {
-		this.legenda = legenda;
+	public void setSubtitle(int subtitle) {
+		this.subtitle = subtitle;
 	}
-	public int getIdioma() {
-		return idioma;
+	public int getLanguage() {
+		return language;
 	}
-	public void setIdioma(int idioma) {
-		this.idioma = idioma;
+	public void setLanguage(int language) {
+		this.language = language;
 	}
 	
 }
