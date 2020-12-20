@@ -2,50 +2,70 @@ package model.entities;
 
 import java.util.Date;
 
+import javafx.scene.control.CheckBox;
+
 public class User {
-	private String nome;
-	private int CPF;
+	private String name;
+	private String cpf;
 	private String email;
-	private Date dataNasc;
-	private int plano;
+	private Date dateOfBirth;
+	private int plan;
+	private CheckBox checkBox = new CheckBox();
 	
-	public User(String nome, int cPF, String email, Date dataNasc, int plano) {
-		super();
-		this.nome = nome;
-		CPF = cPF;
+	public User(String name, String cpf, String email, Date dateOfBirth, int plan) {
+		this.name = name;
+		this.cpf = cpf;
 		this.email = email;
-		this.dataNasc = dataNasc;
-		this.plano = plano;
+		this.dateOfBirth = dateOfBirth;
+		this.plan = plan;
 	}
-	public String getNome() {
-		return nome;
+
+	public String getName() {
+		return name;
 	}
-	public void setNome(String nome) {
-		this.nome = nome;
+
+	public void setName(String name) {
+		this.name = name;
 	}
-	public int getCPF() {
-		return CPF;
+
+	public String getCpf() {
+		return cpf;
 	}
-	public void setCPF(int cPF) {
-		CPF = cPF;
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Date getDataNasc() {
-		return dataNasc;
+
+	public Date getDateOfBirth() {
+		return dateOfBirth;
 	}
-	public void setDataNasc(Date dataNasc) {
-		this.dataNasc = dataNasc;
+
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
 	}
-	public int getPlano() {
-		return plano;
+
+	public int getPlan() {
+		return plan;
 	}
-	public void setPlano(int plano) {
-		this.plano = plano;
+
+	public void setPlan(int plan) {
+		this.plan = plan;
+	}
+
+	public CheckBox getCheckBox() {
+		return checkBox;
+	}
+
+	public void setCheckBox(CheckBox checkBox) {
+		this.checkBox = checkBox;
 	}
 	
 }

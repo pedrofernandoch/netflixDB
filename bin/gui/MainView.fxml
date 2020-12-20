@@ -103,7 +103,7 @@
                                  </font>
                               </Button>
                               <PasswordField layoutX="14.0" layoutY="147.0" prefHeight="32.0" prefWidth="270.0" />
-                              <TextArea layoutX="315.0" layoutY="55.0" prefHeight="369.0" prefWidth="807.0" style="-fx-control-inner-background:#000000; -fx-font-family: Consolas; -fx-highlight-fill: #ffffff; -fx-highlight-text-fill: #000000; -fx-text-fill: #ffffff; -fx-font-size: 20"/>
+                              <TextArea editable="false" layoutX="315.0" layoutY="55.0" prefHeight="369.0" prefWidth="807.0" style="-fx-control-inner-background:#000000; -fx-font-family: Consolas; -fx-highlight-fill: #ffffff; -fx-highlight-text-fill: #000000; -fx-text-fill: #ffffff; -fx-font-size: 20" />
                               <Button layoutX="595.0" layoutY="429.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="270.0" style="-fx-background-color: black;" text="Show Tables" textFill="WHITE">
                                  <graphic>
                                     <ImageView fitHeight="32.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
@@ -128,23 +128,23 @@
                                     <Font size="37.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="317.0" layoutY="25.0" prefHeight="33.0" prefWidth="453.0" promptText="Buscar" />
+                              <TextField fx:id="userSearchField" layoutX="317.0" layoutY="25.0" prefHeight="33.0" prefWidth="453.0" promptText="Buscar" />
                               <ImageView fitHeight="32.0" fitWidth="23.0" layoutX="777.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../resources/lupa.png" />
                                  </image>
                               </ImageView>
-                              <TableView layoutX="34.0" layoutY="76.0" prefHeight="362.0" prefWidth="736.0" AnchorPane.bottomAnchor="56.0" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="380.0" AnchorPane.topAnchor="76.0">
+                              <TableView fx:id="userTable" layoutX="34.0" layoutY="76.0" prefHeight="362.0" prefWidth="736.0" AnchorPane.bottomAnchor="56.0" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="380.0" AnchorPane.topAnchor="76.0">
                                  <columns>
-                                    <TableColumn minWidth="0.0" prefWidth="62.0" text="Seleção" />
-                                    <TableColumn prefWidth="173.0" text="Nome" />
-                                    <TableColumn prefWidth="140.0" text="Email" />
-                                    <TableColumn minWidth="0.0" prefWidth="125.0" text="CPF" />
-                                    <TableColumn prefWidth="130.0" text="Data de nascimento" />
-                                    <TableColumn prefWidth="105.0" text="Plano" />
+                                    <TableColumn fx:id="userSelectionTableColumn" minWidth="0.0" prefWidth="62.0" text="Seleção" />
+                                    <TableColumn fx:id="userNameTableColumn" prefWidth="173.0" text="Nome" />
+                                    <TableColumn fx:id="userEmailTableColumn" prefWidth="140.0" text="Email" />
+                                    <TableColumn fx:id="userCpfTableColumn" minWidth="0.0" prefWidth="125.0" text="CPF" />
+                                    <TableColumn fx:id="userDateOfBirthTableColumn" prefWidth="130.0" text="Data de nascimento" />
+                                    <TableColumn fx:id="userPlanTableColumn" prefWidth="105.0" text="Plano" />
                                  </columns>
                               </TableView>
-                              <Button layoutX="244.0" layoutY="442.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="190.0" style="-fx-background-color: black;" text="Excluir selecionados" textFill="WHITE">
+                              <Button fx:id="userDeleteButton" layoutX="244.0" layoutY="442.0" mnemonicParsing="false" onAction="#onUserDeleteButton" prefHeight="38.0" prefWidth="190.0" style="-fx-background-color: black;" text="Excluir selecionados" textFill="WHITE">
                                  <graphic>
                                     <ImageView fitHeight="32.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -166,8 +166,8 @@
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="846.0" layoutY="98.0" prefHeight="32.0" prefWidth="270.0" />
-                              <Button layoutX="847.0" layoutY="385.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="270.0" style="-fx-background-color: black;" text="Limpar" textFill="WHITE">
+                              <TextField fx:id="userNameField" layoutX="846.0" layoutY="98.0" prefHeight="32.0" prefWidth="270.0" />
+                              <Button fx:id="userCleanButton" layoutX="847.0" layoutY="385.0" mnemonicParsing="false" onAction="#onUserCleanButton" prefHeight="27.0" prefWidth="270.0" style="-fx-background-color: black;" text="Limpar" textFill="WHITE">
                                  <graphic>
                                     <ImageView fitHeight="32.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -179,7 +179,7 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Button>
-                              <Button layoutX="847.0" layoutY="427.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="270.0" style="-fx-background-color: black;" text="Adicionar" textFill="WHITE">
+                              <Button fx:id="userSaveButton" layoutX="847.0" layoutY="427.0" mnemonicParsing="false" onAction="#onUserSaveButton" prefHeight="51.0" prefWidth="270.0" style="-fx-background-color: black;" text="Adicionar" textFill="WHITE">
                                  <graphic>
                                     <ImageView fitHeight="32.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -191,7 +191,7 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Button>
-                              <TextField layoutX="846.0" layoutY="160.0" prefHeight="32.0" prefWidth="270.0" />
+                              <TextField fx:id="userEmailField" layoutX="846.0" layoutY="160.0" prefHeight="32.0" prefWidth="270.0" />
                               <Label layoutX="847.0" layoutY="130.0" text="Email*">
                                  <font>
                                     <Font size="20.0" />
@@ -202,20 +202,20 @@
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="847.0" layoutY="222.0" prefHeight="32.0" prefWidth="270.0" />
-                              <TextField layoutX="847.0" layoutY="284.0" prefHeight="32.0" prefWidth="270.0" />
+                              <TextField fx:id="userCpfField" layoutX="847.0" layoutY="222.0" prefHeight="32.0" prefWidth="270.0" />
+                              <TextField fx:id="userDateOfBirthField" layoutX="847.0" layoutY="284.0" prefHeight="32.0" prefWidth="270.0" />
                               <Label layoutX="848.0" layoutY="254.0" text="Data de nascimento*">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <ComboBox layoutX="846.0" layoutY="344.0" prefHeight="31.0" prefWidth="150.0" />
-                              <Label layoutX="850.0" layoutY="314.0" text="Plano">
+                              <ComboBox fx:id="userPlanComboBox" layoutX="846.0" layoutY="344.0" prefHeight="31.0" prefWidth="150.0" />
+                              <Label layoutX="850.0" layoutY="314.0" text="Plano*">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Button layoutX="34.0" layoutY="442.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="190.0" style="-fx-background-color: black;" text="Fazer consulta" textFill="WHITE">
+                              <Button fx:id="userSearchButton" layoutX="34.0" layoutY="442.0" mnemonicParsing="false" onAction="#onUserSearchButton" prefHeight="38.0" prefWidth="190.0" style="-fx-background-color: black;" text="Fazer consulta" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
@@ -228,7 +228,7 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <TextArea layoutX="14.0" layoutY="14.0" prefHeight="476.0" prefWidth="1113.0" />
+                              <TextArea fx:id="logsTextArea" editable="false" layoutX="14.0" layoutY="14.0" prefHeight="476.0" prefWidth="1113.0" />
                            </children></AnchorPane>
                     </content>
                   </Tab>
