@@ -1,51 +1,70 @@
 package model.entities;
 
 import java.util.Date;
+import javafx.scene.control.CheckBox;
 
 public class User {
 	private String name;
-	private int CPF;
+	private String cpf;
 	private String email;
-	private Date birthday;
+	private Date dateOfBirth;
 	private int plan;
+	private CheckBox checkBox = new CheckBox();
 	
-	public User(String name, int cPF, String email, Date birthday, int plan) {
-		super();
+	public User(String name, String cpf, String email, Date dateOfBirth, int plan) {
 		this.name = name;
-		CPF = cPF;
+		this.cpf = cpf;
 		this.email = email;
-		this.birthday = birthday;
+		this.dateOfBirth = dateOfBirth;
 		this.plan = plan;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getCPF() {
-		return CPF;
+
+	public String getCpf() {
+		return cpf;
 	}
-	public void setCPF(int cPF) {
-		CPF = cPF;
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Date getBirthday() {
-		return birthday;
-	}
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
-	}
+	
 	public int getPlan() {
 		return plan;
 	}
+	
 	public void setPlan(int plan) {
 		this.plan = plan;
+	}
+
+	public Date getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+	public CheckBox getCheckBox() {
+		return checkBox;
+	}
+
+	public void setCheckBox(CheckBox checkBox) {
+		this.checkBox = checkBox;
 	}
 	
 }

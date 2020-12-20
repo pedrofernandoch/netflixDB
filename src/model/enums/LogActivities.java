@@ -1,6 +1,7 @@
 package model.enums;
 
 public enum LogActivities {
+	CONNECTING_DB("Conectando ao banco de dados"),
 	CREATE("Criando"),
 	READ("Lendo"),
 	UPDATE("Atualizando"),
