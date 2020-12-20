@@ -1,7 +1,7 @@
 package model.enums;
 
 public enum LogTypes {
-	CRUD("CRUD"), ERROR("Error"), SYSTEM("Sistema");
+	CRUD("CRUD"), ERROR("Error"), SYSTEM("Sistema"), CONNECTION("Conexão");
 
 	private String description;
 

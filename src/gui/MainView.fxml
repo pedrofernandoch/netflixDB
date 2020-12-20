@@ -40,57 +40,46 @@
             </Pane>
             <TabPane prefHeight="528.0" prefWidth="1146.0" tabClosingPolicy="UNAVAILABLE">
                <tabs>
-                  <Tab text="Geral">
+                  <Tab text="Conexão">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="539.0" prefWidth="1146.0">
                            <children>
-                              <Button layoutX="14.0" layoutY="416.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="270.0" style="-fx-background-color: black;" text="Conectar" textFill="WHITE">
-                                 <graphic>
-                                    <ImageView fitHeight="32.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../resources/db_connection_icon.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Button>
-                              <TextField layoutX="14.0" layoutY="85.0" prefHeight="32.0" prefWidth="270.0" />
-                              <Label layoutX="14.0" layoutY="56.0" text="Nome de usuário*">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
                               <Label layoutX="14.0" layoutY="14.0" text="Conexão com banco oracle da USP São Paulo">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
+                              <Label layoutX="14.0" layoutY="56.0" text="Nome de usuário*">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="connectionUserNameField" layoutX="14.0" layoutY="85.0" prefHeight="32.0" prefWidth="270.0" />
                               <Label layoutX="14.0" layoutY="117.0" text="Senha*">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="14.0" layoutY="207.0" prefHeight="32.0" prefWidth="270.0" />
+                              <PasswordField fx:id="connectionPasswordField" layoutX="14.0" layoutY="147.0" prefHeight="32.0" prefWidth="270.0" />
                               <Label layoutX="14.0" layoutY="178.0" text="Nome do Host*">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="14.0" layoutY="268.0" prefHeight="32.0" prefWidth="270.0" />
+                              <TextField fx:id="connectionHostNameField" layoutX="14.0" layoutY="207.0" prefHeight="32.0" prefWidth="270.0" />
                               <Label layoutX="14.0" layoutY="239.0" text="Porta*">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="14.0" layoutY="329.0" prefHeight="32.0" prefWidth="270.0" />
+                              <TextField fx:id="connectionPortField" layoutX="14.0" layoutY="268.0" prefHeight="32.0" prefWidth="270.0" />
                               <Label layoutX="14.0" layoutY="300.0" text="SID*">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Button layoutX="14.0" layoutY="374.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="270.0" style="-fx-background-color: black;" text="Limpar" textFill="WHITE">
+                              <TextField fx:id="connectionSidField" layoutX="14.0" layoutY="329.0" prefHeight="32.0" prefWidth="270.0" />
+                              <Button fx:id="connectionCleanButton" layoutX="14.0" layoutY="374.0" mnemonicParsing="false" onAction="#onConnectionCleanButton" prefHeight="27.0" prefWidth="270.0" style="-fx-background-color: black;" text="Limpar" textFill="WHITE">
                                  <graphic>
                                     <ImageView fitHeight="32.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -102,9 +91,20 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Button>
-                              <PasswordField layoutX="14.0" layoutY="147.0" prefHeight="32.0" prefWidth="270.0" />
-                              <TextArea editable="false" layoutX="315.0" layoutY="55.0" prefHeight="369.0" prefWidth="807.0" style="-fx-control-inner-background:#000000; -fx-font-family: Consolas; -fx-highlight-fill: #ffffff; -fx-highlight-text-fill: #000000; -fx-text-fill: #ffffff; -fx-font-size: 20" />
-                              <Button layoutX="595.0" layoutY="429.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="270.0" style="-fx-background-color: black;" text="Show Tables" textFill="WHITE">
+                              <Button fx:id="connectionConnectButton" layoutX="14.0" layoutY="416.0" mnemonicParsing="false" onAction="#onConnectionConnectButton" prefHeight="51.0" prefWidth="270.0" style="-fx-background-color: black;" text="Conectar" textFill="WHITE">
+                                 <graphic>
+                                    <ImageView fitHeight="32.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../resources/db_connection_icon.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Button>
+                              <TextArea fx:id="connectionTableTextArea" editable="false" layoutX="315.0" layoutY="55.0" prefHeight="369.0" prefWidth="807.0" style="-fx-control-inner-background:#000000; -fx-font-family: Consolas; -fx-highlight-fill: #ffffff; -fx-highlight-text-fill: #000000; -fx-text-fill: #ffffff; -fx-font-size: 20" />
+                              <Button fx:id="connectionShowTableButton" layoutX="595.0" layoutY="429.0" mnemonicParsing="false" onAction="#onConnectionShowTableButton" prefHeight="51.0" prefWidth="270.0" style="-fx-background-color: black;" text="Show Tables" textFill="WHITE">
                                  <graphic>
                                     <ImageView fitHeight="32.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
