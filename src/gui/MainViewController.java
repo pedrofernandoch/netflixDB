@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,7 +24,9 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -38,9 +41,11 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.stage.PopupWindow;
-
+import javafx.stage.Stage;
 import model.entities.Access;
 import model.entities.Actor;
 import model.entities.Actuation;
@@ -66,58 +71,56 @@ import model.entities.MediaSubtitle;
 import model.entities.Opinion;
 import model.entities.PaymentMethod;
 import model.entities.Paypal;
+import model.entities.Plan;
 import model.entities.Profile;
 import model.entities.Recommendation;
 import model.entities.Season;
 import model.entities.Serie;
-import model.entities.Plan;
 import model.entities.User;
 import model.enums.LogActivities;
 import model.enums.LogTypes;
 
 public class MainViewController implements Initializable {
 
-	private ArrayList<String> statements = new ArrayList<>(); 
 	private ArrayList<User> users = new ArrayList<>();
-	private ObservableList<User> userObsList;
-	private String currentUserCpf = null;
+	private ArrayList<Access> accesses = new ArrayList<>();
+	private ArrayList<Actor> actors = new ArrayList<>();
+	private ArrayList<Actuation> actuations = new ArrayList<>();
+	private ArrayList<Adult> adults = new ArrayList<>();
+	private ArrayList<AutomaticDebit> automaticDebits = new ArrayList<>();
+	private ArrayList<CardNumber> cardNumbers = new ArrayList<>();
+	private ArrayList<Child> childs = new ArrayList<>();
+	private ArrayList<CreditCard> creditCards = new ArrayList<>();
+	private ArrayList<Device> devices = new ArrayList<>();
+	private ArrayList<Direction> directions = new ArrayList<>();
+	private ArrayList<Director> directors = new ArrayList<>();
+	private ArrayList<Evaluation> evaluations = new ArrayList<>();
+	private ArrayList<Exhibition> exhibitions = new ArrayList<>();
+	private ArrayList<Friendship> friendships = new ArrayList<>();
+	private ArrayList<GenderPreference> genderPreferences = new ArrayList<>();
+	private ArrayList<Genre> genres = new ArrayList<>();
+	private ArrayList<Invoice> invoices = new ArrayList<>();
+	private ArrayList<Language> languages = new ArrayList<>();
+	private ArrayList<Media> medias = new ArrayList<>();
+	private ArrayList<MediaAudio> mediaAudios = new ArrayList<>();
+	private ArrayList<MediaGender> mediaGenders = new ArrayList<>();
+	private ArrayList<MediaSubtitle> mediaSubtitles = new ArrayList<>();
+	private ArrayList<Opinion> opinions = new ArrayList<>();
+	private ArrayList<PaymentMethod> paymentMethods = new ArrayList<>();
+	private ArrayList<Paypal> paypals = new ArrayList<>();
+	private ArrayList<Profile> profiles = new ArrayList<>();
+	private ArrayList<Recommendation> recommendations = new ArrayList<>();
+	private ArrayList<Season> seasons = new ArrayList<>();
+	private ArrayList<Serie> series = new ArrayList<>();
 	private ArrayList<Plan> plans = new ArrayList<>();
+	
+	private ObservableList<User> userObsList;
 	private ObservableList<Plan> planObsList;
+	
+	private ArrayList<String> statements = new ArrayList<>(); 
+	private String currentUserCpf = null;
 	private final String SQUARE_BUBBLE = "M24 1h-24v16.981h4v5.019l7-5.019h13z";
 	private boolean connected = false;
-	private ArrayList<Access> accesses = new ArrayList<Access>();
-	private ArrayList<Actor> actors = new ArrayList<Actor>();
-	private ArrayList<Actuation> actuations = new ArrayList<Actuation>();
-	private ArrayList<Adult> adults = new ArrayList<Adult>();
-	private ArrayList<AutomaticDebit> automaticDebits = new ArrayList<AutomaticDebit>();
-	private ArrayList<CardNumber> cardNumbers = new ArrayList<CardNumber>();
-	private ArrayList<Child> childs = new ArrayList<Child>();
-	private ArrayList<CreditCard> creditCards = new ArrayList<CreditCard>();
-	private ArrayList<Device> devices = new ArrayList<Device>();
-	private ArrayList<Direction> directions = new ArrayList<Direction>();
-	private ArrayList<Director> directors = new ArrayList<Director>();
-	private ArrayList<Evaluation> evaluations = new ArrayList<Evaluation>();
-	private ArrayList<Exhibition> exhibitions = new ArrayList<Exhibition>();
-	private ArrayList<Friendship> friendships = new ArrayList<Friendship>();
-	private ArrayList<GenderPreference> genderPreferences = new ArrayList<GenderPreference>();
-	private ArrayList<Genre> genres = new ArrayList<Genre>();
-	private ArrayList<Invoice> invoices = new ArrayList<Invoice>();
-	private ArrayList<Language> languages = new ArrayList<Language>();
-	private ArrayList<Media> medias = new ArrayList<Media>();
-	private ArrayList<MediaAudio> mediaAudios = new ArrayList<MediaAudio>();
-	private ArrayList<MediaGender> mediaGenders = new ArrayList<MediaGender>();
-	private ArrayList<MediaSubtitle> mediaSubtitles = new ArrayList<MediaSubtitle>();
-	private ArrayList<Opinion> opinions = new ArrayList<Opinion>();
-	private ArrayList<PaymentMethod> paymentMethods = new ArrayList<PaymentMethod>();
-	private ArrayList<Paypal> paypals = new ArrayList<Paypal>();
-	private ArrayList<Profile> profiles = new ArrayList<Profile>();
-	private ArrayList<Recommendation> recommendations = new ArrayList<Recommendation>();
-	private ArrayList<Season> seasons = new ArrayList<Season>();
-	private ArrayList<Serie> series = new ArrayList<Serie>();
-	
-	// for com statements pra cada nome de tabela
-	// outro for pra pegar resultado dos statements e adicionar pra cada um dos arraylist
-	// printar arraylist
 
 	// Connection tab
 	// Forms
@@ -276,6 +279,15 @@ public class MainViewController implements Initializable {
 				Alerts.showAlert("Atualiza��o", "Usu�rio atualizado", "O usu�rio foi editado com sucesso!",
 						AlertType.INFORMATION);
 			} else {
+				String queryInsert = null;
+				PreparedStatement pstmt;
+				try {
+					pstmt = OracleConnection.getConnection().prepareStatement(queryInsert);
+					pstmt.executeUpdate();
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 				Alerts.showAlert("Cadastro", "Novo usu�rio criado", "O usu�rio foi salvo com sucesso!",
 						AlertType.INFORMATION);
 				
@@ -291,7 +303,7 @@ public class MainViewController implements Initializable {
 			setUpValidationTextField(userDateOfBirthField);
 			setUpValidationPlanComboBox(userPlanComboBox);
 			Alerts.showAlert("Erro", "Preencha todos os campos obrigat�rios",
-					"Os campos que possuem '*' s�o obrig�torios", AlertType.ERROR);
+					"Os campos que possuem '*' s�o obrigat�rios", AlertType.ERROR);
 		}
 	}
 
@@ -329,7 +341,20 @@ public class MainViewController implements Initializable {
 	}
 
 	public void onUserSearchButton() {
-		
+		AnchorPane queryPane = null;
+		Scene queryScene = null;
+		try {
+			queryPane = FXMLLoader.load(getClass().getResource("/gui/QueryView.fxml"));
+			queryScene = new Scene(queryPane);
+			Stage stage = new Stage();
+			stage.getIcons().add(new Image(getClass().getResourceAsStream("/resources/netflixIcon.png")));
+			stage.setScene(queryScene);
+			stage.setResizable(false);
+			stage.setTitle("Query");
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	// CONNECTION
@@ -350,11 +375,6 @@ public class MainViewController implements Initializable {
 					"A conex�o foi realizada com sucesso, e tabelas foram criadas e populadas usando do script: BD.sql",
 					AlertType.INFORMATION);
 			onConnectionCleanButton();
-			try {
-				OracleConnection.getConnection().close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		} else {
 			setUpValidationTextField(connectionUserNameField);
 			setUpValidationTextField(connectionPasswordField);
@@ -380,7 +400,7 @@ public class MainViewController implements Initializable {
 	}
 
 	public void onConnectionShowTableButton() {
-
+		
 	}
 	
 	private void sqlParser(String filePath) {

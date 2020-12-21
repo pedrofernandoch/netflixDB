@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.QueryViewController">
+   <children>
+      <Pane layoutY="14.0" prefHeight="277.0" prefWidth="407.0">
+         <children>
+            <Label layoutX="20.0" text="Marque na checkbox quais campos você deseja adicionar na consulta" />
+            <CheckBox fx:id="cbName" layoutX="89.0" layoutY="51.0" mnemonicParsing="false" />
+            <TextField fx:id="queryNameField" editable="false" layoutX="123.0" layoutY="47.0" prefHeight="25.0" prefWidth="195.0" promptText="Nome" />
+            <CheckBox fx:id="cbEmail" layoutX="89.0" layoutY="83.0" mnemonicParsing="false" />
+            <TextField fx:id="queryEmailField" editable="false" layoutX="123.0" layoutY="79.0" prefHeight="25.0" prefWidth="195.0" promptText="Email" />
+            <CheckBox fx:id="cbCpf" layoutX="89.0" layoutY="117.0" mnemonicParsing="false" />
+            <TextField fx:id="queryCpfField" editable="false" layoutX="123.0" layoutY="113.0" prefHeight="25.0" prefWidth="195.0" promptText="CPF" />
+            <CheckBox fx:id="cbDateOfBirth" layoutX="89.0" layoutY="151.0" mnemonicParsing="false" />
+            <DatePicker fx:id="queryDateOfBirthDatePicker" editable="false" layoutX="123.0" layoutY="147.0" prefHeight="25.0" prefWidth="195.0" promptText="Data de Nascimento" />
+            <CheckBox fx:id="cbPlan" layoutX="89.0" layoutY="185.0" mnemonicParsing="false" />
+            <Button layoutX="155.0" layoutY="229.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="97.0" style="-fx-background-color: black;" text="Buscar" textFill="WHITE" />
+            <Label layoutX="20.0" layoutY="17.0" text="*Todas as consultas são do tipo %string%" />
+            <ComboBox fx:id="queryPlanComboBox" layoutX="123.0" layoutY="181.0" prefHeight="25.0" prefWidth="195.0" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
