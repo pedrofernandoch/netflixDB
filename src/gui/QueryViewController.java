@@ -1,8 +1,14 @@
 package gui;
 
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
 
+import db.OracleConnection;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -12,9 +18,15 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import model.entities.Plan;
+import model.entities.User;
 
 public class QueryViewController implements Initializable {
+	
+	private final SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+	private Statement stmt;
+	private ResultSet rs;
 	
 	@FXML
     private CheckBox cbName;
@@ -134,15 +146,30 @@ public class QueryViewController implements Initializable {
 		}
 	}
 	
-	public String onQueryButton() {
-		String statement = "SELECT * FROM Usuario u WHERE ";
+	public void onQueryButton() {
+		String query = "SELECT * FROM Usuario u WHERE ";
 		if(cbCpf.isSelected()) {
-			statement = statement.concat("u.CPF = "+queryCpfField.getText());
-			return statement;
+			query = query.concat("u.CPF = "+queryCpfField.getText()+";");
 		}else {
-			
+			if(cbName.isSelected()) query = query.concat("u.Nome LIKE '%"+queryNameField.getText()+"%' AND ");
+			if(cbEmail.isSelected()) query = query.concat("u.Email LIKE '%"+queryEmailField.getText()+"%' AND ");
+			if(cbDateOfBirth.isSelected()) query = query.concat("u.DataNasc = TO_DATE('"+queryDateOfBirthDatePicker.getEditor().getText()+"', 'dd/mm/yyy') AND ");
+			if(cbPlan.isSelected()) query = query.concat("u.plano = "+queryPlanComboBox.getSelectionModel().getSelectedItem().getId()+" AND ");
+			query = query.substring(0, query.length()-5).concat(";");
 		}
-		return statement;
+		try {
+			stmt = OracleConnection.getConnection().createStatement();
+			rs = stmt.executeQuery(query);
+			MainViewController.getUserObsList().clear();
+	        while (rs.next()) {
+	        	MainViewController.getUserObsList().add(new User(rs.getString("Nome"), rs.getString("CPF"), rs.getString("Email"), sdf.parse(rs.getString("DataNasc")), Integer.parseInt(rs.getString("Plano"))));    
+	        }
+	        stmt.close();
+			rs.close();
+		} catch (SQLException | NumberFormatException | ParseException e) {
+			e.printStackTrace();
+		}
+		((Stage)queryButton.getScene().getWindow()).close();
 	}
      
 }

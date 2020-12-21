@@ -1,5 +1,8 @@
 package application;
 	
+import java.sql.SQLException;
+
+import db.OracleConnection;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -24,5 +27,10 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
 		launch(args);
+		try {
+			if(OracleConnection.getConnection() != null && OracleConnection.getConnection().isClosed() != false)OracleConnection.getConnection().close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -20,7 +19,6 @@ import gui.util.TooltippedTableCell;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -115,7 +113,7 @@ public class MainViewController implements Initializable {
 	private ArrayList<Serie> series = new ArrayList<>();
 	private ArrayList<Plan> plans = new ArrayList<>();
 	
-	private ObservableList<User> userObsList;
+	private static ObservableList<User>userObsList;
 	private ObservableList<Plan> planObsList;
 	
 	private ArrayList<String> statements = new ArrayList<>(); 
@@ -193,22 +191,14 @@ public class MainViewController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		Tooltip.install(light,
+				makeBubble(new Tooltip("Desconectado, por favor se concete ao banco atrav�s do bot�o xxx")));
+		light.setFill(javafx.scene.paint.Color.RED);
 		initializeData();
-		initializeLight();
-		connectionTableTextArea.appendText("Oi eu sou marinzera");
-	}
-
-	private void initializeLight() {
-		userObsList.addListener(new ListChangeListener<User>() {
-			public void onChanged(Change<? extends User> arg0) {
-				validateCircle(light);
-			}
-		});
-		validateCircle(light);
 	}
 
 	private void initializeData() {
-		userObsList = FXCollections.observableArrayList(users);
+		userObsList = FXCollections.observableArrayList(new ArrayList<User>());
 		planObsList = FXCollections.observableArrayList(plans);
 		FilteredList<User> userFilteredList = new FilteredList<>(userObsList, b -> true);
 		SortedList<User> userSortedList = new SortedList<>(userFilteredList);
@@ -271,59 +261,64 @@ public class MainViewController implements Initializable {
 
 	// CRUD
 	public void onUserSaveButton() {
-		if (userNameField.getText().length() != 0 && userEmailField.getText().length() != 0
-				&& userCpfField.getText().length() != 0 && userDateOfBirthField.getText().length() != 0
-				&& userPlanComboBox.getSelectionModel().isEmpty() == false) {
-			if (userSaveButton.getText().equals("Salvar")) {
-				newEventLog("Usu�rio", LogActivities.UPDATE,
-						LogActivities.UPDATE.getLogDescription() + " usu�rio de cpf: " + currentUserCpf, LogTypes.CRUD);
-				String queryInsert = "UPDATE Usuario u SET u.CPF = '" + userCpfField.getText() 
-					+ "', u.Nome = '" + userNameField.getText() + "', u.Email = '" + userEmailField.getText() 
-					+ "', u.DataNasc = TO_DATE('" + userDateOfBirthField.getText() + "', '" + "yyyy/mm/dd" +  "')" 
-					+ ", u.Plano = " + userPlanComboBox.getSelectionModel().getSelectedItem().getId() 
-					+ " WHERE " + "u.CPF = '" + userCpfField.getText() + "'";
-				System.out.println("RUNNING QUERY: " + queryInsert);
-				PreparedStatement pstmt;
-				try {
-					pstmt = OracleConnection.getConnection().prepareStatement(queryInsert);
-					pstmt.executeUpdate();
-					pstmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+		if(connected) {
+			if (userNameField.getText().length() != 0 && userEmailField.getText().length() != 0
+					&& userCpfField.getText().length() != 0 && userDateOfBirthField.getText().length() != 0
+					&& userPlanComboBox.getSelectionModel().isEmpty() == false) {
+				if (userSaveButton.getText().equals("Salvar")) {
+					newEventLog("Usu�rio", LogActivities.UPDATE,
+							LogActivities.UPDATE.getLogDescription() + " usu�rio de cpf: " + currentUserCpf, LogTypes.CRUD);
+					String queryInsert = "UPDATE Usuario u SET u.CPF = '" + userCpfField.getText() 
+						+ "', u.Nome = '" + userNameField.getText() + "', u.Email = '" + userEmailField.getText() 
+						+ "', u.DataNasc = TO_DATE('" + userDateOfBirthField.getText() + "', '" + "yyyy/mm/dd" +  "')" 
+						+ ", u.Plano = " + userPlanComboBox.getSelectionModel().getSelectedItem().getId() 
+						+ " WHERE " + "u.CPF = '" + userCpfField.getText() + "'";
+					System.out.println("RUNNING QUERY: " + queryInsert);
+					PreparedStatement pstmt;
+					try {
+						pstmt = OracleConnection.getConnection().prepareStatement(queryInsert);
+						pstmt.executeUpdate();
+						pstmt.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+					Alerts.showAlert("Atualiza��o", "Usu�rio atualizado", "O usu�rio foi editado com sucesso!",
+							AlertType.INFORMATION);
+				} else {
+//					String newDate = new SimpleDateFormat("yyyy-MM-dd").format(userDateOfBirthField.getText());
+					System.out.println(userDateOfBirthField.getText());
+					String queryInsert = "INSERT INTO Usuario VALUES ('" 
+							+ userCpfField.getText() + "', '" + userNameField.getText() + "', '"
+							+ userEmailField.getText()  + "', " + "TO_DATE('" + userDateOfBirthField.getText() + "', '" + "yyyy/mm/dd" +  "')" + ", " + userPlanComboBox.getSelectionModel().getSelectedItem().getId() + ")";
+					System.out.println("RUNNING QUERY: " + queryInsert);
+					PreparedStatement pstmt;
+					try {
+						pstmt = OracleConnection.getConnection().prepareStatement(queryInsert);
+						pstmt.executeUpdate();
+						pstmt.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+					Alerts.showAlert("Cadastro", "Novo usu�rio criado", "O usu�rio foi salvo com sucesso!",
+							AlertType.INFORMATION);
+					
+					newEventLog("Usu�rio", LogActivities.CREATE,
+							LogActivities.CREATE.getLogDescription() + " novo usu�rio: " + userNameField.getText(),
+							LogTypes.CRUD);
 				}
-				Alerts.showAlert("Atualiza��o", "Usu�rio atualizado", "O usu�rio foi editado com sucesso!",
-						AlertType.INFORMATION);
+				onUserCleanButton();
 			} else {
-//				String newDate = new SimpleDateFormat("yyyy-MM-dd").format(userDateOfBirthField.getText());
-				System.out.println(userDateOfBirthField.getText());
-				String queryInsert = "INSERT INTO Usuario VALUES ('" 
-						+ userCpfField.getText() + "', '" + userNameField.getText() + "', '"
-						+ userEmailField.getText()  + "', " + "TO_DATE('" + userDateOfBirthField.getText() + "', '" + "yyyy/mm/dd" +  "')" + ", " + userPlanComboBox.getSelectionModel().getSelectedItem().getId() + ")";
-				System.out.println("RUNNING QUERY: " + queryInsert);
-				PreparedStatement pstmt;
-				try {
-					pstmt = OracleConnection.getConnection().prepareStatement(queryInsert);
-					pstmt.executeUpdate();
-					pstmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-				Alerts.showAlert("Cadastro", "Novo usu�rio criado", "O usu�rio foi salvo com sucesso!",
-						AlertType.INFORMATION);
-				
-				newEventLog("Usu�rio", LogActivities.CREATE,
-						LogActivities.CREATE.getLogDescription() + " novo usu�rio: " + userNameField.getText(),
-						LogTypes.CRUD);
+				setUpValidationTextField(userNameField);
+				setUpValidationTextField(userEmailField);
+				setUpValidationTextField(userCpfField);
+				setUpValidationTextField(userDateOfBirthField);
+				setUpValidationPlanComboBox(userPlanComboBox);
+				Alerts.showAlert("Erro", "Preencha todos os campos obrigat�rios",
+						"Os campos que possuem '*' s�o obrigat�rios", AlertType.ERROR);
 			}
-			onUserCleanButton();
-		} else {
-			setUpValidationTextField(userNameField);
-			setUpValidationTextField(userEmailField);
-			setUpValidationTextField(userCpfField);
-			setUpValidationTextField(userDateOfBirthField);
-			setUpValidationPlanComboBox(userPlanComboBox);
-			Alerts.showAlert("Erro", "Preencha todos os campos obrigat�rios",
-					"Os campos que possuem '*' s�o obrigat�rios", AlertType.ERROR);
+		}else {
+			Alerts.showAlert("Erro", "Voc� n�o se conectou ao banco!",
+					"Para realizar opera��es de crud,consulta e visualiza��o das tabelas, voc� precisa se conectar ao banco primeiro, v� at� a aba de Conex�o e preenche os campos necess�rios para se conectar", AlertType.ERROR);
 		}
 	}
 
@@ -347,7 +342,7 @@ public class MainViewController implements Initializable {
 		alert.setTitle("Confirmar exclus�o");
 		alert.setHeaderText("Voc� tem certeza que quer deletar esses usu�rios?");
 		alert.setContentText(
-				"Ao deletado um usu�rio ele ser� permanentemente removido do banco de dados juntamente com seus perfis, prefer�ncias e quaisquer daods coletados sobre esse usu�rio");
+				"Ao deletado um usu�rio ele ser� permanentemente removido do banco de dados juntamente com seus perfis, prefer�ncias e quaisquer daods coletados sobre o mesmo");
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
 			Alerts.showAlert("Exclus�o", "Usu�rios deletados", "Os usu�rios foram deletados com sucesso!",
@@ -361,19 +356,24 @@ public class MainViewController implements Initializable {
 	}
 
 	public void onUserSearchButton() {
-		AnchorPane queryPane = null;
-		Scene queryScene = null;
-		try {
-			queryPane = FXMLLoader.load(getClass().getResource("/gui/QueryView.fxml"));
-			queryScene = new Scene(queryPane);
-			Stage stage = new Stage();
-			stage.getIcons().add(new Image(getClass().getResourceAsStream("/resources/netflixIcon.png")));
-			stage.setScene(queryScene);
-			stage.setResizable(false);
-			stage.setTitle("Query");
-			stage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
+		if(connected) {
+			AnchorPane queryPane = null;
+			Scene queryScene = null;
+			try {
+				queryPane = FXMLLoader.load(getClass().getResource("/gui/QueryView.fxml"));
+				queryScene = new Scene(queryPane);
+				Stage stage = new Stage();
+				stage.getIcons().add(new Image(getClass().getResourceAsStream("/resources/netflixIcon.png")));
+				stage.setScene(queryScene);
+				stage.setResizable(false);
+				stage.setTitle("Query");
+				stage.show();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else {
+			Alerts.showAlert("Erro", "Voc� n�o se conectou ao banco!",
+					"Para realizar opera��es de crud,consulta e visualiza��o das tabelas, voc� precisa se conectar ao banco primeiro, v� at� a aba de Conex�o e preenche os campos necess�rios para se conectar", AlertType.ERROR);
 		}
 	}
 
@@ -385,7 +385,6 @@ public class MainViewController implements Initializable {
 				&& connectionSidField.getText().length() != 0) {
 			OracleConnection.createConnection(connectionUserNameField.getText(), connectionPasswordField.getText(),
 					connectionHostNameField.getText(), connectionPortField.getText(), connectionSidField.getText());
-			//System.out.println("Conectou\n"+System.getProperty("user.dir")+"/BD.sql");
 			sqlParser(System.getProperty("user.dir")+"/BD.sql");
 			newEventLog("Usu�rio", LogActivities.CONNECTING_DB,
 					LogActivities.CONNECTING_DB.getLogDescription() + " no host " + connectionHostNameField
@@ -395,6 +394,9 @@ public class MainViewController implements Initializable {
 					"A conex�o foi realizada com sucesso, e tabelas foram criadas e populadas usando do script: BD.sql",
 					AlertType.INFORMATION);
 			onConnectionCleanButton();
+			connected = true;
+			light.setFill(javafx.scene.paint.Color.LIMEGREEN);
+			Tooltip.install(light, makeBubble(new Tooltip("Conectado")));
 		} else {
 			setUpValidationTextField(connectionUserNameField);
 			setUpValidationTextField(connectionPasswordField);
@@ -402,7 +404,7 @@ public class MainViewController implements Initializable {
 			setUpValidationTextField(connectionPortField);
 			setUpValidationTextField(connectionSidField);
 			Alerts.showAlert("Erro", "Preencha todos os campos obrigat�rios",
-					"Os campos que possuem '*' s�o obrig�torios", AlertType.ERROR);
+					"Os campos que possuem '*' s�o obrigat�rios", AlertType.ERROR);
 		}
 	}
 
@@ -420,7 +422,12 @@ public class MainViewController implements Initializable {
 	}
 
 	public void onConnectionShowTableButton() {
-		
+		if(connected) {
+			
+		}else {
+			Alerts.showAlert("Erro", "Voc� n�o se conectou ao banco!",
+					"Para realizar opera��es de crud,consulta e visualiza��o das tabelas, voc� precisa se conectar ao banco primeiro, v� at� a aba de Conex�o e preenche os campos necess�rios para se conectar", AlertType.ERROR);
+		}
 	}
 	
 	private void sqlParser(String filePath) {
@@ -490,17 +497,6 @@ public class MainViewController implements Initializable {
 		}
 	}
 
-	private void validateCircle(Circle c) {
-		if (connected) {
-			light.setFill(javafx.scene.paint.Color.LIMEGREEN);
-			Tooltip.install(light, makeBubble(new Tooltip("Conectado")));
-		} else {
-			Tooltip.install(light,
-					makeBubble(new Tooltip("Desconectado, por favor se concete ao banco atrav�s do bot�o xxx")));
-			light.setFill(javafx.scene.paint.Color.RED);
-		}
-	}
-
 	// Error removers
 	private void removeErrorTextField(TextField tf) {
 		tf.getStyleClass().removeAll(Collections.singleton("error"));
@@ -526,6 +522,10 @@ public class MainViewController implements Initializable {
 		plans.clear();
 		userObsList.clear();
 		planObsList.clear();
+	}
+
+	public static ObservableList<User> getUserObsList() {
+		return userObsList;
 	}
 
 }
