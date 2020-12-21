@@ -45,10 +45,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.stage.PopupWindow;
-<<<<<<< HEAD
 import javafx.stage.Stage;
-=======
-
 import model.entities.Access;
 import model.entities.Actor;
 import model.entities.Actuation;
@@ -74,64 +71,57 @@ import model.entities.MediaSubtitle;
 import model.entities.Opinion;
 import model.entities.PaymentMethod;
 import model.entities.Paypal;
+import model.entities.Plan;
 import model.entities.Profile;
 import model.entities.Recommendation;
 import model.entities.Season;
 import model.entities.Serie;
->>>>>>> 47fafdd5fa2c2c1e103fb949ae1bb5ba6ffe2c96
-import model.entities.Plan;
 import model.entities.User;
 import model.enums.LogActivities;
 import model.enums.LogTypes;
 
 public class MainViewController implements Initializable {
 
-	private ArrayList<String> statements = new ArrayList<>(); 
 	private ArrayList<User> users = new ArrayList<>();
-	private ObservableList<User> userObsList;
-	private String currentUserCpf = null;
+	private ArrayList<Access> accesses = new ArrayList<>();
+	private ArrayList<Actor> actors = new ArrayList<>();
+	private ArrayList<Actuation> actuations = new ArrayList<>();
+	private ArrayList<Adult> adults = new ArrayList<>();
+	private ArrayList<AutomaticDebit> automaticDebits = new ArrayList<>();
+	private ArrayList<CardNumber> cardNumbers = new ArrayList<>();
+	private ArrayList<Child> childs = new ArrayList<>();
+	private ArrayList<CreditCard> creditCards = new ArrayList<>();
+	private ArrayList<Device> devices = new ArrayList<>();
+	private ArrayList<Direction> directions = new ArrayList<>();
+	private ArrayList<Director> directors = new ArrayList<>();
+	private ArrayList<Evaluation> evaluations = new ArrayList<>();
+	private ArrayList<Exhibition> exhibitions = new ArrayList<>();
+	private ArrayList<Friendship> friendships = new ArrayList<>();
+	private ArrayList<GenderPreference> genderPreferences = new ArrayList<>();
+	private ArrayList<Genre> genres = new ArrayList<>();
+	private ArrayList<Invoice> invoices = new ArrayList<>();
+	private ArrayList<Language> languages = new ArrayList<>();
+	private ArrayList<Media> medias = new ArrayList<>();
+	private ArrayList<MediaAudio> mediaAudios = new ArrayList<>();
+	private ArrayList<MediaGender> mediaGenders = new ArrayList<>();
+	private ArrayList<MediaSubtitle> mediaSubtitles = new ArrayList<>();
+	private ArrayList<Opinion> opinions = new ArrayList<>();
+	private ArrayList<PaymentMethod> paymentMethods = new ArrayList<>();
+	private ArrayList<Paypal> paypals = new ArrayList<>();
+	private ArrayList<Profile> profiles = new ArrayList<>();
+	private ArrayList<Recommendation> recommendations = new ArrayList<>();
+	private ArrayList<Season> seasons = new ArrayList<>();
+	private ArrayList<Serie> series = new ArrayList<>();
 	private ArrayList<Plan> plans = new ArrayList<>();
+	
+	private ObservableList<User> userObsList;
 	private ObservableList<Plan> planObsList;
+	
+	private ArrayList<String> statements = new ArrayList<>(); 
+	private String currentUserCpf = null;
 	private final String SQUARE_BUBBLE = "M24 1h-24v16.981h4v5.019l7-5.019h13z";
 	private boolean connected = false;
-<<<<<<< HEAD
-	
-=======
-	private ArrayList<Access> accesses = new ArrayList<Access>();
-	private ArrayList<Actor> actors = new ArrayList<Actor>();
-	private ArrayList<Actuation> actuations = new ArrayList<Actuation>();
-	private ArrayList<Adult> adults = new ArrayList<Adult>();
-	private ArrayList<AutomaticDebit> automaticDebits = new ArrayList<AutomaticDebit>();
-	private ArrayList<CardNumber> cardNumbers = new ArrayList<CardNumber>();
-	private ArrayList<Child> childs = new ArrayList<Child>();
-	private ArrayList<CreditCard> creditCards = new ArrayList<CreditCard>();
-	private ArrayList<Device> devices = new ArrayList<Device>();
-	private ArrayList<Direction> directions = new ArrayList<Direction>();
-	private ArrayList<Director> directors = new ArrayList<Director>();
-	private ArrayList<Evaluation> evaluations = new ArrayList<Evaluation>();
-	private ArrayList<Exhibition> exhibitions = new ArrayList<Exhibition>();
-	private ArrayList<Friendship> friendships = new ArrayList<Friendship>();
-	private ArrayList<GenderPreference> genderPreferences = new ArrayList<GenderPreference>();
-	private ArrayList<Genre> genres = new ArrayList<Genre>();
-	private ArrayList<Invoice> invoices = new ArrayList<Invoice>();
-	private ArrayList<Language> languages = new ArrayList<Language>();
-	private ArrayList<Media> medias = new ArrayList<Media>();
-	private ArrayList<MediaAudio> mediaAudios = new ArrayList<MediaAudio>();
-	private ArrayList<MediaGender> mediaGenders = new ArrayList<MediaGender>();
-	private ArrayList<MediaSubtitle> mediaSubtitles = new ArrayList<MediaSubtitle>();
-	private ArrayList<Opinion> opinions = new ArrayList<Opinion>();
-	private ArrayList<PaymentMethod> paymentMethods = new ArrayList<PaymentMethod>();
-	private ArrayList<Paypal> paypals = new ArrayList<Paypal>();
-	private ArrayList<Profile> profiles = new ArrayList<Profile>();
-	private ArrayList<Recommendation> recommendations = new ArrayList<Recommendation>();
-	private ArrayList<Season> seasons = new ArrayList<Season>();
-	private ArrayList<Serie> series = new ArrayList<Serie>();
-	
-	// for com statements pra cada nome de tabela
-	// outro for pra pegar resultado dos statements e adicionar pra cada um dos arraylist
-	// printar arraylist
 
->>>>>>> 47fafdd5fa2c2c1e103fb949ae1bb5ba6ffe2c96
 	// Connection tab
 	// Forms
 	@FXML
@@ -284,12 +274,11 @@ public class MainViewController implements Initializable {
 				&& userCpfField.getText().length() != 0 && userDateOfBirthField.getText().length() != 0
 				&& userPlanComboBox.getSelectionModel().isEmpty() == false) {
 			if (userSaveButton.getText().equals("Salvar")) {
-				newEventLog("Usuï¿½rio", LogActivities.UPDATE,
-						LogActivities.UPDATE.getLogDescription() + " usuï¿½rio de cpf: " + currentUserCpf, LogTypes.CRUD);
-				Alerts.showAlert("Atualizaï¿½ï¿½o", "Usuï¿½rio atualizado", "O usuï¿½rio foi editado com sucesso!",
+				newEventLog("Usuário", LogActivities.UPDATE,
+						LogActivities.UPDATE.getLogDescription() + " usuário de cpf: " + currentUserCpf, LogTypes.CRUD);
+				Alerts.showAlert("Atualização", "Usuário atualizado", "O usuário foi editado com sucesso!",
 						AlertType.INFORMATION);
-<<<<<<< HEAD
-			}else {
+			} else {
 				String queryInsert = null;
 				PreparedStatement pstmt;
 				try {
@@ -300,14 +289,10 @@ public class MainViewController implements Initializable {
 					e.printStackTrace();
 				}
 				Alerts.showAlert("Cadastro", "Novo usuário criado", "O usuário foi salvo com sucesso!",
-=======
-			} else {
-				Alerts.showAlert("Cadastro", "Novo usuï¿½rio criado", "O usuï¿½rio foi salvo com sucesso!",
->>>>>>> 47fafdd5fa2c2c1e103fb949ae1bb5ba6ffe2c96
 						AlertType.INFORMATION);
 				
-				newEventLog("Usuï¿½rio", LogActivities.CREATE,
-						LogActivities.CREATE.getLogDescription() + " novo usuï¿½rio: " + userNameField.getText(),
+				newEventLog("Usuário", LogActivities.CREATE,
+						LogActivities.CREATE.getLogDescription() + " novo usuário: " + userNameField.getText(),
 						LogTypes.CRUD);
 			}
 			onUserCleanButton();
@@ -317,8 +302,8 @@ public class MainViewController implements Initializable {
 			setUpValidationTextField(userCpfField);
 			setUpValidationTextField(userDateOfBirthField);
 			setUpValidationPlanComboBox(userPlanComboBox);
-			Alerts.showAlert("Erro", "Preencha todos os campos obrigatï¿½rios",
-					"Os campos que possuem '*' sï¿½o obrigï¿½torios", AlertType.ERROR);
+			Alerts.showAlert("Erro", "Preencha todos os campos obrigatórios",
+					"Os campos que possuem '*' são obrigatórios", AlertType.ERROR);
 		}
 	}
 
