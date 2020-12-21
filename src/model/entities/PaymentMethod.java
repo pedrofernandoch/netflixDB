@@ -11,7 +11,7 @@ public class PaymentMethod {
 	}
 	
 	public String toString() {
-		return "To be implemented...";
+		return "<" + Integer.toString(user) + "," + type + ">";
 	}
 	
 	public int getUser() {

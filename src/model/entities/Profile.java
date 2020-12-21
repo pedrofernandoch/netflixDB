@@ -13,7 +13,7 @@ public class Profile {
 	}
 	
 	public String toString() {
-		return "To be implemented...";
+		return "<" + alias + "," + Integer.toString(user) + "," + type + ">";
 	}
 	
 	public String getAlias() {

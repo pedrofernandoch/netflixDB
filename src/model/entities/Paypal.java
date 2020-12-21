@@ -13,7 +13,7 @@ public class Paypal {
 	}
 	
 	public String toString() {
-		return "To be implemented...";
+		return "<" + Integer.toString(user) + "," + email + "." + password + ">";
 	}
 	
 	public int getUser() {

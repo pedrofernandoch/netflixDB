@@ -20,7 +20,7 @@ public class User {
 	}
 	
 	public String toString() {
-		return "To be implemented...";
+		return "<" + name + "," + cpf + "," + email + "," + dateOfBirth.toString() + "," + Integer.toString(plan) + ">";
 	}
 
 	public String getName() {

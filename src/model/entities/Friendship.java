@@ -21,7 +21,7 @@ public class Friendship {
 	}
 	
 	public String toString() {
-		return "To be implemented...";
+		return "<" + profile1 + "," + Integer.toString(user1) + "," + profile2 + "," + Integer.toString(user2) + "," + acceptDate.toString() + "," + requestDate.toString() + ">";
 	}
 	
 	public String getProfile1() {

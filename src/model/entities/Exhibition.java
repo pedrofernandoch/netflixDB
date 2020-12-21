@@ -19,7 +19,7 @@ public class Exhibition {
 	}
 	
 	public String toString() {
-		return "To be implemented...";
+		return "<" + alias + "," + Integer.toString(user) + "," + Integer.toString(media) + "," + date.toString() + "," + Integer.toString(watchTime) + ">";
 	}
 	
 	public String getAlias() {

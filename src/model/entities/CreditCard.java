@@ -11,7 +11,7 @@ public class CreditCard {
 	}
 	
 	public String toString() {
-		return "To be implemented...";
+		return "<" + Integer.toString(user) + "," + Integer.toString(cardNumber) + ">";
 	}
 	
 	public int getUser() {

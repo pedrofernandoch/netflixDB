@@ -11,7 +11,7 @@ public class MediaSubtitle {
 	}
 	
 	public String toString() {
-		return "To be implemented...";
+		return "<" + Integer.toString(media) + "," + Integer.toString(language) + ">";
 	}
 	
 	public int getMedia() {

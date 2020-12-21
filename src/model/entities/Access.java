@@ -17,7 +17,7 @@ public class Access {
 	}
 	
 	public String toString() {
-		return "To be implemented...";
+		return "<" + Integer.toString(user) + "," + deviceName + "," + IPv4 + "," + accessTime.toString() + ">";
 	}
 	
 	public int getUser() {

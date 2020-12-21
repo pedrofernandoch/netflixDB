@@ -19,7 +19,7 @@ public class Evaluation {
 	}
 	
 	public String toString() {
-		return "To be implemented...";
+		return "<" + alias + "," + Integer.toString(user) + "," + Integer.toString(media) + "," + date.toString() + "," + Integer.toString(grade) + ">";
 	}
 	
 	public String getAlias() {

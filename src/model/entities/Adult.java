@@ -17,7 +17,7 @@ public class Adult {
 	}
 	
 	public String toString() {
-		return "To be implemented...";
+		return "<" + alias + "," + Integer.toString(user) + "," + Integer.toString(qualitStreaming) + "," + Integer.toString(subtitle) + "," + Integer.toOctalString(language) + ">";
 	}
 	
 	public String getAlias() {

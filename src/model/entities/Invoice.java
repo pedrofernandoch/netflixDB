@@ -17,7 +17,7 @@ public class Invoice {
 	}
 	
 	public String toString() {
-		return "To be implemented...";
+		return "<" + Integer.toString(invoiceCode) + "," + period.toString() + "," + Integer.toString(user) + "," + Integer.toString(plan) + ">";
 	}
 	
 	public int getInvoiceCode() {

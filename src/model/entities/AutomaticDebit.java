@@ -21,7 +21,7 @@ public class AutomaticDebit {
 	}
 	
 	public String toString() {
-		return "To be implemented...";
+		return "<" + Integer.toString(user) + "," + Integer.toString(CPF) + "," + name + "," + lastName + "," + bank + "," + Integer.toString(agency) + "," + Integer.toString(account) + ">";
 	}
 	
 	public int getUser() {

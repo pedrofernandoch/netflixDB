@@ -15,7 +15,7 @@ public class Serie {
 	}
 	
 	public String toString() {
-		return "To be implemented...";
+		return "<" + Integer.toString(id) + "," + title + "," + Integer.toString(releaseYear) + "," + Integer.toString(seasonsQuantity) + ">";
 	}
 	
 	public int getId() {

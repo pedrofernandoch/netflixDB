@@ -19,7 +19,7 @@ public class Plan {
 	}
 	
 	public String toString() {
-		return "To be implemented...";
+		return "<" + Integer.toString(id) + "," + name + "," + Float.toString(value) + "," + Integer.toString(maxQuality) + "," + Integer.toString(screensQuantity)  + "," + Integer.toString(maxProfileNumber) + ">";
 	}
 	
 	public int getId() {

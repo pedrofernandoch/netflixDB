@@ -11,7 +11,7 @@ public class MediaGender {
 	}
 	
 	public String toString() {
-		return "To be implemented...";
+		return "<" + gender + "," + Integer.toString(media) + ">";
 	}
 	
 	public String getGender() {

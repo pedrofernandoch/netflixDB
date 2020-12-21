@@ -11,7 +11,7 @@ public class Language {
 	}
 	
 	public String toString() {
-		return "To be implemented...";
+		return "<" + Integer.toString(id) + "," + name + ">";
 	}
 	
 	public int getId() {

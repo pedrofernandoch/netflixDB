@@ -13,7 +13,7 @@ public class Direction {
 	}
 	
 	public String toString() {
-		return "To be implemented...";
+		return "<" + CPF + "," + Integer.toString(media) + "," + job + ">";
 	}
 	
 	public String getCPF() {

@@ -15,7 +15,7 @@ public class GenderPreference {
 	}
 	
 	public String toString() {
-		return "To be implemented...";
+		return "<" + alias + "," + Integer.toString(user) + "," + gender + "," + Float.toString(grade) + ">";
 	}
 	
 	public String getAlias() {

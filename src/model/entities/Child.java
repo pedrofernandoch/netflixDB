@@ -15,7 +15,7 @@ public class Child {
 	}
 	
 	public String toString() {
-		return "To be implemented...";
+		return "<" + alias + "," + Integer.toString(user) + "," + Integer.toString(ageRange) + "," + adult + ">";
 	}
 	
 	public String getAlias() {

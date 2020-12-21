@@ -19,7 +19,7 @@ public class CardNumber {
 	}
 	
 	public String toString() {
-		return "To be implemented...";
+		return "<" + Integer.toString(cardNumber) + "," + banner + "," + dueDate.toString() + "," + Integer.toString(securityCode) + "," + cardholderName + ">";
 	}
 	
 	public int getCardNumber() {

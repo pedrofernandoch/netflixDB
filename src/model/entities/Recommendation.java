@@ -24,7 +24,7 @@ public class Recommendation {
 	}
 	
 	public String toString() {
-		return "To be implemented...";
+		return "<" + alias + "," + Integer.toString(user) + "," + friendProfile + "," + Integer.toString(friendUser) + "," + Integer.toString(media) + "," + date.toString() + "," + comment + ">";
 	}
 	
 	public String getAlias() {

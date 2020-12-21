@@ -13,7 +13,7 @@ public class Device {
 	}
 	
 	public String toString() {
-		return "To be implemented...";
+		return "<" + Integer.toString(user) + "," + name + "," + operationalSystem + ">";
 	}
 	
 	public int getUser() {

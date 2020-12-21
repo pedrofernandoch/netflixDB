@@ -11,7 +11,7 @@ public class Actuation {
 	}
 
 	public String toString() {
-		return "To be implemented...";
+		return "<" + CPF + "," + Integer.toString(media) + ">";
 	}
 
 	public String getCPF() {

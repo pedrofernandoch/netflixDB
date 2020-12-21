@@ -15,7 +15,7 @@ public class Season {
 	}
 	
 	public String toString() {
-		return "To be implemented...";
+		return "<" + Integer.toString(serie) + "," + Integer.toString(number) + "," + title + "," + Integer.toString(episodesQuantity) + ">";
 	}
 	
 	public int getSerie() {

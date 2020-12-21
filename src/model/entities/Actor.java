@@ -11,7 +11,7 @@ public class Actor {
 	}
 	
 	public String toString() {
-		return "To be implemented...";
+		return "<" + CPF + "," + name + ">";
 	}
 	
 	public String getCPF() {

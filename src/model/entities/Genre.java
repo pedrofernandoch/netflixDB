@@ -11,7 +11,7 @@ public class Genre {
 	}
 	
 	public String toString() {
-		return "To be implemented...";
+		return "<" + name + "," + description + ">";
 	}
 	
 	public String getName() {

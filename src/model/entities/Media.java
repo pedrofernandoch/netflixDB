@@ -30,7 +30,7 @@ public class Media {
 	}
 	
 	public String toString() {
-		return "To be implemented...";
+		return "<" + Integer.toString(id) + "," + title + "," + Integer.toString(releaseYear) + "," + thumb + "," + Integer.toString(duration) + "," + synopsis + "," + Integer.toString(ageRate) + "," + Integer.toString(evaluation) + "," + Integer.toString(episodesQuantity) + "," + Integer.toString(serie) + "," + Integer.toString(season) + ">";
 	}
 	
 	public int getId() {
