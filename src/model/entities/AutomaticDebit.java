@@ -19,6 +19,11 @@ public class AutomaticDebit {
 		this.agency = agency;
 		this.account = account;
 	}
+	
+	public String toString() {
+		return "<" + Integer.toString(user) + "," + Integer.toString(CPF) + "," + name + "," + lastName + "," + bank + "," + Integer.toString(agency) + "," + Integer.toString(account) + ">";
+	}
+	
 	public int getUser() {
 		return user;
 	}

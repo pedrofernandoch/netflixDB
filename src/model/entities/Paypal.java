@@ -11,6 +11,11 @@ public class Paypal {
 		this.email = email;
 		this.password = password;
 	}
+	
+	public String toString() {
+		return "<" + Integer.toString(user) + "," + email + "." + password + ">";
+	}
+	
 	public int getUser() {
 		return user;
 	}

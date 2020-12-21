@@ -16,6 +16,10 @@ public class Adult {
 		this.language = language;
 	}
 	
+	public String toString() {
+		return "<" + alias + "," + Integer.toString(user) + "," + Integer.toString(qualitStreaming) + "," + Integer.toString(subtitle) + "," + Integer.toOctalString(language) + ">";
+	}
+	
 	public String getAlias() {
 		return alias;
 	}

@@ -9,6 +9,11 @@ public class Language {
 		this.id = id;
 		this.name = name;
 	}
+	
+	public String toString() {
+		return "<" + Integer.toString(id) + "," + name + ">";
+	}
+	
 	public int getId() {
 		return id;
 	}

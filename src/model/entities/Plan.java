@@ -17,6 +17,11 @@ public class Plan {
 		this.screensQuantity = screensQuantity;
 		this.maxProfileNumber = maxProfileNumber;
 	}
+	
+	public String toString() {
+		return "<" + Integer.toString(id) + "," + name + "," + Float.toString(value) + "," + Integer.toString(maxQuality) + "," + Integer.toString(screensQuantity)  + "," + Integer.toString(maxProfileNumber) + ">";
+	}
+	
 	public int getId() {
 		return id;
 	}

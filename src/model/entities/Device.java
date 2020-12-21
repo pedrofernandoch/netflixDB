@@ -11,6 +11,11 @@ public class Device {
 		this.name = name;
 		this.operationalSystem = operationalSystem;
 	}
+	
+	public String toString() {
+		return "<" + Integer.toString(user) + "," + name + "," + operationalSystem + ">";
+	}
+	
 	public int getUser() {
 		return user;
 	}

@@ -13,6 +13,11 @@ public class Child {
 		this.ageRange = ageRange;
 		this.adult = adult;
 	}
+	
+	public String toString() {
+		return "<" + alias + "," + Integer.toString(user) + "," + Integer.toString(ageRange) + "," + adult + ">";
+	}
+	
 	public String getAlias() {
 		return alias;
 	}

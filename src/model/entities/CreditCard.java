@@ -9,6 +9,11 @@ public class CreditCard {
 		this.user = user;
 		this.cardNumber = cardNumber;
 	}
+	
+	public String toString() {
+		return "<" + Integer.toString(user) + "," + Integer.toString(cardNumber) + ">";
+	}
+	
 	public int getUser() {
 		return user;
 	}

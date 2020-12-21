@@ -15,6 +15,11 @@ public class Access {
 		this.IPv4 = IPv4;
 		this.accessTime = accessTime;
 	}
+	
+	public String toString() {
+		return "<" + Integer.toString(user) + "," + deviceName + "," + IPv4 + "," + accessTime.toString() + ">";
+	}
+	
 	public int getUser() {
 		return user;
 	}

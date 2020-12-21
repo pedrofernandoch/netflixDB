@@ -18,6 +18,10 @@ public class User {
 		this.dateOfBirth = dateOfBirth;
 		this.plan = plan;
 	}
+	
+	public String toString() {
+		return "<" + name + "," + cpf + "," + email + "," + dateOfBirth.toString() + "," + Integer.toString(plan) + ">";
+	}
 
 	public String getName() {
 		return name;

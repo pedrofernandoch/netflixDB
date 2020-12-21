@@ -15,6 +15,11 @@ public class Invoice {
 		this.user = user;
 		this.plan = plan;
 	}
+	
+	public String toString() {
+		return "<" + Integer.toString(invoiceCode) + "," + period.toString() + "," + Integer.toString(user) + "," + Integer.toString(plan) + ">";
+	}
+	
 	public int getInvoiceCode() {
 		return invoiceCode;
 	}

@@ -17,6 +17,11 @@ public class CardNumber {
 		this.securityCode = securityCode;
 		this.cardholderName = cardholderName;
 	}
+	
+	public String toString() {
+		return "<" + Integer.toString(cardNumber) + "," + banner + "," + dueDate.toString() + "," + Integer.toString(securityCode) + "," + cardholderName + ">";
+	}
+	
 	public int getCardNumber() {
 		return cardNumber;
 	}

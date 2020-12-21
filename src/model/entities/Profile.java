@@ -11,6 +11,11 @@ public class Profile {
 		this.user = user;
 		this.type = type;
 	}
+	
+	public String toString() {
+		return "<" + alias + "," + Integer.toString(user) + "," + type + ">";
+	}
+	
 	public String getAlias() {
 		return alias;
 	}
