@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,7 +24,9 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -38,8 +41,11 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.stage.PopupWindow;
+import javafx.stage.Stage;
 import model.entities.Plan;
 import model.entities.User;
 import model.enums.LogActivities;
@@ -55,7 +61,7 @@ public class MainViewController implements Initializable {
 	private ObservableList<Plan> planObsList;
 	private final String SQUARE_BUBBLE = "M24 1h-24v16.981h4v5.019l7-5.019h13z";
 	private boolean connected = false;
-
+	
 	// Connection tab
 	// Forms
 	@FXML
@@ -211,7 +217,16 @@ public class MainViewController implements Initializable {
 						LogActivities.UPDATE.getLogDescription() + " usuário de cpf: " + currentUserCpf, LogTypes.CRUD);
 				Alerts.showAlert("Atualização", "Usuário atualizado", "O usuário foi editado com sucesso!",
 						AlertType.INFORMATION);
-			} else {
+			}else {
+				String queryInsert = null;
+				PreparedStatement pstmt;
+				try {
+					pstmt = OracleConnection.getConnection().prepareStatement(queryInsert);
+					pstmt.executeUpdate();
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 				Alerts.showAlert("Cadastro", "Novo usuário criado", "O usuário foi salvo com sucesso!",
 						AlertType.INFORMATION);
 				newEventLog("Usuário", LogActivities.CREATE,
@@ -264,7 +279,20 @@ public class MainViewController implements Initializable {
 	}
 
 	public void onUserSearchButton() {
-
+		AnchorPane queryPane = null;
+		Scene queryScene = null;
+		try {
+			queryPane = FXMLLoader.load(getClass().getResource("/gui/QueryView.fxml"));
+			queryScene = new Scene(queryPane);
+			Stage stage = new Stage();
+			stage.getIcons().add(new Image(getClass().getResourceAsStream("/resources/netflixIcon.png")));
+			stage.setScene(queryScene);
+			stage.setResizable(false);
+			stage.setTitle("Query");
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	// CONNECTION
@@ -285,11 +313,6 @@ public class MainViewController implements Initializable {
 					"A conexão foi realizada com sucesso, e tabelas foram criadas e populadas usando do script: BD.sql",
 					AlertType.INFORMATION);
 			onConnectionCleanButton();
-			try {
-				OracleConnection.getConnection().close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		} else {
 			setUpValidationTextField(connectionUserNameField);
 			setUpValidationTextField(connectionPasswordField);
@@ -315,7 +338,7 @@ public class MainViewController implements Initializable {
 	}
 
 	public void onConnectionShowTableButton() {
-
+		
 	}
 	
 	private void sqlParser(String filePath) {
