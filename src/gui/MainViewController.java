@@ -277,11 +277,11 @@ public class MainViewController implements Initializable {
 			if (userSaveButton.getText().equals("Salvar")) {
 				newEventLog("Usu�rio", LogActivities.UPDATE,
 						LogActivities.UPDATE.getLogDescription() + " usu�rio de cpf: " + currentUserCpf, LogTypes.CRUD);
-				String queryInsert = "UPDATE Usuario u SET u.CPF = " + userCpfField.getText() 
-					+ ", u.Nome = " + userNameField.getText() + ", u.Email = " + userEmailField.getText() 
-					+ ", u.DataNasc = TO_DATE('" + userDateOfBirthField.getText() + "', '" + "yyyy/mm/dd" +  "')" 
+				String queryInsert = "UPDATE Usuario u SET u.CPF = '" + userCpfField.getText() 
+					+ "', u.Nome = '" + userNameField.getText() + "', u.Email = '" + userEmailField.getText() 
+					+ "', u.DataNasc = TO_DATE('" + userDateOfBirthField.getText() + "', '" + "yyyy/mm/dd" +  "')" 
 					+ ", u.Plano = " + userPlanComboBox.getSelectionModel().getSelectedItem().getId() 
-					+ " WHERE " + "u.CPF = " + userCpfField.getText();
+					+ " WHERE " + "u.CPF = '" + userCpfField.getText() + "'";
 				System.out.println("RUNNING QUERY: " + queryInsert);
 				PreparedStatement pstmt;
 				try {
@@ -298,7 +298,7 @@ public class MainViewController implements Initializable {
 				System.out.println(userDateOfBirthField.getText());
 				String queryInsert = "INSERT INTO Usuario VALUES ('" 
 						+ userCpfField.getText() + "', '" + userNameField.getText() + "', '"
-						+ userEmailField.getText()  + "', " + "TO_DATE('" + userDateOfBirthField.getText() + "', '" + "yyyy/mm/dd" +  "')" + ", '" + userPlanComboBox.getSelectionModel().getSelectedItem().getId() + "')";
+						+ userEmailField.getText()  + "', " + "TO_DATE('" + userDateOfBirthField.getText() + "', '" + "yyyy/mm/dd" +  "')" + ", " + userPlanComboBox.getSelectionModel().getSelectedItem().getId() + ")";
 				System.out.println("RUNNING QUERY: " + queryInsert);
 				PreparedStatement pstmt;
 				try {
