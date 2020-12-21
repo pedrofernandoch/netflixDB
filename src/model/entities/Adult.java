@@ -16,6 +16,10 @@ public class Adult {
 		this.language = language;
 	}
 	
+	public String toString() {
+		return "To be implemented...";
+	}
+	
 	public String getAlias() {
 		return alias;
 	}

@@ -6,6 +6,18 @@ public class Serie {
 	private int releaseYear;
 	private int seasonsQuantity;
 	
+	public Serie(int id, String title, int releaseYear, int seasonsQuantity) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.releaseYear = releaseYear;
+		this.seasonsQuantity = seasonsQuantity;
+	}
+	
+	public String toString() {
+		return "To be implemented...";
+	}
+	
 	public int getId() {
 		return id;
 	}

@@ -4,6 +4,16 @@ public class Actor {
 	private String CPF;
 	private String name;
 	
+	public Actor(String cPF, String name) {
+		super();
+		CPF = cPF;
+		this.name = name;
+	}
+	
+	public String toString() {
+		return "To be implemented...";
+	}
+	
 	public String getCPF() {
 		return CPF;
 	}

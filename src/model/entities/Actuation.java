@@ -4,6 +4,16 @@ public class Actuation {
 	private String CPF;
 	private int media;
 	
+	public Actuation(String cPF, int media) {
+		super();
+		CPF = cPF;
+		this.media = media;
+	}
+
+	public String toString() {
+		return "To be implemented...";
+	}
+
 	public String getCPF() {
 		return CPF;
 	}

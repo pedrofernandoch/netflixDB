@@ -11,6 +11,11 @@ public class Device {
 		this.name = name;
 		this.operationalSystem = operationalSystem;
 	}
+	
+	public String toString() {
+		return "To be implemented...";
+	}
+	
 	public int getUser() {
 		return user;
 	}

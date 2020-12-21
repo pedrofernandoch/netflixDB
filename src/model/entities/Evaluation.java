@@ -9,6 +9,19 @@ public class Evaluation {
 	private Date date;
 	private int grade;
 	
+	public Evaluation(String alias, int user, int media, Date date, int grade) {
+		super();
+		this.alias = alias;
+		this.user = user;
+		this.media = media;
+		this.date = date;
+		this.grade = grade;
+	}
+	
+	public String toString() {
+		return "To be implemented...";
+	}
+	
 	public String getAlias() {
 		return alias;
 	}

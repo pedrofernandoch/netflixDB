@@ -19,6 +19,11 @@ public class AutomaticDebit {
 		this.agency = agency;
 		this.account = account;
 	}
+	
+	public String toString() {
+		return "To be implemented...";
+	}
+	
 	public int getUser() {
 		return user;
 	}

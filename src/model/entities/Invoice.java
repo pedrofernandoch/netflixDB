@@ -15,6 +15,11 @@ public class Invoice {
 		this.user = user;
 		this.plan = plan;
 	}
+	
+	public String toString() {
+		return "To be implemented...";
+	}
+	
 	public int getInvoiceCode() {
 		return invoiceCode;
 	}

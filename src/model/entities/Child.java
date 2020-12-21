@@ -13,6 +13,11 @@ public class Child {
 		this.ageRange = ageRange;
 		this.adult = adult;
 	}
+	
+	public String toString() {
+		return "To be implemented...";
+	}
+	
 	public String getAlias() {
 		return alias;
 	}

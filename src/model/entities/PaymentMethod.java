@@ -9,6 +9,11 @@ public class PaymentMethod {
 		this.user = user;
 		this.type = type;
 	}
+	
+	public String toString() {
+		return "To be implemented...";
+	}
+	
 	public int getUser() {
 		return user;
 	}

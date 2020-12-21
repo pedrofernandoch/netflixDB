@@ -5,6 +5,17 @@ public class MediaAudio {
 	private int language;
 	private boolean original;
 	
+	public MediaAudio(int media, int language, boolean original) {
+		super();
+		this.media = media;
+		this.language = language;
+		this.original = original;
+	}
+	
+	public String toString() {
+		return "To be implemented...";
+	}
+	
 	public int getMedia() {
 		return media;
 	}

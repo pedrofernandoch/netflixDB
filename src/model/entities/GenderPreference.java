@@ -6,6 +6,18 @@ public class GenderPreference {
 	private String gender;
 	private float grade;
 	
+	public GenderPreference(String alias, int user, String gender, float grade) {
+		super();
+		this.alias = alias;
+		this.user = user;
+		this.gender = gender;
+		this.grade = grade;
+	}
+	
+	public String toString() {
+		return "To be implemented...";
+	}
+	
 	public String getAlias() {
 		return alias;
 	}

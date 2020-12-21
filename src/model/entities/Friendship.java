@@ -10,6 +10,20 @@ public class Friendship {
 	private Date acceptDate;
 	private Date requestDate;
 	
+	public Friendship(String profile1, int user1, String profile2, int user2, Date acceptDate, Date requestDate) {
+		super();
+		this.profile1 = profile1;
+		this.user1 = user1;
+		this.profile2 = profile2;
+		this.user2 = user2;
+		this.acceptDate = acceptDate;
+		this.requestDate = requestDate;
+	}
+	
+	public String toString() {
+		return "To be implemented...";
+	}
+	
 	public String getProfile1() {
 		return profile1;
 	}

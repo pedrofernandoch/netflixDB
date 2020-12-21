@@ -4,6 +4,16 @@ public class MediaSubtitle {
 	private int media;
 	private int language;
 	
+	public MediaSubtitle(int media, int language) {
+		super();
+		this.media = media;
+		this.language = language;
+	}
+	
+	public String toString() {
+		return "To be implemented...";
+	}
+	
 	public int getMedia() {
 		return media;
 	}

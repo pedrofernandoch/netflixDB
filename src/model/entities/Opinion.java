@@ -9,6 +9,19 @@ public class Opinion {
 	private Date date;
 	private String text;
 	
+	public Opinion(String alias, int user, int media, Date date, String text) {
+		super();
+		this.alias = alias;
+		this.user = user;
+		this.media = media;
+		this.date = date;
+		this.text = text;
+	}
+	
+	public String toString() {
+		return "To be implemented...";
+	}
+	
 	public String getAlias() {
 		return alias;
 	}

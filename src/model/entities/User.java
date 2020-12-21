@@ -18,6 +18,10 @@ public class User {
 		this.dateOfBirth = dateOfBirth;
 		this.plan = plan;
 	}
+	
+	public String toString() {
+		return "To be implemented...";
+	}
 
 	public String getName() {
 		return name;

@@ -15,6 +15,11 @@ public class Access {
 		this.IPv4 = IPv4;
 		this.accessTime = accessTime;
 	}
+	
+	public String toString() {
+		return "To be implemented...";
+	}
+	
 	public int getUser() {
 		return user;
 	}

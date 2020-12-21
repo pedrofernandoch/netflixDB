@@ -9,6 +9,11 @@ public class CreditCard {
 		this.user = user;
 		this.cardNumber = cardNumber;
 	}
+	
+	public String toString() {
+		return "To be implemented...";
+	}
+	
 	public int getUser() {
 		return user;
 	}

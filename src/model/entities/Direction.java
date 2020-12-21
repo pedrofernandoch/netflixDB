@@ -5,6 +5,17 @@ public class Direction {
 	private int media;
 	private String job;
 	
+	public Direction(String cPF, int media, String job) {
+		super();
+		CPF = cPF;
+		this.media = media;
+		this.job = job;
+	}
+	
+	public String toString() {
+		return "To be implemented...";
+	}
+	
 	public String getCPF() {
 		return CPF;
 	}

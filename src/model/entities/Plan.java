@@ -17,6 +17,11 @@ public class Plan {
 		this.screensQuantity = screensQuantity;
 		this.maxProfileNumber = maxProfileNumber;
 	}
+	
+	public String toString() {
+		return "To be implemented...";
+	}
+	
 	public int getId() {
 		return id;
 	}

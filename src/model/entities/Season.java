@@ -6,6 +6,18 @@ public class Season {
 	private String title;
 	private int episodesQuantity;
 	
+	public Season(int serie, int number, String title, int episodesQuantity) {
+		super();
+		this.serie = serie;
+		this.number = number;
+		this.title = title;
+		this.episodesQuantity = episodesQuantity;
+	}
+	
+	public String toString() {
+		return "To be implemented...";
+	}
+	
 	public int getSerie() {
 		return serie;
 	}

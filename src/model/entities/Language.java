@@ -9,6 +9,11 @@ public class Language {
 		this.id = id;
 		this.name = name;
 	}
+	
+	public String toString() {
+		return "To be implemented...";
+	}
+	
 	public int getId() {
 		return id;
 	}

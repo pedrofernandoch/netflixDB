@@ -11,6 +11,22 @@ public class Recommendation {
 	private Date date;
 	private String comment;
 	
+	public Recommendation(String alias, int user, String friendProfile, int friendUser, int media, Date date,
+			String comment) {
+		super();
+		this.alias = alias;
+		this.user = user;
+		this.friendProfile = friendProfile;
+		this.friendUser = friendUser;
+		this.media = media;
+		this.date = date;
+		this.comment = comment;
+	}
+	
+	public String toString() {
+		return "To be implemented...";
+	}
+	
 	public String getAlias() {
 		return alias;
 	}

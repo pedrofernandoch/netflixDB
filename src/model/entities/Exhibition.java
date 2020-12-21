@@ -9,6 +9,19 @@ public class Exhibition {
 	private Date date;
 	private int watchTime;
 	
+	public Exhibition(String alias, int user, int media, Date date, int watchTime) {
+		super();
+		this.alias = alias;
+		this.user = user;
+		this.media = media;
+		this.date = date;
+		this.watchTime = watchTime;
+	}
+	
+	public String toString() {
+		return "To be implemented...";
+	}
+	
 	public String getAlias() {
 		return alias;
 	}

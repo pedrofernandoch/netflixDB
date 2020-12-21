@@ -13,6 +13,26 @@ public class Media {
 	private int serie;
 	private int season;
 	
+	public Media(int id, String title, int releaseYear, String thumb, int duration, String synopsis, int ageRate,
+			int evaluation, int episodesQuantity, int serie, int season) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.releaseYear = releaseYear;
+		this.thumb = thumb;
+		this.duration = duration;
+		this.synopsis = synopsis;
+		this.ageRate = ageRate;
+		this.evaluation = evaluation;
+		this.episodesQuantity = episodesQuantity;
+		this.serie = serie;
+		this.season = season;
+	}
+	
+	public String toString() {
+		return "To be implemented...";
+	}
+	
 	public int getId() {
 		return id;
 	}
