@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -276,10 +277,29 @@ public class MainViewController implements Initializable {
 			if (userSaveButton.getText().equals("Salvar")) {
 				newEventLog("Usu�rio", LogActivities.UPDATE,
 						LogActivities.UPDATE.getLogDescription() + " usu�rio de cpf: " + currentUserCpf, LogTypes.CRUD);
+				String queryInsert = "UPDATE Usuario u SET u.CPF = " + userCpfField.getText() 
+					+ ", u.Nome = " + userNameField.getText() + ", u.Email = " + userEmailField.getText() 
+					+ ", u.DataNasc = TO_DATE('" + userDateOfBirthField.getText() + "', '" + "yyyy/mm/dd" +  "')" 
+					+ ", u.Plano = " + userPlanComboBox.getSelectionModel().getSelectedItem().getId() 
+					+ " WHERE " + "u.CPF = " + userCpfField.getText();
+				System.out.println("RUNNING QUERY: " + queryInsert);
+				PreparedStatement pstmt;
+				try {
+					pstmt = OracleConnection.getConnection().prepareStatement(queryInsert);
+					pstmt.executeUpdate();
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 				Alerts.showAlert("Atualiza��o", "Usu�rio atualizado", "O usu�rio foi editado com sucesso!",
 						AlertType.INFORMATION);
 			} else {
-				String queryInsert = null;
+//				String newDate = new SimpleDateFormat("yyyy-MM-dd").format(userDateOfBirthField.getText());
+				System.out.println(userDateOfBirthField.getText());
+				String queryInsert = "INSERT INTO Usuario VALUES ('" 
+						+ userCpfField.getText() + "', '" + userNameField.getText() + "', '"
+						+ userEmailField.getText()  + "', " + "TO_DATE('" + userDateOfBirthField.getText() + "', '" + "yyyy/mm/dd" +  "')" + ", '" + userPlanComboBox.getSelectionModel().getSelectedItem().getId() + "')";
+				System.out.println("RUNNING QUERY: " + queryInsert);
 				PreparedStatement pstmt;
 				try {
 					pstmt = OracleConnection.getConnection().prepareStatement(queryInsert);
