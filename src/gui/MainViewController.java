@@ -5,8 +5,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -45,36 +48,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.stage.PopupWindow;
 import javafx.stage.Stage;
-import model.entities.Access;
-import model.entities.Actor;
-import model.entities.Actuation;
-import model.entities.Adult;
-import model.entities.AutomaticDebit;
-import model.entities.CardNumber;
-import model.entities.Child;
-import model.entities.CreditCard;
-import model.entities.Device;
-import model.entities.Direction;
-import model.entities.Director;
-import model.entities.Evaluation;
-import model.entities.Exhibition;
-import model.entities.Friendship;
-import model.entities.GenderPreference;
-import model.entities.Genre;
-import model.entities.Invoice;
-import model.entities.Language;
-import model.entities.Media;
-import model.entities.MediaAudio;
-import model.entities.MediaGender;
-import model.entities.MediaSubtitle;
-import model.entities.Opinion;
-import model.entities.PaymentMethod;
-import model.entities.Paypal;
 import model.entities.Plan;
-import model.entities.Profile;
-import model.entities.Recommendation;
-import model.entities.Season;
-import model.entities.Serie;
 import model.entities.User;
 import model.enums.LogActivities;
 import model.enums.LogTypes;
@@ -82,44 +56,22 @@ import model.enums.LogTypes;
 public class MainViewController implements Initializable {
 
 	private ArrayList<User> users = new ArrayList<>();
-	private ArrayList<Access> accesses = new ArrayList<>();
-	private ArrayList<Actor> actors = new ArrayList<>();
-	private ArrayList<Actuation> actuations = new ArrayList<>();
-	private ArrayList<Adult> adults = new ArrayList<>();
-	private ArrayList<AutomaticDebit> automaticDebits = new ArrayList<>();
-	private ArrayList<CardNumber> cardNumbers = new ArrayList<>();
-	private ArrayList<Child> childs = new ArrayList<>();
-	private ArrayList<CreditCard> creditCards = new ArrayList<>();
-	private ArrayList<Device> devices = new ArrayList<>();
-	private ArrayList<Direction> directions = new ArrayList<>();
-	private ArrayList<Director> directors = new ArrayList<>();
-	private ArrayList<Evaluation> evaluations = new ArrayList<>();
-	private ArrayList<Exhibition> exhibitions = new ArrayList<>();
-	private ArrayList<Friendship> friendships = new ArrayList<>();
-	private ArrayList<GenderPreference> genderPreferences = new ArrayList<>();
-	private ArrayList<Genre> genres = new ArrayList<>();
-	private ArrayList<Invoice> invoices = new ArrayList<>();
-	private ArrayList<Language> languages = new ArrayList<>();
-	private ArrayList<Media> medias = new ArrayList<>();
-	private ArrayList<MediaAudio> mediaAudios = new ArrayList<>();
-	private ArrayList<MediaGender> mediaGenders = new ArrayList<>();
-	private ArrayList<MediaSubtitle> mediaSubtitles = new ArrayList<>();
-	private ArrayList<Opinion> opinions = new ArrayList<>();
-	private ArrayList<PaymentMethod> paymentMethods = new ArrayList<>();
-	private ArrayList<Paypal> paypals = new ArrayList<>();
-	private ArrayList<Profile> profiles = new ArrayList<>();
-	private ArrayList<Recommendation> recommendations = new ArrayList<>();
-	private ArrayList<Season> seasons = new ArrayList<>();
-	private ArrayList<Serie> series = new ArrayList<>();
 	private ArrayList<Plan> plans = new ArrayList<>();
 	
 	private static ObservableList<User>userObsList;
 	private ObservableList<Plan> planObsList;
 	
-	private ArrayList<String> statements = new ArrayList<>(); 
+	private ArrayList<String> createStatements = new ArrayList<>();
+	private ArrayList<String> populatSstatements = new ArrayList<>();
+	private ArrayList<String> searchStatements = new ArrayList<>();
+	private ArrayList<String> dropStatements = new ArrayList<>();
 	private String currentUserCpf = null;
 	private final String SQUARE_BUBBLE = "M24 1h-24v16.981h4v5.019l7-5.019h13z";
 	private boolean connected = false;
+	private Statement stmt;
+    private ResultSet rs;
+    private PreparedStatement pstmt;
+    private Connection connection;
 
 	// Connection tab
 	// Forms
@@ -234,7 +186,7 @@ public class MainViewController implements Initializable {
 		userNameTableColumn.setCellFactory(TooltippedTableCell.forTableColumn());
 		userEmailTableColumn.setCellFactory(TooltippedTableCell.forTableColumn());
 		userCpfTableColumn.setCellFactory(TooltippedTableCell.forTableColumn());
-		userDateOfBirthTableColumn.setCellFactory(TooltippedTableCell.forTableColumn());
+		//userDateOfBirthTableColumn.setCellFactory(TooltippedTableCell.forTableColumn());
 
 		userTable.setRowFactory(tv -> {
 			TableRow<User> row = new TableRow<>();
@@ -270,8 +222,7 @@ public class MainViewController implements Initializable {
 							LogActivities.UPDATE.getLogDescription() + " usuário de cpf: " + currentUserCpf, LogTypes.CRUD);
 					String queryInsert = "UPDATE Usuario u SET u.CPF = " + userCpfField.getText() 
 						+ ", u.Nome = " + userNameField.getText() + ", u.Email = " + userEmailField.getText() 
-						+ ", u.DataNasc = TO_DATE('" + userDateOfBirthField.getText() + "', '" + "yyyy/mm/dd" +  "')" 
-
+						+ ", u.DataNasc = TO_DATE('" + userDateOfBirthField.getText() + "', '" + "yyyy/mm/dd" +  "')"
 						+ ", u.Plano = " + userPlanComboBox.getSelectionModel().getSelectedItem().getId() 
 						+ " WHERE " + "u.CPF = '" + userCpfField.getText() + "'";
 					System.out.println("RUNNING QUERY: " + queryInsert);
@@ -384,28 +335,40 @@ public class MainViewController implements Initializable {
 		if (connectionUserNameField.getText().length() != 0 && connectionPasswordField.getText().length() != 0
 				&& connectionHostNameField.getText().length() != 0 && connectionPortField.getText().length() != 0
 				&& connectionSidField.getText().length() != 0) {
-			OracleConnection.createConnection(connectionUserNameField.getText(), connectionPasswordField.getText(),
+			connected = OracleConnection.createConnection(connectionUserNameField.getText(), connectionPasswordField.getText(),
 					connectionHostNameField.getText(), connectionPortField.getText(), connectionSidField.getText());
-			sqlParser(System.getProperty("user.dir")+"/BD.sql");
-			newEventLog("Usuï¿½rio", LogActivities.CONNECTING_DB,
-					LogActivities.CONNECTING_DB.getLogDescription() + " no host " + connectionHostNameField
-							+ ", na porta " + connectionPortField + ", no SID " + connectionSidField,
-					LogTypes.CONNECTION);
-			Alerts.showAlert("Conexï¿½o", "Conexï¿½o realizada!",
-					"A conexï¿½o foi realizada com sucesso, e tabelas foram criadas e populadas usando do script: BD.sql",
-					AlertType.INFORMATION);
-			onConnectionCleanButton();
-			connected = true;
-			light.setFill(javafx.scene.paint.Color.LIMEGREEN);
-			Tooltip.install(light, makeBubble(new Tooltip("Conectado")));
+			if(connected) {
+				connection = OracleConnection.getConnection();
+				connectionConnectButton.setDisable(true);
+				connectionCleanButton.setDisable(true);
+				connectionUserNameField.setEditable(false);
+				connectionPasswordField.setEditable(false);
+				connectionHostNameField.setEditable(false);
+				connectionPortField.setEditable(false);
+				connectionSidField.setEditable(false);
+				sqlParser(System.getProperty("user.dir")+"/src/resources/CreateDB.sql", createStatements);
+				sqlParser(System.getProperty("user.dir")+"/src/resources/PopulateDB.sql", populatSstatements);
+				executeStatements(createStatements);
+				executeStatements(populatSstatements);
+				newEventLog("Usuário", LogActivities.CONNECTING_DB,
+						LogActivities.CONNECTING_DB.getLogDescription() + " no host " + connectionHostNameField.getText()
+								+ ", na porta " + connectionPortField + ", no SID " + connectionSidField.getText(),
+						LogTypes.CONNECTION);
+				Alerts.showAlert("Conexão", "Conexão realizada!",
+						"A conexão foi realizada com sucesso, e tabelas foram criadas e populadas usando dos scripts: CreateDB.sql e PopulateDB.sql",
+						AlertType.INFORMATION);
+				onConnectionCleanButton();
+				light.setFill(javafx.scene.paint.Color.LIMEGREEN);
+				Tooltip.install(light, makeBubble(new Tooltip("Conectado")));
+			}
 		} else {
 			setUpValidationTextField(connectionUserNameField);
 			setUpValidationTextField(connectionPasswordField);
 			setUpValidationTextField(connectionHostNameField);
 			setUpValidationTextField(connectionPortField);
 			setUpValidationTextField(connectionSidField);
-			Alerts.showAlert("Erro", "Preencha todos os campos obrigatï¿½rios",
-					"Os campos que possuem '*' sï¿½o obrigatï¿½rios", AlertType.ERROR);
+			Alerts.showAlert("Erro", "Preencha todos os campos obrigatórios",
+					"Os campos que possuem '*' são obrigatórios", AlertType.ERROR);
 		}
 	}
 
@@ -424,14 +387,35 @@ public class MainViewController implements Initializable {
 
 	public void onConnectionShowTableButton() {
 		if(connected) {
-			
+			connectionTableTextArea.clear();
+			sqlParser(System.getProperty("user.dir")+"/src/resources/ShowAllDB.sql", searchStatements);
+			try {
+				String columnLabel;
+				stmt = connection.createStatement();
+				for(String query : searchStatements) {
+					rs = stmt.executeQuery(query);
+					int numCols = rs.getMetaData().getColumnCount();
+					connectionTableTextArea.appendText(query.substring(13, query.length())+"\n<");
+					while(rs.next()) {
+						for(int i=0;i<numCols;i++) {
+							columnLabel = rs.getMetaData().getColumnName(i+1);
+							connectionTableTextArea.appendText(rs.getString(columnLabel)+",");
+						}
+						connectionTableTextArea.deletePreviousChar();
+						connectionTableTextArea.appendText(">\n");
+					}
+				}
+				stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}else {
-			Alerts.showAlert("Erro", "Vocï¿½ nï¿½o se conectou ao banco!",
-					"Para realizar operaï¿½ï¿½es de crud,consulta e visualizaï¿½ï¿½o das tabelas, vocï¿½ precisa se conectar ao banco primeiro, vï¿½ atï¿½ a aba de Conexï¿½o e preenche os campos necessï¿½rios para se conectar", AlertType.ERROR);
+			Alerts.showAlert("Erro", "Você não se conectou ao banco!",
+					"Para realizar operações de crud,consulta e visualização das tabelas, você precisa se conectar ao banco primeiro, vá até a aba de Conexão e preencha os campos necessários para se conectar", AlertType.ERROR);
 		}
 	}
 	
-	private void sqlParser(String filePath) {
+	private void sqlParser(String filePath, ArrayList<String> statements) {
 		try (BufferedReader reader = new BufferedReader(new FileReader(new File(filePath)))) {
     	    String line;
     	    String delimiter = ";";
@@ -443,9 +427,9 @@ public class MainViewController implements Initializable {
     	        }
     	        if (line.isEmpty()) {
     	            continue;
-    	        }
-    	        buffer.append(line.replaceFirst("\\h+$", "")).append("\n");
-    	        if (line.endsWith(delimiter)) {    	        	
+    	        } 	    
+    	        buffer.append(line.replace(";", ""));
+    	        if (line.endsWith(delimiter)) {    	
     	            statements.add(buffer.toString());    	       
     	            buffer.setLength(0);
     	        }
@@ -453,6 +437,20 @@ public class MainViewController implements Initializable {
     	}catch (IOException e) {
     		e.printStackTrace();
     	}
+	}
+	
+	private void executeStatements(ArrayList<String> statements) {
+		if(connected) {
+			try {
+				for(String query : statements) {
+					pstmt = connection.prepareStatement(query);
+					pstmt.executeUpdate();
+					pstmt.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	// Validators

@@ -103,7 +103,7 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Button>
-                              <TextArea fx:id="connectionTableTextArea" editable="false" layoutX="315.0" layoutY="55.0" prefHeight="369.0" prefWidth="807.0" style="-fx-control-inner-background:#000000; -fx-font-family: Consolas; -fx-highlight-fill: #ffffff; -fx-highlight-text-fill: #000000; -fx-text-fill: #ffffff; -fx-font-size: 20" />
+                              <TextArea fx:id="connectionTableTextArea" editable="false" layoutX="315.0" layoutY="55.0" prefHeight="369.0" prefWidth="807.0" style="-fx-control-inner-background:#000000; -fx-font-family: Consolas; -fx-highlight-fill: #ffffff; -fx-highlight-text-fill: #000000; -fx-text-fill: #ffffff; -fx-font-size: 10" />
                               <Button fx:id="connectionShowTableButton" layoutX="595.0" layoutY="429.0" mnemonicParsing="false" onAction="#onConnectionShowTableButton" prefHeight="51.0" prefWidth="270.0" style="-fx-background-color: black;" text="Mostrar Tabelas" textFill="WHITE">
                                  <graphic>
                                     <ImageView fitHeight="32.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">

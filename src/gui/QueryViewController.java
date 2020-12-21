@@ -1,6 +1,7 @@
 package gui;
 
 import java.net.URL;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -155,7 +156,7 @@ public class QueryViewController implements Initializable {
 			if(cbEmail.isSelected()) query = query.concat("u.Email LIKE '%"+queryEmailField.getText()+"%' AND ");
 			if(cbDateOfBirth.isSelected()) query = query.concat("u.DataNasc = TO_DATE('"+queryDateOfBirthDatePicker.getEditor().getText()+"', 'dd/mm/yyy') AND ");
 			if(cbPlan.isSelected()) query = query.concat("u.plano = "+queryPlanComboBox.getSelectionModel().getSelectedItem().getId()+" AND ");
-			query = query.substring(0, query.length()-5).concat(";");
+			query = query.substring(0, query.length()-5);
 		}
 		try {
 			stmt = OracleConnection.getConnection().createStatement();
