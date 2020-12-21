@@ -329,7 +329,7 @@ public class MainViewController implements Initializable {
 	}
 
 	public void onUserSearchButton() {
-
+		
 	}
 
 	// CONNECTION
