@@ -271,8 +271,9 @@ public class MainViewController implements Initializable {
 					String queryInsert = "UPDATE Usuario u SET u.CPF = " + userCpfField.getText() 
 						+ ", u.Nome = " + userNameField.getText() + ", u.Email = " + userEmailField.getText() 
 						+ ", u.DataNasc = TO_DATE('" + userDateOfBirthField.getText() + "', '" + "yyyy/mm/dd" +  "')" 
+
 						+ ", u.Plano = " + userPlanComboBox.getSelectionModel().getSelectedItem().getId() 
-						+ " WHERE " + "u.CPF = " + userCpfField.getText();
+						+ " WHERE " + "u.CPF = '" + userCpfField.getText() + "'";
 					System.out.println("RUNNING QUERY: " + queryInsert);
 					PreparedStatement pstmt;
 					try {
@@ -289,7 +290,7 @@ public class MainViewController implements Initializable {
 					System.out.println(userDateOfBirthField.getText());
 					String queryInsert = "INSERT INTO Usuario VALUES ('" 
 							+ userCpfField.getText() + "', '" + userNameField.getText() + "', '"
-							+ userEmailField.getText()  + "', " + "TO_DATE('" + userDateOfBirthField.getText() + "', '" + "yyyy/mm/dd" +  "')" + ", '" + userPlanComboBox.getSelectionModel().getSelectedItem().getId() + "')";
+							+ userEmailField.getText()  + "', " + "TO_DATE('" + userDateOfBirthField.getText() + "', '" + "yyyy/mm/dd" +  "')" + ", " + userPlanComboBox.getSelectionModel().getSelectedItem().getId() + ")";
 					System.out.println("RUNNING QUERY: " + queryInsert);
 					PreparedStatement pstmt;
 					try {
@@ -313,12 +314,12 @@ public class MainViewController implements Initializable {
 				setUpValidationTextField(userCpfField);
 				setUpValidationTextField(userDateOfBirthField);
 				setUpValidationPlanComboBox(userPlanComboBox);
-				Alerts.showAlert("Erro", "Preencha todos os campos obrigatórios",
-						"Os campos que possuem '*' são obrigatórios", AlertType.ERROR);
+				Alerts.showAlert("Erro", "Preencha todos os campos obrigatï¿½rios",
+						"Os campos que possuem '*' sï¿½o obrigatï¿½rios", AlertType.ERROR);
 			}
 		}else {
-			Alerts.showAlert("Erro", "Você não se conectou ao banco!",
-					"Para realizar operações de crud,consulta e visualização das tabelas, você precisa se conectar ao banco primeiro, vá até a aba de Conexão e preenche os campos necessários para se conectar", AlertType.ERROR);
+			Alerts.showAlert("Erro", "Vocï¿½ nï¿½o se conectou ao banco!",
+					"Para realizar operaï¿½ï¿½es de crud,consulta e visualizaï¿½ï¿½o das tabelas, vocï¿½ precisa se conectar ao banco primeiro, vï¿½ atï¿½ a aba de Conexï¿½o e preenche os campos necessï¿½rios para se conectar", AlertType.ERROR);
 		}
 	}
 
@@ -339,13 +340,13 @@ public class MainViewController implements Initializable {
 
 	public void onUserDeleteButton() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Confirmar exclusão");
-		alert.setHeaderText("Você tem certeza que quer deletar esses usuários?");
+		alert.setTitle("Confirmar exclusï¿½o");
+		alert.setHeaderText("Vocï¿½ tem certeza que quer deletar esses usuï¿½rios?");
 		alert.setContentText(
-				"Ao deletado um usuário ele será permanentemente removido do banco de dados juntamente com seus perfis, preferências e quaisquer daods coletados sobre o mesmo");
+				"Ao deletado um usuï¿½rio ele serï¿½ permanentemente removido do banco de dados juntamente com seus perfis, preferï¿½ncias e quaisquer daods coletados sobre o mesmo");
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
-			Alerts.showAlert("Exclusão", "Usuários deletados", "Os usuários foram deletados com sucesso!",
+			Alerts.showAlert("Exclusï¿½o", "Usuï¿½rios deletados", "Os usuï¿½rios foram deletados com sucesso!",
 					AlertType.INFORMATION);
 		} else {
 			for (User user : userObsList) {
@@ -372,8 +373,8 @@ public class MainViewController implements Initializable {
 				e.printStackTrace();
 			}
 		}else {
-			Alerts.showAlert("Erro", "Você não se conectou ao banco!",
-					"Para realizar operações de crud,consulta e visualização das tabelas, você precisa se conectar ao banco primeiro, vá até a aba de Conexão e preenche os campos necessários para se conectar", AlertType.ERROR);
+			Alerts.showAlert("Erro", "Vocï¿½ nï¿½o se conectou ao banco!",
+					"Para realizar operaï¿½ï¿½es de crud,consulta e visualizaï¿½ï¿½o das tabelas, vocï¿½ precisa se conectar ao banco primeiro, vï¿½ atï¿½ a aba de Conexï¿½o e preenche os campos necessï¿½rios para se conectar", AlertType.ERROR);
 		}
 	}
 
@@ -390,8 +391,8 @@ public class MainViewController implements Initializable {
 					LogActivities.CONNECTING_DB.getLogDescription() + " no host " + connectionHostNameField
 							+ ", na porta " + connectionPortField + ", no SID " + connectionSidField,
 					LogTypes.CONNECTION);
-			Alerts.showAlert("Conexão", "Conexão realizada!",
-					"A conexão foi realizada com sucesso, e tabelas foram criadas e populadas usando do script: BD.sql",
+			Alerts.showAlert("Conexï¿½o", "Conexï¿½o realizada!",
+					"A conexï¿½o foi realizada com sucesso, e tabelas foram criadas e populadas usando do script: BD.sql",
 					AlertType.INFORMATION);
 			onConnectionCleanButton();
 			connected = true;
@@ -403,8 +404,8 @@ public class MainViewController implements Initializable {
 			setUpValidationTextField(connectionHostNameField);
 			setUpValidationTextField(connectionPortField);
 			setUpValidationTextField(connectionSidField);
-			Alerts.showAlert("Erro", "Preencha todos os campos obrigatórios",
-					"Os campos que possuem '*' são obrigatórios", AlertType.ERROR);
+			Alerts.showAlert("Erro", "Preencha todos os campos obrigatï¿½rios",
+					"Os campos que possuem '*' sï¿½o obrigatï¿½rios", AlertType.ERROR);
 		}
 	}
 
@@ -425,8 +426,8 @@ public class MainViewController implements Initializable {
 		if(connected) {
 			
 		}else {
-			Alerts.showAlert("Erro", "Você não se conectou ao banco!",
-					"Para realizar operações de crud,consulta e visualização das tabelas, você precisa se conectar ao banco primeiro, vá até a aba de Conexão e preenche os campos necessários para se conectar", AlertType.ERROR);
+			Alerts.showAlert("Erro", "Vocï¿½ nï¿½o se conectou ao banco!",
+					"Para realizar operaï¿½ï¿½es de crud,consulta e visualizaï¿½ï¿½o das tabelas, vocï¿½ precisa se conectar ao banco primeiro, vï¿½ atï¿½ a aba de Conexï¿½o e preenche os campos necessï¿½rios para se conectar", AlertType.ERROR);
 		}
 	}
 	
