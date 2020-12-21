@@ -55,6 +55,11 @@ public class MainViewController implements Initializable {
 	private ObservableList<Plan> planObsList;
 	private final String SQUARE_BUBBLE = "M24 1h-24v16.981h4v5.019l7-5.019h13z";
 	private boolean connected = false;
+	// Aqui vem o array
+	
+	// for com statements pra cada nome de tabela
+	// outro for pra pegar resultado dos statements e adicionar pra cada um dos arraylist
+	// printar arraylist
 
 	// Connection tab
 	// Forms
@@ -128,6 +133,7 @@ public class MainViewController implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
 		initializeData();
 		initializeLight();
+		connectionTableTextArea.appendText("Oi eu sou marinzera");
 	}
 
 	private void initializeLight() {
@@ -207,15 +213,15 @@ public class MainViewController implements Initializable {
 				&& userCpfField.getText().length() != 0 && userDateOfBirthField.getText().length() != 0
 				&& userPlanComboBox.getSelectionModel().isEmpty() == false) {
 			if (userSaveButton.getText().equals("Salvar")) {
-				newEventLog("Usuário", LogActivities.UPDATE,
-						LogActivities.UPDATE.getLogDescription() + " usuário de cpf: " + currentUserCpf, LogTypes.CRUD);
-				Alerts.showAlert("Atualização", "Usuário atualizado", "O usuário foi editado com sucesso!",
+				newEventLog("Usuï¿½rio", LogActivities.UPDATE,
+						LogActivities.UPDATE.getLogDescription() + " usuï¿½rio de cpf: " + currentUserCpf, LogTypes.CRUD);
+				Alerts.showAlert("Atualizaï¿½ï¿½o", "Usuï¿½rio atualizado", "O usuï¿½rio foi editado com sucesso!",
 						AlertType.INFORMATION);
 			} else {
-				Alerts.showAlert("Cadastro", "Novo usuário criado", "O usuário foi salvo com sucesso!",
+				Alerts.showAlert("Cadastro", "Novo usuï¿½rio criado", "O usuï¿½rio foi salvo com sucesso!",
 						AlertType.INFORMATION);
-				newEventLog("Usuário", LogActivities.CREATE,
-						LogActivities.CREATE.getLogDescription() + " novo usuário: " + userNameField.getText(),
+				newEventLog("Usuï¿½rio", LogActivities.CREATE,
+						LogActivities.CREATE.getLogDescription() + " novo usuï¿½rio: " + userNameField.getText(),
 						LogTypes.CRUD);
 			}
 			onUserCleanButton();
@@ -225,8 +231,8 @@ public class MainViewController implements Initializable {
 			setUpValidationTextField(userCpfField);
 			setUpValidationTextField(userDateOfBirthField);
 			setUpValidationPlanComboBox(userPlanComboBox);
-			Alerts.showAlert("Erro", "Preencha todos os campos obrigatórios",
-					"Os campos que possuem '*' são obrigátorios", AlertType.ERROR);
+			Alerts.showAlert("Erro", "Preencha todos os campos obrigatï¿½rios",
+					"Os campos que possuem '*' sï¿½o obrigï¿½torios", AlertType.ERROR);
 		}
 	}
 
@@ -247,13 +253,13 @@ public class MainViewController implements Initializable {
 
 	public void onUserDeleteButton() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Confirmar exclusão");
-		alert.setHeaderText("Você tem certeza que quer deletar esses usuários?");
+		alert.setTitle("Confirmar exclusï¿½o");
+		alert.setHeaderText("Vocï¿½ tem certeza que quer deletar esses usuï¿½rios?");
 		alert.setContentText(
-				"Ao deletado um usuário ele será permanentemente removido do banco de dados juntamente com seus perfis, preferências e quaisquer daods coletados sobre esse usuário");
+				"Ao deletado um usuï¿½rio ele serï¿½ permanentemente removido do banco de dados juntamente com seus perfis, preferï¿½ncias e quaisquer daods coletados sobre esse usuï¿½rio");
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
-			Alerts.showAlert("Exclusão", "Usuários deletados", "Os usuários foram deletados com sucesso!",
+			Alerts.showAlert("Exclusï¿½o", "Usuï¿½rios deletados", "Os usuï¿½rios foram deletados com sucesso!",
 					AlertType.INFORMATION);
 		} else {
 			for (User user : userObsList) {
@@ -277,12 +283,12 @@ public class MainViewController implements Initializable {
 					connectionHostNameField.getText(), connectionPortField.getText(), connectionSidField.getText());
 			//System.out.println("Conectou\n"+System.getProperty("user.dir")+"/BD.sql");
 			sqlParser(System.getProperty("user.dir")+"/BD.sql");
-			newEventLog("Usuário", LogActivities.CONNECTING_DB,
+			newEventLog("Usuï¿½rio", LogActivities.CONNECTING_DB,
 					LogActivities.CONNECTING_DB.getLogDescription() + " no host " + connectionHostNameField
 							+ ", na porta " + connectionPortField + ", no SID " + connectionSidField,
 					LogTypes.CONNECTION);
-			Alerts.showAlert("Conexão", "Conexão realizada!",
-					"A conexão foi realizada com sucesso, e tabelas foram criadas e populadas usando do script: BD.sql",
+			Alerts.showAlert("Conexï¿½o", "Conexï¿½o realizada!",
+					"A conexï¿½o foi realizada com sucesso, e tabelas foram criadas e populadas usando do script: BD.sql",
 					AlertType.INFORMATION);
 			onConnectionCleanButton();
 			try {
@@ -296,8 +302,8 @@ public class MainViewController implements Initializable {
 			setUpValidationTextField(connectionHostNameField);
 			setUpValidationTextField(connectionPortField);
 			setUpValidationTextField(connectionSidField);
-			Alerts.showAlert("Erro", "Preencha todos os campos obrigatórios",
-					"Os campos que possuem '*' são obrigátorios", AlertType.ERROR);
+			Alerts.showAlert("Erro", "Preencha todos os campos obrigatï¿½rios",
+					"Os campos que possuem '*' sï¿½o obrigï¿½torios", AlertType.ERROR);
 		}
 	}
 
@@ -391,7 +397,7 @@ public class MainViewController implements Initializable {
 			Tooltip.install(light, makeBubble(new Tooltip("Conectado")));
 		} else {
 			Tooltip.install(light,
-					makeBubble(new Tooltip("Desconectado, por favor se concete ao banco através do botão xxx")));
+					makeBubble(new Tooltip("Desconectado, por favor se concete ao banco atravï¿½s do botï¿½o xxx")));
 			light.setFill(javafx.scene.paint.Color.RED);
 		}
 	}
