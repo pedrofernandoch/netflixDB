@@ -40,6 +40,36 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.shape.Circle;
 import javafx.stage.PopupWindow;
+
+import model.entities.Access;
+import model.entities.Actor;
+import model.entities.Actuation;
+import model.entities.Adult;
+import model.entities.AutomaticDebit;
+import model.entities.CardNumber;
+import model.entities.Child;
+import model.entities.CreditCard;
+import model.entities.Device;
+import model.entities.Direction;
+import model.entities.Director;
+import model.entities.Evaluation;
+import model.entities.Exhibition;
+import model.entities.Friendship;
+import model.entities.GenderPreference;
+import model.entities.Genre;
+import model.entities.Invoice;
+import model.entities.Language;
+import model.entities.Media;
+import model.entities.MediaAudio;
+import model.entities.MediaGender;
+import model.entities.MediaSubtitle;
+import model.entities.Opinion;
+import model.entities.PaymentMethod;
+import model.entities.Paypal;
+import model.entities.Profile;
+import model.entities.Recommendation;
+import model.entities.Season;
+import model.entities.Serie;
 import model.entities.Plan;
 import model.entities.User;
 import model.enums.LogActivities;
@@ -55,7 +85,35 @@ public class MainViewController implements Initializable {
 	private ObservableList<Plan> planObsList;
 	private final String SQUARE_BUBBLE = "M24 1h-24v16.981h4v5.019l7-5.019h13z";
 	private boolean connected = false;
-	// Aqui vem o array
+	private ArrayList<Access> accesses = new ArrayList<Access>();
+	private ArrayList<Actor> actors = new ArrayList<Actor>();
+	private ArrayList<Actuation> actuations = new ArrayList<Actuation>();
+	private ArrayList<Adult> adults = new ArrayList<Adult>();
+	private ArrayList<AutomaticDebit> automaticDebits = new ArrayList<AutomaticDebit>();
+	private ArrayList<CardNumber> cardNumbers = new ArrayList<CardNumber>();
+	private ArrayList<Child> childs = new ArrayList<Child>();
+	private ArrayList<CreditCard> creditCards = new ArrayList<CreditCard>();
+	private ArrayList<Device> devices = new ArrayList<Device>();
+	private ArrayList<Direction> directions = new ArrayList<Direction>();
+	private ArrayList<Director> directors = new ArrayList<Director>();
+	private ArrayList<Evaluation> evaluations = new ArrayList<Evaluation>();
+	private ArrayList<Exhibition> exhibitions = new ArrayList<Exhibition>();
+	private ArrayList<Friendship> friendships = new ArrayList<Friendship>();
+	private ArrayList<GenderPreference> genderPreferences = new ArrayList<GenderPreference>();
+	private ArrayList<Genre> genres = new ArrayList<Genre>();
+	private ArrayList<Invoice> invoices = new ArrayList<Invoice>();
+	private ArrayList<Language> languages = new ArrayList<Language>();
+	private ArrayList<Media> medias = new ArrayList<Media>();
+	private ArrayList<MediaAudio> mediaAudios = new ArrayList<MediaAudio>();
+	private ArrayList<MediaGender> mediaGenders = new ArrayList<MediaGender>();
+	private ArrayList<MediaSubtitle> mediaSubtitles = new ArrayList<MediaSubtitle>();
+	private ArrayList<Opinion> opinions = new ArrayList<Opinion>();
+	private ArrayList<PaymentMethod> paymentMethods = new ArrayList<PaymentMethod>();
+	private ArrayList<Paypal> paypals = new ArrayList<Paypal>();
+	private ArrayList<Profile> profiles = new ArrayList<Profile>();
+	private ArrayList<Recommendation> recommendations = new ArrayList<Recommendation>();
+	private ArrayList<Season> seasons = new ArrayList<Season>();
+	private ArrayList<Serie> series = new ArrayList<Serie>();
 	
 	// for com statements pra cada nome de tabela
 	// outro for pra pegar resultado dos statements e adicionar pra cada um dos arraylist
@@ -220,6 +278,7 @@ public class MainViewController implements Initializable {
 			} else {
 				Alerts.showAlert("Cadastro", "Novo usu�rio criado", "O usu�rio foi salvo com sucesso!",
 						AlertType.INFORMATION);
+				
 				newEventLog("Usu�rio", LogActivities.CREATE,
 						LogActivities.CREATE.getLogDescription() + " novo usu�rio: " + userNameField.getText(),
 						LogTypes.CRUD);
