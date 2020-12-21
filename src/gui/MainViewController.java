@@ -266,8 +266,8 @@ public class MainViewController implements Initializable {
 					&& userCpfField.getText().length() != 0 && userDateOfBirthField.getText().length() != 0
 					&& userPlanComboBox.getSelectionModel().isEmpty() == false) {
 				if (userSaveButton.getText().equals("Salvar")) {
-					newEventLog("Usuï¿½rio", LogActivities.UPDATE,
-							LogActivities.UPDATE.getLogDescription() + " usuï¿½rio de cpf: " + currentUserCpf, LogTypes.CRUD);
+					newEventLog("Usuário", LogActivities.UPDATE,
+							LogActivities.UPDATE.getLogDescription() + " usuário de cpf: " + currentUserCpf, LogTypes.CRUD);
 					String queryInsert = "UPDATE Usuario u SET u.CPF = " + userCpfField.getText() 
 						+ ", u.Nome = " + userNameField.getText() + ", u.Email = " + userEmailField.getText() 
 						+ ", u.DataNasc = TO_DATE('" + userDateOfBirthField.getText() + "', '" + "yyyy/mm/dd" +  "')" 
@@ -282,7 +282,7 @@ public class MainViewController implements Initializable {
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
-					Alerts.showAlert("Atualizaï¿½ï¿½o", "Usuï¿½rio atualizado", "O usuï¿½rio foi editado com sucesso!",
+					Alerts.showAlert("Atualização", "Usuário atualizado", "O usuário foi editado com sucesso!",
 							AlertType.INFORMATION);
 				} else {
 //					String newDate = new SimpleDateFormat("yyyy-MM-dd").format(userDateOfBirthField.getText());
@@ -299,11 +299,11 @@ public class MainViewController implements Initializable {
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
-					Alerts.showAlert("Cadastro", "Novo usuï¿½rio criado", "O usuï¿½rio foi salvo com sucesso!",
+					Alerts.showAlert("Cadastro", "Novo usuário criado", "O usuário foi salvo com sucesso!",
 							AlertType.INFORMATION);
 					
-					newEventLog("Usuï¿½rio", LogActivities.CREATE,
-							LogActivities.CREATE.getLogDescription() + " novo usuï¿½rio: " + userNameField.getText(),
+					newEventLog("Usuário", LogActivities.CREATE,
+							LogActivities.CREATE.getLogDescription() + " novo usuário: " + userNameField.getText(),
 							LogTypes.CRUD);
 				}
 				onUserCleanButton();
