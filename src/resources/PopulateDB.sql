@@ -5,11 +5,11 @@ INSERT INTO Plano (Id, Nome, Valor, QualidadeMax, QtdTelas, NumMaxPerfis) VALUES
 INSERT INTO Plano (Id, Nome, Valor, QualidadeMax, QtdTelas, NumMaxPerfis) VALUES (4, 'AvançadoHD', 55.90, 1080, 3, 5);
 INSERT INTO Plano (Id, Nome, Valor, QualidadeMax, QtdTelas, NumMaxPerfis) VALUES (5, 'FamiliaHD', 59.90, 1080, 5, 8);
 
-INSERT INTO Usuario (CPF, Nome, Email, DataNasc, Plano)  VALUES(96917262030, 'Eduardo Carlos de Souza' ,'Edcarlos@gmail.com', date '2015-01-01' ,2);
-INSERT INTO Usuario (CPF, Nome, Email, DataNasc, Plano)  VALUES (56055095009, 'Carla Maria Antonieta', 'Carlita@hotmail.com', DATE'1992-03-28', 3);
-INSERT INTO Usuario (CPF, Nome, Email, DataNasc, Plano)  VALUES (20372442072, 'Lucas Morais e Silva', 'Lusilva@gmail.com', DATE '1980-12-03', 5);
-INSERT INTO Usuario (CPF, Nome, Email, DataNasc, Plano)  VALUES (74338892056, 'Michelle Santos', 'Misantos@yahoo.com', DATE '1989-07-15', 4);
-INSERT INTO Usuario (CPF, Nome, Email, DataNasc, Plano)  VALUES (23276743019, 'Diego Magno Fiorutti', 'Didifiorutti@gmail.com', DATE '2000-02-12', 1);
+INSERT INTO Usuario (CPF, Nome, Email, DataNasc, Plano)  VALUES(96917262030, 'Eduardo Carlos de Souza' ,'Edcarlos@gmail.com', TO_DATE('01/01/2015', 'dd/mm/yyyy'),2);
+INSERT INTO Usuario (CPF, Nome, Email, DataNasc, Plano)  VALUES (56055095009, 'Carla Maria Antonieta', 'Carlita@hotmail.com', TO_DATE('28/03/1992', 'dd/mm/yyyy'), 3);
+INSERT INTO Usuario (CPF, Nome, Email, DataNasc, Plano)  VALUES (20372442072, 'Lucas Morais e Silva', 'Lusilva@gmail.com', TO_DATE('03/12/1980', 'dd/mm/yyyy'), 5);
+INSERT INTO Usuario (CPF, Nome, Email, DataNasc, Plano)  VALUES (74338892056, 'Michelle Santos', 'Misantos@yahoo.com', TO_DATE('15/07/1989', 'dd/mm/yyyy'), 4);
+INSERT INTO Usuario (CPF, Nome, Email, DataNasc, Plano)  VALUES (23276743019, 'Diego Magno Fiorutti', 'Didifiorutti@gmail.com', TO_DATE('02/12/2000', 'dd/mm/yyyy'), 1);
 
 INSERT INTO Dispositivo (Usuario ,Nome, SistOperacional) VALUES (96917262030, 'CompDoEdu','Linux');
 INSERT INTO Dispositivo (Usuario ,Nome, SistOperacional) VALUES (56055095009, 'IphoneDaCarla', 'IOS');

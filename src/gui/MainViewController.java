@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -35,6 +36,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
@@ -51,23 +53,21 @@ import javafx.stage.Stage;
 import model.entities.Plan;
 import model.entities.User;
 import model.enums.LogActivities;
-import model.enums.LogTypes;
 
 public class MainViewController implements Initializable {
-
-	private ArrayList<User> users = new ArrayList<>();
-	private ArrayList<Plan> plans = new ArrayList<>();
 	
 	private static ObservableList<User>userObsList;
-	private ObservableList<Plan> planObsList;
+	private static ObservableList<Plan> planObsList;
 	
 	private ArrayList<String> createStatements = new ArrayList<>();
-	private ArrayList<String> populatSstatements = new ArrayList<>();
+	private ArrayList<String> populatStatements = new ArrayList<>();
 	private ArrayList<String> searchStatements = new ArrayList<>();
 	private ArrayList<String> dropStatements = new ArrayList<>();
+	private static ArrayList<String> searchQuerys = new ArrayList<>();
 	private String currentUserCpf = null;
 	private final String SQUARE_BUBBLE = "M24 1h-24v16.981h4v5.019l7-5.019h13z";
 	private boolean connected = false;
+	private boolean created = false;
 	private Statement stmt;
     private ResultSet rs;
     private PreparedStatement pstmt;
@@ -91,7 +91,11 @@ public class MainViewController implements Initializable {
 	@FXML
 	private Button connectionConnectButton;
 	@FXML
+	private Button connectionCreateTablesButton;
+	@FXML
 	private Button connectionShowTableButton;
+	@FXML
+	private Button connectionDeleteTablesButton;
 	@FXML
 	private TextArea connectionTableTextArea;
 
@@ -120,7 +124,7 @@ public class MainViewController implements Initializable {
 	@FXML
 	private TextField userCpfField;
 	@FXML
-	private TextField userDateOfBirthField;
+	private DatePicker userDateOfBirthField;
 	@FXML
 	private ComboBox<Plan> userPlanComboBox;
 
@@ -135,6 +139,8 @@ public class MainViewController implements Initializable {
 	private Button userCleanButton;
 	@FXML
 	private Button userDeleteButton;
+	@FXML
+	private Button generatePDFeButton;
 
 	@FXML
 	private Circle light;
@@ -144,14 +150,14 @@ public class MainViewController implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		Tooltip.install(light,
-				makeBubble(new Tooltip("Desconectado, por favor se concete ao banco atravï¿½s do botï¿½o xxx")));
+				makeBubble(new Tooltip("Desconectado, por favor se concete ao banco através do botão Conectar na aba de Conexão")));
 		light.setFill(javafx.scene.paint.Color.RED);
 		initializeData();
 	}
 
 	private void initializeData() {
 		userObsList = FXCollections.observableArrayList(new ArrayList<User>());
-		planObsList = FXCollections.observableArrayList(plans);
+		planObsList = FXCollections.observableArrayList(new ArrayList<Plan>());
 		FilteredList<User> userFilteredList = new FilteredList<>(userObsList, b -> true);
 		SortedList<User> userSortedList = new SortedList<>(userFilteredList);
 		userSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -181,12 +187,13 @@ public class MainViewController implements Initializable {
 		userEmailTableColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
 		userCpfTableColumn.setCellValueFactory(new PropertyValueFactory<>("cpf"));
 		userDateOfBirthTableColumn.setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
+		userPlanTableColumn.setCellValueFactory(new PropertyValueFactory<>("plan"));
 		userSelectionTableColumn.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
 		userPlanComboBox.setItems(planObsList);
 		userNameTableColumn.setCellFactory(TooltippedTableCell.forTableColumn());
 		userEmailTableColumn.setCellFactory(TooltippedTableCell.forTableColumn());
 		userCpfTableColumn.setCellFactory(TooltippedTableCell.forTableColumn());
-		//userDateOfBirthTableColumn.setCellFactory(TooltippedTableCell.forTableColumn());
+		userDateOfBirthTableColumn.setCellFactory(TooltippedTableCell.forTableColumn());
 
 		userTable.setRowFactory(tv -> {
 			TableRow<User> row = new TableRow<>();
@@ -197,12 +204,17 @@ public class MainViewController implements Initializable {
 					userNameField.setText(rowData.getName());
 					userEmailField.setText(rowData.getEmail());
 					userCpfField.setText(rowData.getCpf());
-					userDateOfBirthField.setText(rowData.getDateOfBirth().toString());
+					userDateOfBirthField.setValue(LocalDate.of(Integer.parseInt(rowData.getDateOfBirth().substring(0, 4)),
+						Integer.parseInt(rowData.getDateOfBirth().substring(5, 7)),
+							Integer.parseInt(rowData.getDateOfBirth().substring(8, 10))));				
 					int index = 0;
-					for (int i = 0; i < plans.size(); i++)
-						if (plans.get(i).getId() == rowData.getPlan())
+					for (int i = 0; i < planObsList.size(); i++) {
+						if (planObsList.get(i).getId() == rowData.getPlan()) {
 							index = i;
-					userPlanComboBox.getSelectionModel().select(plans.get(index));
+							break;
+						}
+					}
+					userPlanComboBox.getSelectionModel().select(planObsList.get(index));
 					userSaveButton.setText("Salvar");
 					userCleanButton.setText("Cancelar");
 				}
@@ -213,64 +225,60 @@ public class MainViewController implements Initializable {
 
 	// CRUD
 	public void onUserSaveButton() {
-		if(connected) {
+		if(created) {
 			if (userNameField.getText().length() != 0 && userEmailField.getText().length() != 0
-					&& userCpfField.getText().length() != 0 && userDateOfBirthField.getText().length() != 0
+					&& userCpfField.getText().length() != 0 && userDateOfBirthField.getEditor().getText().length() != 0
 					&& userPlanComboBox.getSelectionModel().isEmpty() == false) {
 				if (userSaveButton.getText().equals("Salvar")) {
-					newEventLog("Usuário", LogActivities.UPDATE,
-							LogActivities.UPDATE.getLogDescription() + " usuário de cpf: " + currentUserCpf, LogTypes.CRUD);
-					String queryInsert = "UPDATE Usuario u SET u.CPF = " + userCpfField.getText() 
-						+ ", u.Nome = " + userNameField.getText() + ", u.Email = " + userEmailField.getText() 
-						+ ", u.DataNasc = TO_DATE('" + userDateOfBirthField.getText() + "', '" + "yyyy/mm/dd" +  "')"
+					String updateQuery = "UPDATE Usuario u SET u.CPF = " + userCpfField.getText() 
+						+ ", u.Nome = '" + userNameField.getText() + "', u.Email = '" + userEmailField.getText() 
+						+ "', u.DataNasc = TO_DATE('" + userDateOfBirthField.getEditor().getText() + "', '" + "dd/mm/yyyy" +  "')"
 						+ ", u.Plano = " + userPlanComboBox.getSelectionModel().getSelectedItem().getId() 
-						+ " WHERE " + "u.CPF = '" + userCpfField.getText() + "'";
-					System.out.println("RUNNING QUERY: " + queryInsert);
+						+ " WHERE " + "u.CPF = " + currentUserCpf;
+					newCRUDQuery(LogActivities.UPDATE, LogActivities.CREATE.getLogDescription(), updateQuery);
 					PreparedStatement pstmt;
 					try {
-						pstmt = OracleConnection.getConnection().prepareStatement(queryInsert);
+						pstmt = connection.prepareStatement(updateQuery);
 						pstmt.executeUpdate();
 						pstmt.close();
+						Alerts.showAlert("Atualização", "Usuário atualizado", "O usuário foi editado com sucesso!",
+								AlertType.INFORMATION);
 					} catch (SQLException e) {
-						e.printStackTrace();
+						Alerts.showAlert("Exceção", "Erro ao atualizar usuário", e.getMessage(),
+								AlertType.ERROR);
 					}
-					Alerts.showAlert("Atualização", "Usuário atualizado", "O usuário foi editado com sucesso!",
-							AlertType.INFORMATION);
 				} else {
-//					String newDate = new SimpleDateFormat("yyyy-MM-dd").format(userDateOfBirthField.getText());
-					System.out.println(userDateOfBirthField.getText());
-					String queryInsert = "INSERT INTO Usuario VALUES ('" 
-							+ userCpfField.getText() + "', '" + userNameField.getText() + "', '"
-							+ userEmailField.getText()  + "', " + "TO_DATE('" + userDateOfBirthField.getText() + "', '" + "yyyy/mm/dd" +  "')" + ", " + userPlanComboBox.getSelectionModel().getSelectedItem().getId() + ")";
-					System.out.println("RUNNING QUERY: " + queryInsert);
+					String insertQuery = "INSERT INTO Usuario VALUES (" 
+							+ userCpfField.getText() + ", '" + userNameField.getText() + "', '"
+							+ userEmailField.getText()  + "', " + "TO_DATE('" + userDateOfBirthField.getEditor().getText() + "', '" + "dd/mm/yyyy" +  "')" + ", " + userPlanComboBox.getSelectionModel().getSelectedItem().getId() + ")";
+					newCRUDQuery(LogActivities.UPDATE, LogActivities.CREATE.getLogDescription(), insertQuery);
 					PreparedStatement pstmt;
 					try {
-						pstmt = OracleConnection.getConnection().prepareStatement(queryInsert);
+						pstmt = connection.prepareStatement(insertQuery);
 						pstmt.executeUpdate();
 						pstmt.close();
+						Alerts.showAlert("Cadastro", "Novo usuário criado", "O usuário foi salvo com sucesso!",
+								AlertType.INFORMATION);
 					} catch (SQLException e) {
-						e.printStackTrace();
+						Alerts.showAlert("Exceção", "Erro ao cadastrar usuário", e.getMessage(),
+								AlertType.ERROR);
 					}
-					Alerts.showAlert("Cadastro", "Novo usuário criado", "O usuário foi salvo com sucesso!",
-							AlertType.INFORMATION);
-					
-					newEventLog("Usuário", LogActivities.CREATE,
-							LogActivities.CREATE.getLogDescription() + " novo usuário: " + userNameField.getText(),
-							LogTypes.CRUD);
 				}
 				onUserCleanButton();
 			} else {
 				setUpValidationTextField(userNameField);
 				setUpValidationTextField(userEmailField);
 				setUpValidationTextField(userCpfField);
-				setUpValidationTextField(userDateOfBirthField);
+				//setUpValidationTextField(userDateOfBirthField);
 				setUpValidationPlanComboBox(userPlanComboBox);
-				Alerts.showAlert("Erro", "Preencha todos os campos obrigatï¿½rios",
-						"Os campos que possuem '*' sï¿½o obrigatï¿½rios", AlertType.ERROR);
+				Alerts.showAlert("Erro", "Preencha todos os campos obrigatórios",
+						"Os campos que possuem '*' são obrigatórios", AlertType.ERROR);
 			}
 		}else {
-			Alerts.showAlert("Erro", "Vocï¿½ nï¿½o se conectou ao banco!",
-					"Para realizar operaï¿½ï¿½es de crud,consulta e visualizaï¿½ï¿½o das tabelas, vocï¿½ precisa se conectar ao banco primeiro, vï¿½ atï¿½ a aba de Conexï¿½o e preenche os campos necessï¿½rios para se conectar", AlertType.ERROR);
+			Alerts.showAlert("Erro", "Você não criou as tabelas ainda",
+					"Para realizar operações de crud, consulta e visualização das tabelas, você precisa estar conectado ao banco"
+					+ "e ter criado as tabelas, vá até a aba de Conexão e preencha os campos necessários para se conectar caso não o tenha feito"
+					+ "e clique no botão Criar e Popular Tabelas", AlertType.ERROR);
 		}
 	}
 
@@ -278,37 +286,56 @@ public class MainViewController implements Initializable {
 		userNameField.clear();
 		userEmailField.clear();
 		userCpfField.clear();
-		userDateOfBirthField.clear();
+		userDateOfBirthField.getEditor().clear();
 		userPlanComboBox.getSelectionModel().clearSelection();
 		userSaveButton.setText("Adicionar");
 		userCleanButton.setText("Limpar");
 		removeErrorTextField(userNameField);
 		removeErrorTextField(userEmailField);
 		removeErrorTextField(userCpfField);
-		removeErrorTextField(userDateOfBirthField);
+		//removeErrorTextField(userDateOfBirthField);
 		removeErrorComboBox(userPlanComboBox);
 	}
 
 	public void onUserDeleteButton() {
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Confirmar exclusï¿½o");
-		alert.setHeaderText("Vocï¿½ tem certeza que quer deletar esses usuï¿½rios?");
-		alert.setContentText(
-				"Ao deletado um usuï¿½rio ele serï¿½ permanentemente removido do banco de dados juntamente com seus perfis, preferï¿½ncias e quaisquer daods coletados sobre o mesmo");
-		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == ButtonType.OK) {
-			Alerts.showAlert("Exclusï¿½o", "Usuï¿½rios deletados", "Os usuï¿½rios foram deletados com sucesso!",
-					AlertType.INFORMATION);
-		} else {
-			for (User user : userObsList) {
-				user.getCheckBox().setSelected(false);
+		if(userObsList.size() !=0) {
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Confirmar exclusão");
+			alert.setHeaderText("Você tem certeza que quer deletar esses usuários?");
+			alert.setContentText(
+					"Ao deletado um usuário ele será permanentemente removido do banco de dados juntamente com seus perfis, preferências e quaisquer daods coletados sobre o mesmo");
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == ButtonType.OK) {
+				boolean deleted = false;
+				String deleteQuery;
+				for (User user : userObsList) {
+					if(user.getCheckBox().isSelected()) {
+						deleteQuery = "DELETE FROM Usuario u WHERE u.CPF = "+user.getCpf();
+						newCRUDQuery(LogActivities.DELETE, LogActivities.DELETE.getLogDescription(), deleteQuery);
+						try {
+							pstmt = connection.prepareStatement(deleteQuery);
+							pstmt.executeUpdate();
+							pstmt.close();
+							deleted = true;
+						} catch (SQLException e) {
+							Alerts.showAlert("Exceção", "Erro ao deletar usuário de CPF:" + user.getCpf(), e.getMessage(),
+									AlertType.INFORMATION);
+						}
+					}
+				}
+				if(deleted)Alerts.showAlert("Exclusão", "Usuários deletados", "Os usuários foram deletados com sucesso!",
+						AlertType.INFORMATION);
+			} else {
+				for (User user : userObsList) {
+					user.getCheckBox().setSelected(false);
+				}
 			}
+			alert = null;
 		}
-		alert = null;
 	}
 
 	public void onUserSearchButton() {
-		if(connected) {
+		if(created) {
 			AnchorPane queryPane = null;
 			Scene queryScene = null;
 			try {
@@ -324,9 +351,15 @@ public class MainViewController implements Initializable {
 				e.printStackTrace();
 			}
 		}else {
-			Alerts.showAlert("Erro", "Vocï¿½ nï¿½o se conectou ao banco!",
-					"Para realizar operaï¿½ï¿½es de crud,consulta e visualizaï¿½ï¿½o das tabelas, vocï¿½ precisa se conectar ao banco primeiro, vï¿½ atï¿½ a aba de Conexï¿½o e preenche os campos necessï¿½rios para se conectar", AlertType.ERROR);
+			Alerts.showAlert("Erro", "Você não criou as tabelas ainda",
+					"Para realizar operações de crud, consulta e visualização das tabelas, você precisa estar conectado ao banco"
+					+ "e ter criado as tabelas, vá até a aba de Conexão e preencha os campos necessários para se conectar caso não o tenha feito"
+					+ "e clique no botão Criar e Popular Tabelas", AlertType.ERROR);
 		}
+	}
+	
+	public void onGeneratePDF() {
+		
 	}
 
 	// CONNECTION
@@ -338,7 +371,9 @@ public class MainViewController implements Initializable {
 			connected = OracleConnection.createConnection(connectionUserNameField.getText(), connectionPasswordField.getText(),
 					connectionHostNameField.getText(), connectionPortField.getText(), connectionSidField.getText());
 			if(connected) {
+				created = true;
 				connection = OracleConnection.getConnection();
+				fillPlanObsList();
 				connectionConnectButton.setDisable(true);
 				connectionCleanButton.setDisable(true);
 				connectionUserNameField.setEditable(false);
@@ -346,17 +381,16 @@ public class MainViewController implements Initializable {
 				connectionHostNameField.setEditable(false);
 				connectionPortField.setEditable(false);
 				connectionSidField.setEditable(false);
-				sqlParser(System.getProperty("user.dir")+"/src/resources/CreateDB.sql", createStatements);
-				sqlParser(System.getProperty("user.dir")+"/src/resources/PopulateDB.sql", populatSstatements);
-				executeStatements(createStatements);
-				executeStatements(populatSstatements);
-				newEventLog("Usuário", LogActivities.CONNECTING_DB,
-						LogActivities.CONNECTING_DB.getLogDescription() + " no host " + connectionHostNameField.getText()
-								+ ", na porta " + connectionPortField + ", no SID " + connectionSidField.getText(),
-						LogTypes.CONNECTION);
-				Alerts.showAlert("Conexão", "Conexão realizada!",
-						"A conexão foi realizada com sucesso, e tabelas foram criadas e populadas usando dos scripts: CreateDB.sql e PopulateDB.sql",
-						AlertType.INFORMATION);
+				userDeleteButton.setDisable(false);
+				userSaveButton.setDisable(false);
+				userDeleteButton.setDisable(false);
+				userSearchButton.setDisable(false);
+				connectionCreateTablesButton.setDisable(false);
+				connectionDeleteTablesButton.setDisable(false);
+				connectionShowTableButton.setDisable(false);
+				generatePDFeButton.setDisable(false);
+				Alerts.showAlert("Conexão", "Conexão realizada!","A conexão foi realizada com sucesso, caso não tenha criada/populado"
+						+ "as tabelas, clique no botão Criar e Popular Tabelas",	AlertType.INFORMATION);
 				onConnectionCleanButton();
 				light.setFill(javafx.scene.paint.Color.LIMEGREEN);
 				Tooltip.install(light, makeBubble(new Tooltip("Conectado")));
@@ -369,6 +403,35 @@ public class MainViewController implements Initializable {
 			setUpValidationTextField(connectionSidField);
 			Alerts.showAlert("Erro", "Preencha todos os campos obrigatórios",
 					"Os campos que possuem '*' são obrigatórios", AlertType.ERROR);
+		}
+	}
+	
+	public void onConnectionCreateTablesButton() {
+		if(!created  && connected) {
+			sqlParser(System.getProperty("user.dir")+"/src/resources/CreateDB.sql", createStatements);
+			executeStatements(createStatements);
+			sqlParser(System.getProperty("user.dir")+"/src/resources/PopulateDB.sql", populatStatements);
+			executeStatements(populatStatements);
+			fillPlanObsList();
+			Alerts.showAlert("Create", "Criação e população da tabela feita!","As tabelas foram criadas e populadas"
+					+ " usando dos scripts: CreateDB.sql e PopulateDB.sql",	AlertType.INFORMATION);
+		}else{
+			Alerts.showAlert("Erro", "Erro ao tentar criar as tabelas","Não foi possível criar as tabelas pois"
+					+ "você ou se não concetou ao banco ou já criou as tabelas",	AlertType.ERROR);
+		}
+	}
+	
+	public void onConnectionDeleteTablesButton() {
+		if(created && connected) {
+			sqlParser(System.getProperty("user.dir")+"/src/resources/DropDB.sql", dropStatements);
+			executeStatements(dropStatements);
+			planObsList.clear();
+			userObsList.clear();
+			created = false;
+			Alerts.showAlert("Delete", "Exclusão das tabelas feita!","Todas as tabelas do banco foram excluídas com sucesso",AlertType.INFORMATION);
+		}else {
+			Alerts.showAlert("Erro", "Erro ao tentar deletar as tabelas","Não foi possível deletar as tabelas pois"
+					+ "você ou se não concetou ao banco ou já deletou as tabelas",	AlertType.ERROR);
 		}
 	}
 
@@ -386,7 +449,7 @@ public class MainViewController implements Initializable {
 	}
 
 	public void onConnectionShowTableButton() {
-		if(connected) {
+		if(created) {
 			connectionTableTextArea.clear();
 			sqlParser(System.getProperty("user.dir")+"/src/resources/ShowAllDB.sql", searchStatements);
 			try {
@@ -394,6 +457,7 @@ public class MainViewController implements Initializable {
 				stmt = connection.createStatement();
 				for(String query : searchStatements) {
 					rs = stmt.executeQuery(query);
+					newCRUDQuery(LogActivities.READ, LogActivities.READ.getLogDescription(), query);
 					int numCols = rs.getMetaData().getColumnCount();
 					connectionTableTextArea.appendText(query.substring(13, query.length())+"\n<");
 					while(rs.next()) {
@@ -410,8 +474,10 @@ public class MainViewController implements Initializable {
 				e.printStackTrace();
 			}
 		}else {
-			Alerts.showAlert("Erro", "Você não se conectou ao banco!",
-					"Para realizar operações de crud,consulta e visualização das tabelas, você precisa se conectar ao banco primeiro, vá até a aba de Conexão e preencha os campos necessários para se conectar", AlertType.ERROR);
+			Alerts.showAlert("Erro", "Você não criou as tabelas ainda",
+					"Para realizar operações de crud, consulta e visualização das tabelas, você precisa estar conectado ao banco"
+					+ "e ter criado as tabelas, vá até a aba de Conexão e preencha os campos necessários para se conectar caso não o tenha feito"
+					+ "e clique no botão Criar e Popular Tabelas", AlertType.ERROR);
 		}
 	}
 	
@@ -443,6 +509,7 @@ public class MainViewController implements Initializable {
 		if(connected) {
 			try {
 				for(String query : statements) {
+					newCRUDQuery(LogActivities.CREATE, LogActivities.CREATE.getLogDescription(), query);
 					pstmt = connection.prepareStatement(query);
 					pstmt.executeUpdate();
 					pstmt.close();
@@ -450,6 +517,21 @@ public class MainViewController implements Initializable {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	private void fillPlanObsList() {
+		try {
+			stmt = connection.createStatement();
+			rs = stmt.executeQuery("SELECT * FROM Plano");
+			newCRUDQuery(LogActivities.READ, LogActivities.READ.getLogDescription(), "SELECT * FROM Plano");
+			while(rs.next()) {
+				planObsList.add(new Plan(Integer.parseInt(rs.getString("ID")), rs.getString("NOME"), 
+						Float.parseFloat(rs.getString("VALOR")), Integer.parseInt(rs.getString("QUALIDADEMAX")), 
+						Integer.parseInt(rs.getString("QTDTELAS")), Integer.parseInt(rs.getString("NUMMAXPERFIS"))));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -511,20 +593,34 @@ public class MainViewController implements Initializable {
 		return tooltip;
 	}
 
-	private void newEventLog(String resource, LogActivities activity, String description, LogTypes logType) {
-		logsTextArea.appendText("\"" + new Date().toString() + "\",\"" + resource + "\"," + activity.toString() + ",\""
-				+ description + "\"," + logType.toString());
+	private void newCRUDQuery(LogActivities activity, String description, String query) {
+		logsTextArea.appendText("\"" + new Date().toString() + "\", \"," + activity.toString() + "\",\""
+				+ description + "\"\n"+query);
+	}
+	
+	public void newSearchQuery() {
+		for(String query: searchQuerys) {
+			newCRUDQuery(LogActivities.SELECT, LogActivities.SELECT.getLogDescription(), query);
+		}
+		searchQuerys.clear();
 	}
 
 	public void clearObjects() {
-		users.clear();
-		plans.clear();
 		userObsList.clear();
 		planObsList.clear();
 	}
 
 	public static ObservableList<User> getUserObsList() {
 		return userObsList;
+	}
+
+	public static ObservableList<Plan> getPlanObsList() {
+		return planObsList;
+	}
+	
+
+	public static ArrayList<String> getSearchQuerys() {
+		return searchQuerys;
 	}
 
 }

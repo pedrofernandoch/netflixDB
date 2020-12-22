@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.ScrollPane?>
@@ -54,31 +55,31 @@
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="connectionUserNameField" layoutX="14.0" layoutY="85.0" prefHeight="32.0" prefWidth="270.0" />
+                              <TextField fx:id="connectionUserNameField" layoutX="14.0" layoutY="85.0" prefHeight="32.0" prefWidth="270.0" text="11218560" />
                               <Label layoutX="14.0" layoutY="117.0" text="Senha*">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <PasswordField fx:id="connectionPasswordField" layoutX="14.0" layoutY="147.0" prefHeight="32.0" prefWidth="270.0" />
+                              <PasswordField fx:id="connectionPasswordField" layoutX="14.0" layoutY="147.0" prefHeight="32.0" prefWidth="270.0" text="a" />
                               <Label layoutX="14.0" layoutY="178.0" text="Nome do Host*">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="connectionHostNameField" layoutX="14.0" layoutY="207.0" prefHeight="32.0" prefWidth="270.0" />
+                              <TextField fx:id="connectionHostNameField" layoutX="14.0" layoutY="207.0" prefHeight="32.0" prefWidth="270.0" text="grad.icmc.usp.br" />
                               <Label layoutX="14.0" layoutY="239.0" text="Porta*">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="connectionPortField" layoutX="14.0" layoutY="268.0" prefHeight="32.0" prefWidth="270.0" />
+                              <TextField fx:id="connectionPortField" layoutX="14.0" layoutY="268.0" prefHeight="32.0" prefWidth="270.0" text="15215" />
                               <Label layoutX="14.0" layoutY="300.0" text="SID*">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="connectionSidField" layoutX="14.0" layoutY="329.0" prefHeight="32.0" prefWidth="270.0" />
+                              <TextField fx:id="connectionSidField" layoutX="14.0" layoutY="329.0" prefHeight="32.0" prefWidth="270.0" text="orcl" />
                               <Button fx:id="connectionCleanButton" layoutX="14.0" layoutY="374.0" mnemonicParsing="false" onAction="#onConnectionCleanButton" prefHeight="27.0" prefWidth="270.0" style="-fx-background-color: black;" text="Limpar" textFill="WHITE">
                                  <graphic>
                                     <ImageView fitHeight="32.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
@@ -104,11 +105,35 @@
                                  </font>
                               </Button>
                               <TextArea fx:id="connectionTableTextArea" editable="false" layoutX="315.0" layoutY="55.0" prefHeight="369.0" prefWidth="807.0" style="-fx-control-inner-background:#000000; -fx-font-family: Consolas; -fx-highlight-fill: #ffffff; -fx-highlight-text-fill: #000000; -fx-text-fill: #ffffff; -fx-font-size: 10" />
-                              <Button fx:id="connectionShowTableButton" layoutX="595.0" layoutY="429.0" mnemonicParsing="false" onAction="#onConnectionShowTableButton" prefHeight="51.0" prefWidth="270.0" style="-fx-background-color: black;" text="Mostrar Tabelas" textFill="WHITE">
+                              <Button fx:id="connectionShowTableButton" disable="true" layoutX="614.0" layoutY="426.0" mnemonicParsing="false" onAction="#onConnectionShowTableButton" prefHeight="50.0" prefWidth="210.0" style="-fx-background-color: black;" text="Mostrar Tabelas" textFill="WHITE">
                                  <graphic>
                                     <ImageView fitHeight="32.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../resources/eye_icon.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="connectionCreateTablesButton" disable="true" layoutX="315.0" layoutY="426.0" mnemonicParsing="false" onAction="#onConnectionCreateTablesButton" prefHeight="50.0" prefWidth="210.0" style="-fx-background-color: green;" text="Criar e Popular Tabelas" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                                 <graphic>
+                                    <ImageView fitHeight="32.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../resources/add_icon.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="connectionDeleteTablesButton" disable="true" layoutX="912.0" layoutY="426.0" mnemonicParsing="false" onAction="#onConnectionDeleteTablesButton" prefHeight="50.0" prefWidth="210.0" style="-fx-background-color: red;" text="Deletar Tabelas" textFill="WHITE">
+                                 <graphic>
+                                    <ImageView fitHeight="32.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../resources/x_icon.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -144,7 +169,7 @@
                                     <TableColumn fx:id="userPlanTableColumn" prefWidth="105.0" text="Plano" />
                                  </columns>
                               </TableView>
-                              <Button fx:id="userDeleteButton" layoutX="244.0" layoutY="442.0" mnemonicParsing="false" onAction="#onUserDeleteButton" prefHeight="38.0" prefWidth="190.0" style="-fx-background-color: black;" text="Excluir selecionados" textFill="WHITE">
+                              <Button fx:id="userDeleteButton" disable="true" layoutX="34.0" layoutY="442.0" mnemonicParsing="false" onAction="#onUserDeleteButton" prefHeight="38.0" prefWidth="190.0" style="-fx-background-color: black;" text="Excluir selecionados" textFill="WHITE">
                                  <graphic>
                                     <ImageView fitHeight="32.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -179,7 +204,7 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="userSaveButton" layoutX="847.0" layoutY="427.0" mnemonicParsing="false" onAction="#onUserSaveButton" prefHeight="51.0" prefWidth="270.0" style="-fx-background-color: black;" text="Adicionar" textFill="WHITE">
+                              <Button fx:id="userSaveButton" disable="true" layoutX="847.0" layoutY="427.0" mnemonicParsing="false" onAction="#onUserSaveButton" prefHeight="51.0" prefWidth="270.0" style="-fx-background-color: black;" text="Adicionar" textFill="WHITE">
                                  <graphic>
                                     <ImageView fitHeight="32.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -203,7 +228,6 @@
                                  </font>
                               </Label>
                               <TextField fx:id="userCpfField" layoutX="847.0" layoutY="222.0" prefHeight="32.0" prefWidth="270.0" />
-                              <TextField fx:id="userDateOfBirthField" layoutX="847.0" layoutY="284.0" prefHeight="32.0" prefWidth="270.0" />
                               <Label layoutX="848.0" layoutY="254.0" text="Data de nascimento*">
                                  <font>
                                     <Font size="20.0" />
@@ -215,7 +239,13 @@
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="userSearchButton" layoutX="34.0" layoutY="442.0" mnemonicParsing="false" onAction="#onUserSearchButton" prefHeight="38.0" prefWidth="190.0" style="-fx-background-color: black;" text="Fazer consulta" textFill="WHITE">
+                              <Button fx:id="userSearchButton" disable="true" layoutX="385.0" layoutY="442.0" mnemonicParsing="false" onAction="#onUserSearchButton" prefHeight="38.0" prefWidth="190.0" style="-fx-background-color: black;" text="Fazer consulta" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Button>
+                              <DatePicker fx:id="userDateOfBirthField" layoutX="847.0" layoutY="282.0" prefHeight="32.0" prefWidth="270.0" />
+                              <Button fx:id="generatePDFeButton" disable="true" layoutX="580.0" layoutY="442.0" mnemonicParsing="false" onAction="#onGeneratePDF" prefHeight="38.0" prefWidth="190.0" style="-fx-background-color: black;" text="Gerar PDF" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
@@ -224,7 +254,7 @@
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab text="Logs">
+                  <Tab onSelectionChanged="#newSearchQuery" text="Querys Realizadas">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
