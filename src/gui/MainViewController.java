@@ -271,7 +271,6 @@ public class MainViewController implements Initializable {
 				setUpValidationTextField(userNameField);
 				setUpValidationTextField(userEmailField);
 				setUpValidationTextField(userCpfField);
-				//setUpValidationTextField(userDateOfBirthField);
 				setUpValidationPlanComboBox(userPlanComboBox);
 				Alerts.showAlert("Erro", "Preencha todos os campos obrigatórios",
 						"Os campos que possuem '*' são obrigatórios", AlertType.ERROR);
@@ -295,7 +294,6 @@ public class MainViewController implements Initializable {
 		removeErrorTextField(userNameField);
 		removeErrorTextField(userEmailField);
 		removeErrorTextField(userCpfField);
-		//removeErrorTextField(userDateOfBirthField);
 		removeErrorComboBox(userPlanComboBox);
 	}
 
@@ -372,13 +370,14 @@ public class MainViewController implements Initializable {
             //while(rs.next()) {
             //}
             pdf.createPDF("Não deu tempo, sorry :(");
+            Alerts.showAlert("PDF", "O PDF com nome relatoriofilmes foi gerado com sucesso e se encontra na sua área de trabalho!","Consulta para: Recupere os filmes na base de dados que atendam as preferências de legenda e idioma definidas por\r\n" + 
+            		"um dado perfil e que pelo menos um amigo tenha assistido ou comentado",	AlertType.INFORMATION);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 	}
 
 	// CONNECTION
-	// connectionTableTextArea;
 	public void onConnectionConnectButton() {
 		if (connectionUserNameField.getText().length() != 0 && connectionPasswordField.getText().length() != 0
 				&& connectionHostNameField.getText().length() != 0 && connectionPortField.getText().length() != 0
@@ -434,9 +433,9 @@ public class MainViewController implements Initializable {
 	
 	public void onConnectionCreateTablesButton() {
 		if(!created  && connected) {
-			sqlParser(System.getProperty("user.dir")+"/src/resources/CreateDB.sql", createStatements);
+			sqlParser(System.getProperty("user.dir")+"/CreateDB.sql", createStatements);
 			executeStatements(createStatements);
-			sqlParser(System.getProperty("user.dir")+"/src/resources/PopulateDB.sql", populatStatements);
+			sqlParser(System.getProperty("user.dir")+"/PopulateDB.sql", populatStatements);
 			executeStatements(populatStatements);
 			fillPlanObsList();
 			connectionDeleteTablesButton.setDisable(false);
@@ -445,7 +444,8 @@ public class MainViewController implements Initializable {
 			userSaveButton.setDisable(false);
 			userDeleteButton.setDisable(false);
 			userSearchButton.setDisable(false);
-			connectionCreateTablesButton.setDisable(true);	
+			connectionCreateTablesButton.setDisable(true);
+			created = true;
 			Alerts.showAlert("Create", "Criação e população da tabela feita!","As tabelas foram criadas e populadas"
 					+ " usando dos scripts: CreateDB.sql e PopulateDB.sql",	AlertType.INFORMATION);
 		}else{
@@ -456,7 +456,7 @@ public class MainViewController implements Initializable {
 	
 	public void onConnectionDeleteTablesButton() {
 		if(created && connected) {
-			sqlParser(System.getProperty("user.dir")+"/src/resources/DropDB.sql", dropStatements);
+			sqlParser(System.getProperty("user.dir")+"/DropDB.sql", dropStatements);
 			executeStatements(dropStatements);
 			planObsList.clear();
 			userObsList.clear();
@@ -468,6 +468,7 @@ public class MainViewController implements Initializable {
 			userDeleteButton.setDisable(true);
 			userSearchButton.setDisable(true);
 			connectionCreateTablesButton.setDisable(false);
+			connectionTableTextArea.clear();
 			Alerts.showAlert("Delete", "Exclusão das tabelas feita!","Todas as tabelas do banco foram excluídas com sucesso",AlertType.INFORMATION);
 		}else {
 			Alerts.showAlert("Erro", "Erro ao tentar deletar as tabelas","Não foi possível deletar as tabelas pois "
@@ -491,7 +492,7 @@ public class MainViewController implements Initializable {
 	public void onConnectionShowTableButton() {
 		if(created) {
 			connectionTableTextArea.clear();
-			sqlParser(System.getProperty("user.dir")+"/src/resources/ShowAllDB.sql", searchStatements);
+			sqlParser(System.getProperty("user.dir")+"/ShowAllDB.sql", searchStatements);
 			try {
 				String columnLabel;
 				stmt = connection.createStatement();
@@ -541,7 +542,7 @@ public class MainViewController implements Initializable {
     	        }
     	    }
     	}catch (IOException e) {
-    		e.printStackTrace();
+    		Alerts.showAlert("Erro", "Erro ao tentar abrir arquivo",e.getMessage(),	AlertType.ERROR);
     	}
 	}
 	
@@ -635,12 +636,12 @@ public class MainViewController implements Initializable {
 
 	private void newCRUDQuery(LogActivities activity, String description, String query) {
 		logsTextArea.appendText("\"" + new Date().toString() + "\", \"," + activity.toString() + "\",\""
-				+ description + "\"\n"+query);
+				+ description + "\"\n"+query+"\n");
 	}
 	
 	public void newSearchQuery() {
 		for(String query: searchQuerys) {
-			newCRUDQuery(LogActivities.SELECT, LogActivities.SELECT.getLogDescription(), query);
+			newCRUDQuery(LogActivities.SELECT, LogActivities.SELECT.getLogDescription(), query+"\n");
 		}
 		searchQuerys.clear();
 	}

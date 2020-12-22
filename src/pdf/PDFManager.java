@@ -20,7 +20,7 @@ import org.apache.xmpbox.xml.XmpSerializer;
 
 public class PDFManager {
 	String file = System.getProperty("user.home") + File.separator + "Desktop" + File.separator + "relatoriofilmes.pdf";
-	String fontfile = System.getProperty("user.dir")+"/src/resources/verdana-4.ttf";
+	String fontfile = System.getProperty("user.dir")+"/verdana-4.ttf";
 
 	public PDFManager() {
 		File pdf = new File(file);
