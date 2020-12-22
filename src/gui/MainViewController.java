@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -53,6 +54,7 @@ import javafx.stage.Stage;
 import model.entities.Plan;
 import model.entities.User;
 import model.enums.LogActivities;
+import pdf.PDFManager;
 
 public class MainViewController implements Initializable {
 	
@@ -140,7 +142,7 @@ public class MainViewController implements Initializable {
 	@FXML
 	private Button userDeleteButton;
 	@FXML
-	private Button generatePDFeButton;
+	private Button userGeneratePDFeButton;
 
 	@FXML
 	private Circle light;
@@ -321,6 +323,7 @@ public class MainViewController implements Initializable {
 							Alerts.showAlert("Exceção", "Erro ao deletar usuário de CPF:" + user.getCpf(), e.getMessage(),
 									AlertType.INFORMATION);
 						}
+						userObsList.remove(user);
 					}
 				}
 				if(deleted)Alerts.showAlert("Exclusão", "Usuários deletados", "Os usuários foram deletados com sucesso!",
@@ -358,8 +361,20 @@ public class MainViewController implements Initializable {
 		}
 	}
 	
-	public void onGeneratePDF() {
-		
+	public void onUserGeneratePDF() {
+		try {
+            PDFManager pdf = new PDFManager();
+            //String query = "SELECT Usuario u, Media m WHERE"
+            //+"u.Cpf = cpf JOIN Adulto a ON a.Usuario = u.Cpf"
+            //+"JOIN LegendaMedia lm ON m.id = lm.Media WHERE lm.Idioma = a.idioma OR lm.Idioma = a.legenda;"
+            //stmt = connection.createStatement();
+            //rs = stmt.executeQuery(query);
+            //while(rs.next()) {
+            //}
+            pdf.createPDF("Não deu tempo, sorry :(");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 	}
 
 	// CONNECTION
@@ -371,24 +386,35 @@ public class MainViewController implements Initializable {
 			connected = OracleConnection.createConnection(connectionUserNameField.getText(), connectionPasswordField.getText(),
 					connectionHostNameField.getText(), connectionPortField.getText(), connectionSidField.getText());
 			if(connected) {
-				created = true;
 				connection = OracleConnection.getConnection();
-				fillPlanObsList();
+				DatabaseMetaData dbm;
+				try {
+					dbm = connection.getMetaData();
+					rs = dbm.getTables(null, null, "USUARIO", null);
+					if(rs.next()) {
+						created = true;
+						fillPlanObsList();
+						connectionDeleteTablesButton.setDisable(false);
+						connectionShowTableButton.setDisable(false);
+						userGeneratePDFeButton.setDisable(false);
+						userSaveButton.setDisable(false);
+						userDeleteButton.setDisable(false);
+						userSearchButton.setDisable(false);
+						connectionCreateTablesButton.setDisable(true);
+					}else {
+						connectionCreateTablesButton.setDisable(false);	
+					}
+					dbm = null;
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 				connectionConnectButton.setDisable(true);
 				connectionCleanButton.setDisable(true);
 				connectionUserNameField.setEditable(false);
 				connectionPasswordField.setEditable(false);
 				connectionHostNameField.setEditable(false);
 				connectionPortField.setEditable(false);
-				connectionSidField.setEditable(false);
-				userDeleteButton.setDisable(false);
-				userSaveButton.setDisable(false);
-				userDeleteButton.setDisable(false);
-				userSearchButton.setDisable(false);
-				connectionCreateTablesButton.setDisable(false);
-				connectionDeleteTablesButton.setDisable(false);
-				connectionShowTableButton.setDisable(false);
-				generatePDFeButton.setDisable(false);
+				connectionSidField.setEditable(false);			
 				Alerts.showAlert("Conexão", "Conexão realizada!","A conexão foi realizada com sucesso, caso não tenha criada/populado"
 						+ "as tabelas, clique no botão Criar e Popular Tabelas",	AlertType.INFORMATION);
 				onConnectionCleanButton();
@@ -413,6 +439,13 @@ public class MainViewController implements Initializable {
 			sqlParser(System.getProperty("user.dir")+"/src/resources/PopulateDB.sql", populatStatements);
 			executeStatements(populatStatements);
 			fillPlanObsList();
+			connectionDeleteTablesButton.setDisable(false);
+			connectionShowTableButton.setDisable(false);
+			userGeneratePDFeButton.setDisable(false);
+			userSaveButton.setDisable(false);
+			userDeleteButton.setDisable(false);
+			userSearchButton.setDisable(false);
+			connectionCreateTablesButton.setDisable(true);	
 			Alerts.showAlert("Create", "Criação e população da tabela feita!","As tabelas foram criadas e populadas"
 					+ " usando dos scripts: CreateDB.sql e PopulateDB.sql",	AlertType.INFORMATION);
 		}else{
@@ -428,10 +461,17 @@ public class MainViewController implements Initializable {
 			planObsList.clear();
 			userObsList.clear();
 			created = false;
+			connectionDeleteTablesButton.setDisable(true);
+			connectionShowTableButton.setDisable(true);
+			userGeneratePDFeButton.setDisable(true);
+			userSaveButton.setDisable(true);
+			userDeleteButton.setDisable(true);
+			userSearchButton.setDisable(true);
+			connectionCreateTablesButton.setDisable(false);
 			Alerts.showAlert("Delete", "Exclusão das tabelas feita!","Todas as tabelas do banco foram excluídas com sucesso",AlertType.INFORMATION);
 		}else {
-			Alerts.showAlert("Erro", "Erro ao tentar deletar as tabelas","Não foi possível deletar as tabelas pois"
-					+ "você ou se não concetou ao banco ou já deletou as tabelas",	AlertType.ERROR);
+			Alerts.showAlert("Erro", "Erro ao tentar deletar as tabelas","Não foi possível deletar as tabelas pois "
+					+ "você ou não concetou ao banco ou já deletou as tabelas",	AlertType.ERROR);
 		}
 	}
 
@@ -618,7 +658,6 @@ public class MainViewController implements Initializable {
 		return planObsList;
 	}
 	
-
 	public static ArrayList<String> getSearchQuerys() {
 		return searchQuerys;
 	}

@@ -10,5 +10,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFX"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/OracleDataBaseConnection"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/OracleConnection"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/PDF"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

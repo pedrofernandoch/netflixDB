@@ -49,15 +49,13 @@ public class SplashViewController implements Initializable {
 							stage.setTitle("Netflix DB");
 							stage.show();
 						} catch (IOException e) {
-							e.printStackTrace();
-							Alerts.showAlert("IOException", "Erro ao carregar a pï¿½gina principal", e.getMessage(),AlertType.ERROR);
+							Alerts.showAlert("IOException", "Erro ao carregar a página principal", e.getMessage(),AlertType.ERROR);
 						}
 						rootPane.getScene().getWindow().hide();
 					}
 				});
 			} catch (InterruptedException e) {
-				e.printStackTrace();
-				Alerts.showAlert("InterruptedException", "Erro ao carregar a pï¿½gina principal", e.getMessage(),AlertType.ERROR);
+				Alerts.showAlert("InterruptedException", "Erro ao carregar a página principal", e.getMessage(),AlertType.ERROR);
 			}
 		}
 
