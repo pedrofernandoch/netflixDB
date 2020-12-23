@@ -93,6 +93,7 @@ INSERT INTO Amizade (Perfil1, Usuario1, Perfil2, Usuario2, DataAceitacao, DataSo
 INSERT INTO Amizade (Perfil1, Usuario1, Perfil2, Usuario2, DataAceitacao, DataSolicitacao) VALUES ('Carla', 23276743019, 'joaozinho', 56055095009, TO_DATE('10/10/2020', 'dd/mm/yyyy'),TO_DATE('20/11/2020', 'dd/mm/yyyy'));
 INSERT INTO Amizade (Perfil1, Usuario1, Perfil2, Usuario2, DataAceitacao, DataSolicitacao) VALUES ('Diego', 74338892056,'Lucas',56055095009, TO_DATE('20/12/2018', 'dd/mm/yyyy'),TO_DATE('07/01/2019', 'dd/mm/yyyy'));
 INSERT INTO Amizade (Perfil1, Usuario1, Perfil2, Usuario2, DataAceitacao, DataSolicitacao) VALUES ('gabrielzinho', 56055095009, 'clarinha', 96917262030, TO_DATE('12/05/2020', 'dd/mm/yyyy'), TO_DATE('15/06/2020', 'dd/mm/yyyy'));
+INSERT INTO Amizade (Perfil1, Usuario1, Perfil2, Usuario2, DataAceitacao, DataSolicitacao) VALUES ('Carla', 23276743019,'Diego', 74338892056, TO_DATE('16/01/2019', 'dd/mm/yyyy'),TO_DATE('20/11/2018', 'dd/mm/yyyy'));
 
 INSERT INTO Serie (Id, Titulo, AnoLancamento, QtdTemporadas) VALUES (1,'Anos Incríveis',1988,6);
 INSERT INTO Serie (Id, Titulo, AnoLancamento, QtdTemporadas) VALUES (2,'Black Mirror', 2011,5);
@@ -123,6 +124,7 @@ INSERT INTO LegendaMedia(Media, Idioma) VALUES (2,3);
 INSERT INTO LegendaMedia(Media, Idioma) VALUES (3,1);
 INSERT INTO LegendaMedia(Media, Idioma) VALUES (4,2);
 INSERT INTO LegendaMedia(Media, Idioma) VALUES (4,4);
+INSERT INTO LegendaMedia(Media, Idioma) VALUES (5, 3);
 
 INSERT INTO AudioMedia(Media, Idioma, Original) VALUES (1,5,3);
 INSERT INTO AudioMedia(Media, Idioma, Original) VALUES (2,4,2);
@@ -177,6 +179,7 @@ INSERT INTO Exibicao(Alias, Usuario, Media, Data, TempoAssistido) VALUES ('Miche
 INSERT INTO Exibicao(Alias, Usuario, Media, Data, TempoAssistido) VALUES ('joaozinho', 56055095009, 3,TO_DATE('15/10/2020', 'dd/mm/yyyy'),45 );
 INSERT INTO Exibicao(Alias, Usuario, Media, Data, TempoAssistido) VALUES ('Lucas',56055095009,4,TO_DATE('07/09/2020', 'dd/mm/yyyy'),50 );
 INSERT INTO Exibicao(Alias, Usuario, Media, Data, TempoAssistido) VALUES ('julinha', 96917262030, 5 ,TO_DATE('01/08/2020', 'dd/mm/yyyy'),13);
+INSERT INTO Exibicao(Alias, Usuario, Media, Data, TempoAssistido) VALUES ('joaozinho',56055095009,5,TO_DATE('08/12/2020', 'dd/mm/yyyy'),30);
 
 INSERT INTO Avaliacao(Alias, Usuario, Media, Data, Nota) VALUES ('Eduardo',96917262030,1,TO_DATE('20/12/2020', 'dd/mm/yyyy'),80);
 INSERT INTO Avaliacao(Alias, Usuario, Media, Data, Nota) VALUES ('Michelle', 20372442072, 2,TO_DATE('23/11/2020', 'dd/mm/yyyy'),55);

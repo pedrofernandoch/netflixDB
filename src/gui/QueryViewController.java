@@ -77,7 +77,7 @@ public class QueryViewController implements Initializable {
 							"Para buscar por um CPF digite apenas os 11 dígitos, sem pontos ou traços",
 							AlertType.ERROR);
 				}else {
-					query = query.concat("u.CPF = "+queryCpfField.getText()+";");
+					query = query.concat("u.CPF = "+queryCpfField.getText());
 					executeQuery(query);
 					MainViewController.getSearchQuerys().add(query);
 					valid = true;

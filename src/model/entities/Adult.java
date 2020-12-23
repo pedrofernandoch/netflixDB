@@ -2,12 +2,12 @@ package model.entities;
 
 public class Adult {
 	private String alias;
-	private int user;
+	private String user;
 	private int qualitStreaming;
 	private int subtitle;
 	private int language;
 	
-	public Adult(String alias, int user, int qualitStreaming, int subtitle, int language) {
+	public Adult(String alias, String user, int qualitStreaming, int subtitle, int language) {
 		super();
 		this.alias = alias;
 		this.user = user;
@@ -17,7 +17,7 @@ public class Adult {
 	}
 	
 	public String toString() {
-		return "<" + alias + "," + Integer.toString(user) + "," + Integer.toString(qualitStreaming) + "," + Integer.toString(subtitle) + "," + Integer.toOctalString(language) + ">";
+		return "<" + alias + "," +user + "," + Integer.toString(qualitStreaming) + "," + Integer.toString(subtitle) + "," + Integer.toOctalString(language) + ">";
 	}
 	
 	public String getAlias() {
@@ -26,10 +26,10 @@ public class Adult {
 	public void setAlias(String alias) {
 		this.alias = alias;
 	}
-	public int getUser() {
+	public String getUser() {
 		return user;
 	}
-	public void setUser(int user) {
+	public void setUser(String user) {
 		this.user = user;
 	}
 	public int getQualitStreaming() {

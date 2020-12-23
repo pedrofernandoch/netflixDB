@@ -54,12 +54,12 @@ import javafx.stage.Stage;
 import model.entities.Plan;
 import model.entities.User;
 import model.enums.LogActivities;
-import pdf.PDFManager;
 
 public class MainViewController implements Initializable {
 	
 	private static ObservableList<User>userObsList;
 	private static ObservableList<Plan> planObsList;
+	private static String userCpf;
 	
 	private ArrayList<String> createStatements = new ArrayList<>();
 	private ArrayList<String> populatStatements = new ArrayList<>();
@@ -142,7 +142,7 @@ public class MainViewController implements Initializable {
 	@FXML
 	private Button userDeleteButton;
 	@FXML
-	private Button userGeneratePDFeButton;
+	private Button userGeneratePDFButton;
 
 	@FXML
 	private Circle light;
@@ -308,6 +308,7 @@ public class MainViewController implements Initializable {
 			if (result.get() == ButtonType.OK) {
 				boolean deleted = false;
 				String deleteQuery;
+				ArrayList<User> removedUsers = new ArrayList<>();
 				for (User user : userObsList) {
 					if(user.getCheckBox().isSelected()) {
 						deleteQuery = "DELETE FROM Usuario u WHERE u.CPF = "+user.getCpf();
@@ -321,9 +322,10 @@ public class MainViewController implements Initializable {
 							Alerts.showAlert("Exceção", "Erro ao deletar usuário de CPF:" + user.getCpf(), e.getMessage(),
 									AlertType.INFORMATION);
 						}
-						userObsList.remove(user);
+						removedUsers.add(user);
 					}
 				}
+				userObsList.removeAll(removedUsers);
 				if(deleted)Alerts.showAlert("Exclusão", "Usuários deletados", "Os usuários foram deletados com sucesso!",
 						AlertType.INFORMATION);
 			} else {
@@ -349,7 +351,7 @@ public class MainViewController implements Initializable {
 				stage.setTitle("Query");
 				stage.show();
 			} catch (IOException e) {
-				e.printStackTrace();
+				Alerts.showAlert("IOException", "Erro ao carregar a página", e.getMessage(),AlertType.ERROR);
 			}
 		}else {
 			Alerts.showAlert("Erro", "Você não criou as tabelas ainda",
@@ -359,22 +361,40 @@ public class MainViewController implements Initializable {
 		}
 	}
 	
-	public void onUserGeneratePDF() {
-		try {
-            PDFManager pdf = new PDFManager();
-            //String query = "SELECT Usuario u, Media m WHERE"
-            //+"u.Cpf = cpf JOIN Adulto a ON a.Usuario = u.Cpf"
-            //+"JOIN LegendaMedia lm ON m.id = lm.Media WHERE lm.Idioma = a.idioma OR lm.Idioma = a.legenda;"
-            //stmt = connection.createStatement();
-            //rs = stmt.executeQuery(query);
-            //while(rs.next()) {
-            //}
-            pdf.createPDF("Não deu tempo, sorry :(");
-            Alerts.showAlert("PDF", "O PDF com nome relatoriofilmes foi gerado com sucesso e se encontra na sua área de trabalho!","Consulta para: Recupere os filmes na base de dados que atendam as preferências de legenda e idioma definidas por\r\n" + 
-            		"um dado perfil e que pelo menos um amigo tenha assistido ou comentado",	AlertType.INFORMATION);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+	public void onUserGeneratePDFButton() {
+		if(created) {
+			int count = 0;
+			for (User user : userObsList) {
+				if(user.getCheckBox().isSelected()) {
+					userCpf = user.getCpf();
+					count++;
+				}
+			}
+			if(count == 1) {
+				AnchorPane pdfPane = null;
+				Scene pdfScene = null;
+				try {
+					pdfPane = FXMLLoader.load(getClass().getResource("/gui/GeneratePDFView.fxml"));
+					pdfScene = new Scene(pdfPane);
+					Stage pdfStage = new Stage();
+					pdfStage.getIcons().add(new Image(getClass().getResourceAsStream("/resources/netflixIcon.png")));
+					pdfStage.setScene(pdfScene);
+					pdfStage.setResizable(false);
+					pdfStage.setTitle("PDF");
+					pdfStage.show();
+				} catch (IOException e) {
+					e.printStackTrace();
+					Alerts.showAlert("IOException", "Erro ao carregar a página", e.getMessage(),AlertType.ERROR);
+				}
+			}else {
+				Alerts.showAlert("Erro", "Selecione um único usuário!", "Só é possível fazer o relatório de um usuário por vez e ao menos um precisa ser selecionado",AlertType.ERROR);
+			}
+		}else {
+			Alerts.showAlert("Erro", "Você não criou as tabelas ainda",
+					"Para realizar operações de crud, consulta e visualização das tabelas, você precisa estar conectado ao banco"
+					+ "e ter criado as tabelas, vá até a aba de Conexão e preencha os campos necessários para se conectar caso não o tenha feito"
+					+ "e clique no botão Criar e Popular Tabelas", AlertType.ERROR);
+		}
 	}
 
 	// CONNECTION
@@ -385,6 +405,8 @@ public class MainViewController implements Initializable {
 			connected = OracleConnection.createConnection(connectionUserNameField.getText(), connectionPasswordField.getText(),
 					connectionHostNameField.getText(), connectionPortField.getText(), connectionSidField.getText());
 			if(connected) {
+				connectionConnectButton.setTooltip(new Tooltip("Você só pode se conectar uma vez"));
+				connectionCleanButton.setTooltip(new Tooltip("Você só pode se conectar uma vez"));
 				connection = OracleConnection.getConnection();
 				DatabaseMetaData dbm;
 				try {
@@ -395,7 +417,7 @@ public class MainViewController implements Initializable {
 						fillPlanObsList();
 						connectionDeleteTablesButton.setDisable(false);
 						connectionShowTableButton.setDisable(false);
-						userGeneratePDFeButton.setDisable(false);
+						userGeneratePDFButton.setDisable(false);
 						userSaveButton.setDisable(false);
 						userDeleteButton.setDisable(false);
 						userSearchButton.setDisable(false);
@@ -440,7 +462,7 @@ public class MainViewController implements Initializable {
 			fillPlanObsList();
 			connectionDeleteTablesButton.setDisable(false);
 			connectionShowTableButton.setDisable(false);
-			userGeneratePDFeButton.setDisable(false);
+			userGeneratePDFButton.setDisable(false);
 			userSaveButton.setDisable(false);
 			userDeleteButton.setDisable(false);
 			userSearchButton.setDisable(false);
@@ -463,7 +485,7 @@ public class MainViewController implements Initializable {
 			created = false;
 			connectionDeleteTablesButton.setDisable(true);
 			connectionShowTableButton.setDisable(true);
-			userGeneratePDFeButton.setDisable(true);
+			userGeneratePDFButton.setDisable(true);
 			userSaveButton.setDisable(true);
 			userDeleteButton.setDisable(true);
 			userSearchButton.setDisable(true);
@@ -661,6 +683,10 @@ public class MainViewController implements Initializable {
 	
 	public static ArrayList<String> getSearchQuerys() {
 		return searchQuerys;
+	}
+
+	public static String getUserCpf() {
+		return userCpf;
 	}
 
 }

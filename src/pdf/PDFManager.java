@@ -3,6 +3,7 @@ package pdf;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.xml.transform.TransformerException;
 
@@ -37,7 +38,7 @@ public class PDFManager {
 		}
 	}
 
-	public void createPDF(String message) throws IOException, TransformerException {
+	public void createPDF(ArrayList<String> messages) throws IOException, TransformerException {
 		try (PDDocument doc = new PDDocument()) {
 			PDPage page = new PDPage();
 			doc.addPage(page);
@@ -50,9 +51,12 @@ public class PDFManager {
 
 			try (PDPageContentStream contents = new PDPageContentStream(doc, page)) {
 				contents.beginText();
-				contents.setFont(font, 12);
+				contents.setFont(font, 8);
 				contents.newLineAtOffset(50, 720);
-				contents.showText(message);
+				for(int i=0;i<messages.size();i++) {
+					contents.showText(messages.get(i));
+					contents.newLineAtOffset(0, -20);
+				}
 				contents.endText();
 			}
 			XMPMetadata xmp = XMPMetadata.createXMPMetadata();
